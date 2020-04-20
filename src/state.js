@@ -96,7 +96,7 @@ const store = {
 				this._state.profileData.postsData.push(postObj);
 				this._callSubscriber(store);
 				break;
-			case "CHANGE-TEXTAREA-VALUE ":
+			case "CHANGE-TEXTAREA-VALUE":
 				store._state.profileData.textareaValue = action.value;
 				store._callSubscriber(store);
 				break;
