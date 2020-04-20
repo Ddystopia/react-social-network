@@ -3,21 +3,21 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import  { state, addPost, changeTextareaValue, subscribe } from "./state";
 import { BrowserRouter } from "react-router-dom";
+import store from "./state";
 
-const renderEntireState = () => {
+const renderEntireState = (store) => {
 	ReactDOM.render(
 		<React.StrictMode>
 			<BrowserRouter>
-				<App addPost={addPost} changeTextareaValue={changeTextareaValue} state={state} />
+				<App store={store} />
 			</BrowserRouter>
 		</React.StrictMode>,
 		document.getElementById("root")
 	);
 };
-subscribe(renderEntireState);
-renderEntireState();
+store.subscribe(renderEntireState);
+renderEntireState(store);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -4,7 +4,7 @@ import MyPosts from "./MyPosts/MyPosts";
 import classNames from "./Profile.module.css";
 
 const Profile = (props) => {
-	const state = props.state;
+	const state = props.data;
 	return (
 		<section className={classNames.content}>
 			<img
@@ -13,7 +13,7 @@ const Profile = (props) => {
 				alt="Some back"
 			/>
 			<UserInfo />
-			<MyPosts data={state.postsData} changeTextareaValue={props.changeTextareaValue} textareaValue={props.state.textareaValue} addPost={props.addPost}/>
+			<MyPosts data={state.postsData} textareaValue={state.textareaValue} dispatch={props.dispatch}/>
 		</section>
 	);
 };
