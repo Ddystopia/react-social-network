@@ -1,0 +1,7 @@
+.content{
+	position: relative;
+}
+.messages{
+	height: 60vh;
+	overflow-y: auto;
+}

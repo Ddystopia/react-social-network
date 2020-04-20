@@ -1,0 +1,33 @@
+.posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: stretch;
+  grid-area: posts;
+  width: 100%;
+}
+
+.posts > form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.posts > form > textarea {
+  width: 100%;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  resize: vertical;
+  min-height: 50px;
+  height: 100px;
+  max-height: 150px;
+}
+
+.posts > form > input {
+  width: 50px;
+  font-size: 1.05rem;
+  text-align: center;
+  padding: 3px;
+  margin: 5px;
+}

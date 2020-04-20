@@ -1,0 +1,13 @@
+.post{
+	display: flex;
+	align-items: flex-start;
+}
+
+.post > img{
+	width: 100px;
+	height: auto;
+}
+
+.post > .messageObj{
+	margin: 7px 0;
+}
