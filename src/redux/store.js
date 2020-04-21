@@ -74,7 +74,7 @@ const store = {
 			textareaValue: "",
 		},
 	},
-	get state() {
+	getState() {
 		return this._state;
 	},
 	subscribe(observer) {

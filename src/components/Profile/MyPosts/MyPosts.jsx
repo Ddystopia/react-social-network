@@ -21,10 +21,10 @@ const MyPosts = (props) => {
 
 	const changeTextareaValue = (event) => {
 		const value = event.target.value;
-		return props.dispatch(new ChangePostTextareaActionCreator(value));
+		return props.dispatch(ChangePostTextareaActionCreator(value));
 	};
 	const addPost = () => {
-		return props.dispatch(new AddPostActionCreator());
+		return props.dispatch(AddPostActionCreator());
 	};
 
 	return (

@@ -7,15 +7,14 @@ import "./App.css";
 import { Route } from "react-router-dom";
 
 const App = (props) => {
-	const store = props.store;
 	return (
 			<div className="app_wrapper">
 				<Header />
 				<Nav />
 				<main className="main">
-					<Route exact path="/" render={() => <Profile data={store.state.profileData} dispatch={store.dispatch.bind(store)}/>} />
-					<Route path="/profile" render={() => <Profile data={store.state.profileData} dispatch={store.dispatch.bind(store)}/>} />
-					<Route path="/dialogs" render={() => <Dialogs data={store.state.dialogData} dispatch={store.dispatch.bind(store)}/>} />
+					<Route exact path="/" render={() => <Profile data={props.state.profileData} dispatch={props.dispatch}/>} />
+					<Route path="/profile" render={() => <Profile data={props.state.profileData} dispatch={props.dispatch}/>} />
+					<Route path="/dialogs" render={() => <Dialogs data={props.state.dialogData} dispatch={props.dispatch}/>} />
 				</main>
 			</div>
 	);

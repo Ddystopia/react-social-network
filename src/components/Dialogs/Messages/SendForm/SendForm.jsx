@@ -13,7 +13,7 @@ function textareaAdjust(o) {
 const SendForm = (props) => {
 	
 	const sendMessage = () => {
-		return props.dispatch(new SendMessageActionCreator());
+		return props.dispatch(SendMessageActionCreator());
 	};
 	const changeTextareaValue = (event) => {
 		const textarea = event.target;
@@ -21,7 +21,7 @@ const SendForm = (props) => {
 		textareaAdjust(textarea)
 		if (value.length > 1000) textarea.classList.add(classNames.warning);
 		else textarea.classList.remove(classNames.warning)
-		return props.dispatch(new ChangeMessageTextareaActionCreator(value));
+		return props.dispatch(ChangeMessageTextareaActionCreator(value));
 	};
 	return (
 		<div className={classNames.posts}>
