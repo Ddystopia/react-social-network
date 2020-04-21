@@ -29,5 +29,6 @@
   font-size: 1.05rem;
   text-align: center;
   padding: 3px;
-  margin: 5px;
+	margin: 5px;
+	cursor: pointer;
 }

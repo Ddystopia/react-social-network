@@ -13,18 +13,21 @@ const Message = (props) => {
 		h: date.getHours(),
 		m: date.getMinutes(),
 	};
+	for(const item in dateObj){
+		if(dateObj[item] < 10) dateObj[item] = `0${dateObj[item]}`;
+	}
 	let resDate = "";
 
 	if (thisDate.getDate() !== dateObj.d) {
 		if (
-			thisDate.getDate() - dateObj.d === 1 &&
-			thisDate.getMonth() === dateObj.month &&
-			thisDate.getFullYear() === dateObj.y
+			thisDate.getDate() - +dateObj.d === 1 &&
+			thisDate.getMonth() === +dateObj.month &&
+			thisDate.getFullYear() === +dateObj.y
 		)
 			resDate += "Yesterday ";
 		else resDate += `${dateObj.y}-${dateObj.month}-${dateObj.d} `;
 	}
-	resDate += `${dateObj.h}:${dateObj.m}`;
+	resDate += `${dateObj.h} : ${dateObj.m}`;
 
 	return (
 		<article className={props.data.self ? classNamesSelf.message : classNamesElse.message}>

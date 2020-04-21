@@ -15,7 +15,7 @@ const App = (props) => {
 				<main className="main">
 					<Route exact path="/" render={() => <Profile data={store.state.profileData} dispatch={store.dispatch.bind(store)}/>} />
 					<Route path="/profile" render={() => <Profile data={store.state.profileData} dispatch={store.dispatch.bind(store)}/>} />
-					<Route path="/dialogs" render={() => <Dialogs data={store.state.dialogData}/>} />
+					<Route path="/dialogs" render={() => <Dialogs data={store.state.dialogData} dispatch={store.dispatch.bind(store)}/>} />
 				</main>
 			</div>
 	);

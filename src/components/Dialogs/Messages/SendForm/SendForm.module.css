@@ -1,25 +1,32 @@
 .posts > form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 }
 
-.posts > form > textarea {
-  width: 100%;
-  padding: 5px;
-  margin: 5px;
-  border-radius: 5px;
-  resize: vertical;
-  min-height: 25px;
-  height: 75px;
-  max-height: 100px;
+.posts > form > .textarea {
+	--size: 1.18rem;
+	width: 100%;
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+	resize: none;
+	height: calc(var(--size) + 14px);
+	font-size: var(--size);
+	line-height: var(--size);
+	max-height: 140px;
+	overflow: hidden auto;
 }
 
 .posts > form > input {
-  width: 50px;
-  font-size: 1.05rem;
-  text-align: center;
-  padding: 3px;
+	width: 50px;
+	font-size: 1.05rem;
+	text-align: center;
+	padding: 3px;
 	margin: 5px;
 	cursor: pointer;
+}
+
+.warning {
+	box-shadow: 0 0 3pt 2pt tomato;
 }
