@@ -1,10 +1,6 @@
 import React from "react";
 import classNames from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {
-	AddPostActionCreator,
-	ChangePostTextareaActionCreator,
-} from "../../../redux/profileReducer";
 
 const MyPosts = (props) => {
 	const postMessages = props.data
@@ -21,10 +17,10 @@ const MyPosts = (props) => {
 
 	const changeTextareaValue = (event) => {
 		const value = event.target.value;
-		return props.dispatch(ChangePostTextareaActionCreator(value));
+		props.changeTextareaValue(value)
 	};
 	const addPost = () => {
-		return props.dispatch(AddPostActionCreator());
+		props.addPost();
 	};
 
 	return (

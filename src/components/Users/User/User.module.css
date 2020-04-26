@@ -1,0 +1,50 @@
+.li {
+	display: grid;
+	grid-template-areas: 
+	"avatar info"
+	"butt info";
+	grid-template-columns: 100px 1fr;
+	grid-template-rows: 1fr;
+	justify-items: center;
+}
+
+.li > .info {
+	grid-area: info;
+	justify-self: stretch;
+	display: grid;
+	grid-template-areas: 
+	"name location"
+	"status location";
+	grid-template-columns: 1fr 70px;
+	border: 1px solid black;
+	border-radius: 7px;
+	padding: 4px 17px;
+}
+
+.li > .info > h3{
+	grid-area: name;
+}
+
+.li > .info > h4{
+	grid-area: location;
+}
+
+.li > .info > p{
+	grid-area: status;
+}
+
+.li > .avatar {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	grid-area: avatar;
+}
+
+.li > .butt {
+	grid-area: butt;
+	background-color: var(--standard_color);
+	padding: 4px 9px;
+	font-size: 1.05rem;
+	border: none;
+	font-weight: bold;
+}

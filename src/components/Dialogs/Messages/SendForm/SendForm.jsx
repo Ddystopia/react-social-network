@@ -1,9 +1,5 @@
 import React from "react";
 import classNames from "./SendForm.module.css";
-import {
-	ChangeMessageTextareaActionCreator,
-	SendMessageActionCreator,
-} from '../../../../redux/dialogReducer';
 
 function textareaAdjust(o) {
   o.style.height = "1px";
@@ -13,15 +9,17 @@ function textareaAdjust(o) {
 const SendForm = (props) => {
 	
 	const sendMessage = () => {
-		return props.dispatch(SendMessageActionCreator());
+		props.sendMessage()
 	};
 	const changeTextareaValue = (event) => {
 		const textarea = event.target;
 		const value = textarea.value;
 		textareaAdjust(textarea)
+		
 		if (value.length > 1000) textarea.classList.add(classNames.warning);
 		else textarea.classList.remove(classNames.warning)
-		return props.dispatch(ChangeMessageTextareaActionCreator(value));
+		
+		props.changeTextareaValue(value);
 	};
 	return (
 		<div className={classNames.posts}>

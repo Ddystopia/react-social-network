@@ -21,7 +21,11 @@ const Messages = (props) => {
 			>
 				{messages}
 			</div>
-			<SendForm textareaValue={props.textareaValue} dispatch={props.dispatch} />
+			<SendForm
+				textareaValue={props.textareaValue}
+				sendMessage={props.sendMessage}
+				changeTextareaValue={props.changeTextareaValue}
+			/>
 		</section>
 	);
 };

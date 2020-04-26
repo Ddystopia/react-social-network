@@ -37,7 +37,7 @@ const Message = (props) => {
 			/>
 			<div className={classNames.content}>
 				{props.data.message}
-				<div className={props.data.self ? classNamesSelf.date : classNamesElse.date} style={{width:`${resDate.length}ch`}}>{resDate}</div>
+				<div className={props.data.self ? classNamesSelf.date : classNamesElse.date}>{resDate}</div>
 			</div>
 		</article>
 	);

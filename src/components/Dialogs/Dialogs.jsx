@@ -1,14 +1,13 @@
 import React from "react";
 import classNames from "./Dialogs.module.css";
-import Chats from "./Chats/Chats";
-import Messages from "./Messages/Messages";
+import ChatsContainer from "./Chats/ChatsContainer";
+import MessagesContainer from "./Messages/MessagesContainer";
 
 const Dialogs = (props) => {
-	const state = props.data;
 	return (
 		<section className={classNames.content}>
-			<Chats data={state.chatsData} />
-			<Messages data={state.messagesData} textareaValue={state.textareaValue} dispatch={props.dispatch}/>
+			<ChatsContainer />
+			<MessagesContainer />
 		</section>
 	);
 };

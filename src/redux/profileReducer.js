@@ -37,32 +37,32 @@ const profileReducer = (state = initial, action) => {
 				state.textareaValue.trim().length < 10 ||
 				state.textareaValue.trim().length > 1000
 			)
-				break;
+				return state;
 			const postObj = {
 				id: state.postsData[state.postsData.length - 1].id + 1,
 				message: state.textareaValue.trim() /*action.message*/,
 				likesCount: 0,
 			};
-			state.postsData.push(postObj);
-			state.textareaValue = "";
-			break;
+			return {
+				...state,
+				postsData: [...state.postsData, postObj],
+				textareaValue: ""
+			}
 		case CHANGE_POST_TEXTAREA_VALUE:
-			state.textareaValue = action.value;
-			break;
+			return {...state,textareaValue: action.value}
 		default:
-			break;
+			return state;
 	}
-	return state;
 };
 
-const AddPostActionCreator = () => ({
+const AddPostAC = () => ({
 	type: ADD_POST,
 });
 
-const ChangePostTextareaActionCreator = (value) => ({
+const ChangePostTextareaAC = (value) => ({
 	value: value,
 	type: CHANGE_POST_TEXTAREA_VALUE,
 });
 
 export default profileReducer;
-export { AddPostActionCreator, ChangePostTextareaActionCreator };
+export { AddPostAC, ChangePostTextareaAC };

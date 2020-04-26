@@ -21,4 +21,5 @@
 	transform: translateY(100%);
 	font-size: 0.6rem;
 	color: gray;
+	width: max-content;
 }

@@ -3,6 +3,6 @@
 	border: 1px #3b3a3a solid;
 	border-radius: 10px;
 	position: relative;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	max-width: 350px;
 }

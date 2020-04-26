@@ -48,35 +48,33 @@ const dialogReducer = (state = initial, action) => {
 			if (
 				state.textareaValue.trim().length < 1 ||
 				state.textareaValue.length > 1000
-			)
-				break;
-
+			)	return state;
 			const messageObj = {
 				id: state.messagesData[state.messagesData.length - 1].id + 1,
 				self: true,
 				date: new Date(),
 				message: state.textareaValue /* action.message */,
 			};
-			state.messagesData.push(messageObj);
-			state.textareaValue = "";
-			break;
+			return {
+				...state,
+				messagesData: [...state.messagesData ,messageObj],
+				textareaValue: "",
+			};
 		case CHANGE_MESSAGE_TEXTAREA_VALUE:
-			state.textareaValue = action.value;
-			break;
+			return { ...state, textareaValue: action.value };
 		default:
-			break;
+			return state;
 	}
-	return state;
 };
 
-const SendMessageActionCreator = () => ({
+const SendMessageAC = () => ({
 	type: SEND_MESSAGE,
 });
 
-const ChangeMessageTextareaActionCreator = (value) => ({
+const ChangeMessageTextareaAC = (value) => ({
 	value: value,
 	type: CHANGE_MESSAGE_TEXTAREA_VALUE,
 });
 
 export default dialogReducer;
-export { ChangeMessageTextareaActionCreator, SendMessageActionCreator };
+export { ChangeMessageTextareaAC, SendMessageAC };

@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Nav from "./components/Nav/Nav";
+import UsersContainer from "./components/Users/UsersContainer";
 import "./App.css";
 import { Route } from "react-router-dom";
 
@@ -12,9 +13,10 @@ const App = (props) => {
 				<Header />
 				<Nav />
 				<main className="main">
-					<Route exact path="/" render={() => <Profile data={props.state.profileData} dispatch={props.dispatch}/>} />
-					<Route path="/profile" render={() => <Profile data={props.state.profileData} dispatch={props.dispatch}/>} />
-					<Route path="/dialogs" render={() => <Dialogs data={props.state.dialogData} dispatch={props.dispatch}/>} />
+					<Route exact path="/" render={() => <Profile/>} />
+					<Route path="/profile" render={() => <Profile/>} />
+					<Route path="/dialogs" render={() => <Dialogs/>} />
+					<Route path="/users" render={() => <UsersContainer />} />
 				</main>
 			</div>
 	);

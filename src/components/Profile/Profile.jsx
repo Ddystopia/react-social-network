@@ -1,10 +1,9 @@
 import React from "react";
 import UserInfo from "./UserInfo/UserInfo";
-import MyPosts from "./MyPosts/MyPosts";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import classNames from "./Profile.module.css";
 
 const Profile = (props) => {
-	const state = props.data;
 	return (
 		<section className={classNames.content}>
 			<img
@@ -13,7 +12,7 @@ const Profile = (props) => {
 				alt="Some back"
 			/>
 			<UserInfo />
-			<MyPosts data={state.postsData} textareaValue={state.textareaValue} dispatch={props.dispatch}/>
+			<MyPostsContainer/>
 		</section>
 	);
 };

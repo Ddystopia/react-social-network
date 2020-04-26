@@ -1,0 +1,16 @@
+.content, .content > ul{
+	display: grid;
+	gap: 20px;
+}
+
+.content > ul > li{
+	height: calc(70vh / 4 - 32px);
+}
+
+.content > .butt{
+	justify-self: center;
+	background-color: var(--standard_color);
+	padding: 7px 15px;
+	font-size: 1.1rem;
+	border: none;
+}
