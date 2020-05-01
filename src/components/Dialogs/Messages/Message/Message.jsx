@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "./Message.module.css";
 import classNamesSelf from "./MessageSelf.module.css";
 import classNamesElse from "./MessageElse.module.css";
+import standardAvatar from "../../../../assets/images/standardAvatar.jpg"
 
 const Message = (props) => {
 	const thisDate = new Date();
@@ -33,7 +34,7 @@ const Message = (props) => {
 		<article className={props.data.self ? classNamesSelf.message : classNamesElse.message}>
 			<img
 				alt="avatar"
-				src="https://profilepicture7.com/img/img_dongman/1/699918823.jpg"
+				src={standardAvatar}
 			/>
 			<div className={classNames.content}>
 				{props.data.message}

@@ -1,6 +1,6 @@
 .user_info{
 	display: grid;	
-	grid-template-columns: 100px 1fr;
+	grid-template-columns: 100px 1fr 1fr;
 }
 
 .user_info > .avatar {
@@ -11,6 +11,23 @@
 .user_info > .user_info_text {
 	display: flex;
 	flex-direction: column;
-	justify-content: start;
-	align-items: start;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.circle{
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	display: inline-block;
+	margin: 0px 4px -2px 3px;
+}
+
+.linkList{
+	margin-left: 20px;
+}
+
+.linkList > li > a{
+	display: inline-block;
+	color: #025fa0;
 }

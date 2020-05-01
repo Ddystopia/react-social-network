@@ -1,9 +1,10 @@
 .header {
   display: flex;
-  align-items: center;
-  padding: 1px;
+	align-items: center;
+	justify-content: space-between;
+  padding: 1px 10px 1px 1px;
   background-color: var(--standard_color);
-  grid-area: header;
+	grid-area: header;
 }
 
 .header > img {

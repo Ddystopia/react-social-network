@@ -1,5 +1,9 @@
+import { getProfile } from "../api/api";
+
 const ADD_POST = "ADD_POST";
-const CHANGE_POST_TEXTAREA_VALUE = "CHANGE_POST_TEXTAREA_VALUE";
+const CHANGE_TEXTAREA_VALUE = "CHANGE_TEXTAREA_VALUE";
+const SET_PROFILE_USER = "SET_PROFILE_USER";
+const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const initial = {
 	postsData: [
 		{
@@ -27,7 +31,9 @@ const initial = {
 			likesCount: 0,
 		},
 	],
+	profile: null,
 	textareaValue: "",
+	isFetching: false,
 };
 
 const profileReducer = (state = initial, action) => {
@@ -40,29 +46,37 @@ const profileReducer = (state = initial, action) => {
 				return state;
 			const postObj = {
 				id: state.postsData[state.postsData.length - 1].id + 1,
-				message: state.textareaValue.trim() /*action.message*/,
+				message: state.textareaValue.trim(),
 				likesCount: 0,
 			};
 			return {
 				...state,
 				postsData: [...state.postsData, postObj],
-				textareaValue: ""
-			}
-		case CHANGE_POST_TEXTAREA_VALUE:
-			return {...state,textareaValue: action.value}
+				textareaValue: "",
+			};
+		case CHANGE_TEXTAREA_VALUE:
+			return { ...state, textareaValue: action.value };
+		case SET_PROFILE_USER:
+			return { ...state, profile: action.profile };
+		case TOGGLE_IS_FETCHING:
+			return {
+				...state,
+				isFetching: action.isFetching,
+			};
 		default:
 			return state;
 	}
 };
 
-const AddPostAC = () => ({
-	type: ADD_POST,
-});
+const addPost = () => ({ type: ADD_POST });
+const changeTextareaValue = (value) => ({ type: CHANGE_TEXTAREA_VALUE, value });
+const setProfileUser = (profile) => ({ type: SET_PROFILE_USER, profile });
 
-const ChangePostTextareaAC = (value) => ({
-	value: value,
-	type: CHANGE_POST_TEXTAREA_VALUE,
-});
+const setProfile = (userId) => (dispatch) => {
+	getProfile(userId).then((data) => {
+		dispatch(setProfileUser(data));
+	});
+};
 
 export default profileReducer;
-export { AddPostAC, ChangePostTextareaAC };
+export { setProfile, addPost, changeTextareaValue };

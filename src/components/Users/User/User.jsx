@@ -1,5 +1,7 @@
 import React from "react";
 import classNames from "./User.module.css";
+import standardAvatar from "../../../assets/images/standardAvatar.jpg";
+import { NavLink } from "react-router-dom";
 
 const User = (props) => {
 	return (
@@ -9,19 +11,18 @@ const User = (props) => {
 				<h4>Male</h4>
 				<p>{props.data.status}</p>
 			</div>
-			<img
-				className={classNames.avatar}
-				src={props.data.photos.small || "https://66.media.tumblr.com/0275b304a43db7298da2fb7d84fded83/tumblr_nacu2a5MJE1r1y69ho3_500.jpg"}
-				alt="avatar"
-			/>
+			<NavLink className={classNames.avatarWrapper} to={`profile/${props.id}`}>
+				<img
+					className={classNames.avatar}
+					src={props.data.photos.small || standardAvatar}
+					alt="avatar"
+				/>
+			</NavLink>
 			{
 				<button
 					className={classNames.butt}
-					onClick={
-						props.data.followed
-							? () => props.unFollow(props.data.id)
-							: () => props.follow(props.data.id)
-					}
+					disabled={props.disabled}
+					onClick={props.data.followed ?  () => props.unFollow(props.data.id) : () => props.follow(props.data.id)}
 				>
 					{props.data.followed ? "Unfollow" : "Follow"}
 				</button>

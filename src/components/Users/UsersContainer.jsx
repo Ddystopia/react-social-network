@@ -1,54 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
 import Users from "./Users";
-import {
-	FollowAC,
-	UnFollowAC,
-	SetUsersAC,
-	SePageAC,
-	SetUsersCountAC,
-} from "../../redux/usersReducer";
-import * as axios from "axios";
+import Preloader from "../common/Preloader/Preloader";
+import { getUsers, follow, unFollow } from "../../redux/usersReducer";
 
 class UsersContainer extends React.Component {
 	componentDidMount() {
-		if (this.props.data.length === 0) {
-			axios
-				.get(
-					`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.page}&count=${this.props.count}`,
-					{
-						headers: { "API-KEY": "6bd488a7-8102-4f56-8668-0ba795d69754" },
-					}
-				)
-				.then((r) => {
-					this.props.setUsers(r.data.items);
-					this.props.setUsersCount(r.data.totalCount);
-				});
-		}
+		if (this.props.data.length === 0)
+			this.props.getUsers(this.props.page, this.props.count);
 	}
-	changePage = (p) => {
-		this.props.setPage(p);
-		axios
-			.get(
-				`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.count}`,
-				{
-					headers: { "API-KEY": "6bd488a7-8102-4f56-8668-0ba795d69754" },
-				}
-			)
-			.then((r) => {
-				this.props.setUsers(r.data.items);
-			});
-	}
+
+	changePage = (p) => this.props.getUsers(p, this.props.count);
+
 	render() {
-		return (
+		return this.props.isFetching ? (
+			<Preloader />
+		) : (
 			<Users
 				data={this.props.data}
-				follow={this.props.follow}
-				unFollow={this.props.unFollow	}
 				usersCount={this.props.usersCount}
 				count={this.props.count}
 				page={this.props.page}
+				isFollowing={this.props.isFollowing}
 				changePage={this.changePage}
+				follow={this.props.follow}
+				unFollow={this.props.unFollow}
 			/>
 		);
 	}
@@ -59,17 +35,10 @@ const mapStateToProps = (state) => ({
 	page: state.usersData.page,
 	count: state.usersData.count,
 	usersCount: state.usersData.usersCount,
+	isFetching: state.usersData.isFetching,
+	isFollowing: state.usersData.isFollowing,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	follow: (userId) => dispatch(FollowAC(userId)),
-	unFollow: (userId) => dispatch(UnFollowAC(userId)),
-	setUsers: (users) => dispatch(SetUsersAC(users)),
-	setPage: (page) => dispatch(SePageAC(page)),
-	setUsersCount: (usersCount) => dispatch(SetUsersCountAC(usersCount)),
-});
+const mapDispatchToProps = {getUsers, follow, unFollow};
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(UsersContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);

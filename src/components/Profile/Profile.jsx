@@ -11,7 +11,7 @@ const Profile = (props) => {
 				src="http://getwallpapers.com/wallpaper/full/8/8/c/254974.jpg"
 				alt="Some back"
 			/>
-			<UserInfo />
+			<UserInfo profile={props.profile} />
 			<MyPostsContainer/>
 		</section>
 	);

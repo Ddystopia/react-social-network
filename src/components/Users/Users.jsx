@@ -4,7 +4,14 @@ import User from "./User/User";
 
 const Users = (props) => {
 	const users = props.data.map((u) => (
-		<User key={u.id} data={u} follow={props.follow} unFollow={props.unFollow} />
+		<User
+			key={u.id}
+			disabled={props.isFollowing.includes(u.id)}
+			id={u.id}
+			data={u}
+			follow={props.follow}
+			unFollow={props.unFollow}
+		/>
 	));
 
 	const pages = Math.ceil(props.usersCount / props.count);
@@ -14,8 +21,9 @@ const Users = (props) => {
 	for (let i = centerPage; i <= pages && i <= centerPage + 14; i++)
 		pageListItems.push(
 			<li
-				className={props.page === i && classNames.active}
+				className={props.page === i ? classNames.active : ''}
 				onClick={() => props.changePage(i)}
+				key={i}
 			>
 				{i}
 			</li>

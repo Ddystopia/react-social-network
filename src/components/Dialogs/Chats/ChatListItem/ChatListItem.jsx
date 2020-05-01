@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const ChatListItem = (props) => {
 	return (
-		<li class={classNames.li}>
+		<li className={classNames.li}>
 			<NavLink
 				activeClassName={classNames.active}
 				to={`/dialogs/chat/${props.id}`}
