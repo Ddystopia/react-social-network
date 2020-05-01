@@ -6,13 +6,18 @@ import classNames from "./Profile.module.css";
 const Profile = (props) => {
 	return (
 		<section className={classNames.content}>
-			<img
+			{/* <img
 				className={classNames.img}
 				src="http://getwallpapers.com/wallpaper/full/8/8/c/254974.jpg"
 				alt="Some back"
+			/> */}
+			<UserInfo
+				profile={props.profile}
+				status={props.status}
+				updateUserStatus={props.updateUserStatus}
+				authUserId={props.authUserId}
 			/>
-			<UserInfo profile={props.profile} />
-			<MyPostsContainer/>
+			<MyPostsContainer />
 		</section>
 	);
 };

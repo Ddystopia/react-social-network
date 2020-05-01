@@ -1,9 +1,11 @@
-import { getProfile } from "../api/api";
+import { profileAPI } from "../api/api";
 
 const ADD_POST = "ADD_POST";
 const CHANGE_TEXTAREA_VALUE = "CHANGE_TEXTAREA_VALUE";
 const SET_PROFILE_USER = "SET_PROFILE_USER";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
+const SET_USER_STATUS = "SET_USER_STATUS";
+
 const initial = {
 	postsData: [
 		{
@@ -34,6 +36,7 @@ const initial = {
 	profile: null,
 	textareaValue: "",
 	isFetching: false,
+	status: "",
 };
 
 const profileReducer = (state = initial, action) => {
@@ -58,6 +61,8 @@ const profileReducer = (state = initial, action) => {
 			return { ...state, textareaValue: action.value };
 		case SET_PROFILE_USER:
 			return { ...state, profile: action.profile };
+		case SET_USER_STATUS:
+			return { ...state, status: action.status };
 		case TOGGLE_IS_FETCHING:
 			return {
 				...state,
@@ -71,12 +76,27 @@ const profileReducer = (state = initial, action) => {
 const addPost = () => ({ type: ADD_POST });
 const changeTextareaValue = (value) => ({ type: CHANGE_TEXTAREA_VALUE, value });
 const setProfileUser = (profile) => ({ type: SET_PROFILE_USER, profile });
+const setUserStatus = (status) => ({ type: SET_USER_STATUS, status });
 
 const setProfile = (userId) => (dispatch) => {
-	getProfile(userId).then((data) => {
+	profileAPI.getProfile(userId).then((data) => {
 		dispatch(setProfileUser(data));
 	});
 };
 
+const getUserStatus = (userId) => (dispatch) => {
+	profileAPI.getUserStatus(userId).then((data) => {
+		dispatch(setUserStatus(data));
+	});
+};
+
+const updateUserStatus = (status) => (dispatch) => {
+	profileAPI.setUserStatus(status).then((data) => {
+		if (data.resultCode === 0) {
+			dispatch(setUserStatus(status));
+		}
+	});
+};
+
 export default profileReducer;
-export { setProfile, addPost, changeTextareaValue };
+export { setProfile, getUserStatus, updateUserStatus, addPost, changeTextareaValue };

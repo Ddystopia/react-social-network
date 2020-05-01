@@ -1,4 +1,4 @@
-import { authMe } from "../api/api";
+import { authAPI } from "../api/api";
 
 const SET_AUTH_USER = "SET_AUTH_USER";
 const initial = {
@@ -27,10 +27,11 @@ const setAuthUser = (userId, email, login) => ({
 });
 
 const authUser = () => (dispatch) => {
-	authMe().then((r) => {
-		if (r.resultCode !== 0) return;
-		const { id, email, login } = r.data;
-		dispatch(setAuthUser(id, email, login));
+	authAPI.me().then((r) => {
+		if (r.resultCode === 0) {
+			const { id, email, login } = r.data;
+			dispatch(setAuthUser(id, email, login));
+		}
 	});
 };
 

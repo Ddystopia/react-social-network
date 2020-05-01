@@ -1,0 +1,30 @@
+.user_info > .user_info_text {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.user_info_text > .statusContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.statusContainer > .input,
+.statusContainer > .status {
+	display: block;
+	padding: 4px;
+	width: 100%;
+	min-width: 120px;
+	margin-left: 3px;
+}
+
+.circle {
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	display: inline-block;
+	margin: 0px 4px -2px 3px;
+}

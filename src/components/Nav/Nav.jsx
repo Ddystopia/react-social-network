@@ -3,10 +3,7 @@ import classNames from "./Nav.module.css";
 import { NavLink } from "react-router-dom";
 
 class Nav extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = { menuIsHidden: window.innerWidth < 761 ? true : false };
-	}
+	state = { menuIsHidden: window.innerWidth < 761 ? true : false };
 	menuChange = () =>
 		this.setState((state) => ({ menuIsHidden: !state.menuIsHidden }));
 	render() {
