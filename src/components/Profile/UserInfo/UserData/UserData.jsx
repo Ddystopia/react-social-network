@@ -34,14 +34,15 @@ class UserData extends React.Component {
 				<div className={classNames.statusContainer}>
 					Status:
 					{this.state.editMode ? (
-						<input
-							className={classNames.input}
-							autoFocus={true}
-							onBlur={this.disableEditMode}
-							type="text"
-							value={this.state.status}
-							onChange={this.statusOnChange}
-						/>
+						<div className={classNames.textarea}>
+							<textarea
+								autoFocus={true}
+								onBlur={this.disableEditMode}
+								type="text"
+								value={this.state.status}
+								onChange={this.statusOnChange}
+							/>
+						</div>
 					) : (
 						<div
 							className={classNames.status}

@@ -1,12 +1,12 @@
 import { usersAPI } from "../api/api";
 
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-const SET_USERS = "SET_USERS";
-const SET_PAGE = "SET_PAGE";
-const SET_USERS_COUNT = "SET_USERS_COUNT";
-const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
-const TOGGLE_IS_FOLLOWING = "TOGGLE_IS_FOLLOWING";
+const FOLLOW = Symbol();
+const UNFOLLOW = Symbol();
+const SET_USERS = Symbol();
+const SET_PAGE = Symbol();
+const SET_USERS_COUNT = Symbol();
+const TOGGLE_IS_FETCHING = Symbol();
+const TOGGLE_IS_FOLLOWING = Symbol();
 
 const initial = {
 	users: [],

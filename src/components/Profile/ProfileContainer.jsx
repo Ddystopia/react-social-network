@@ -8,18 +8,21 @@ import {
 	updateUserStatus,
 } from "../../redux/profileReducer";
 import { withRouter } from "react-router-dom";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
 	componentDidMount() {
-		const userId = this.props.match.params.userId || this.props.authUserId;
-		if (!userId) return;
+		const userId = +this.props.match.params.userId || this.props.authUserId;
+		if(this.props.profile && this.props.profile.userId === userId) return;
+		if(!userId) return this.props.history.push("/login")
+		this.getProfile(userId);
+	}
+	getProfile(userId) {
 		this.props.setProfile(userId);
 		this.props.getUserStatus(userId);
 	}
 	render() {
-		return this.props.profile ? (
+		return this.props.profile && !this.props.isFetching ? (
 			<Profile
 				profile={this.props.profile}
 				status={this.props.status}
@@ -36,6 +39,7 @@ const mapStateToProps = (state) => ({
 	profile: state.profileData.profile,
 	authUserId: state.auth.userId,
 	status: state.profileData.status,
+	isFetching: state.profileData.isFetching,
 });
 
 const mapDispatchToProps = { setProfile, getUserStatus, updateUserStatus };
@@ -43,5 +47,4 @@ const mapDispatchToProps = { setProfile, getUserStatus, updateUserStatus };
 export default compose(
 	connect(mapStateToProps, mapDispatchToProps),
 	withRouter,
-	withAuthRedirect
 )(ProfileContainer);

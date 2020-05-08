@@ -1,5 +1,4 @@
-const SEND_MESSAGE = "SEND_MESSAGE";
-const CHANGE_MESSAGE_TEXTAREA_VALUE = "CHANGE_MESSAGE_TEXTAREA_VALUE";
+const SEND_MESSAGE = Symbol();
 const initial = {
 	chatsData: [
 		{ chatName: "Sasha", id: 0 },
@@ -39,42 +38,27 @@ const initial = {
 			id: 4,
 		},
 	],
-	textareaValue: "",
 };
 
 const dialogReducer = (state = initial, action) => {
 	switch (action.type) {
 		case SEND_MESSAGE:
-			if (
-				state.textareaValue.trim().length < 1 ||
-				state.textareaValue.length > 1000
-			)	return state;
 			const messageObj = {
 				id: state.messagesData[state.messagesData.length - 1].id + 1,
 				self: true,
 				date: new Date(),
-				message: state.textareaValue /* action.message */,
+				message: action.message,
 			};
 			return {
 				...state,
-				messagesData: [...state.messagesData ,messageObj],
-				textareaValue: "",
+				messagesData: [...state.messagesData, messageObj],
 			};
-		case CHANGE_MESSAGE_TEXTAREA_VALUE:
-			return { ...state, textareaValue: action.value };
 		default:
 			return state;
 	}
 };
 
-const SendMessageAC = () => ({
-	type: SEND_MESSAGE,
-});
-
-const ChangeMessageTextareaAC = (value) => ({
-	value: value,
-	type: CHANGE_MESSAGE_TEXTAREA_VALUE,
-});
+const sendMessage = (message) => ({ type: SEND_MESSAGE, message });
 
 export default dialogReducer;
-export { ChangeMessageTextareaAC, SendMessageAC };
+export { sendMessage };

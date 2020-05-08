@@ -1,0 +1,7 @@
+.error {
+	border: 1px solid red;
+	padding: 10px;
+	line-height: 1.3rem;
+	font-size: 1.3rem;
+	text-transform: uppercase;
+}

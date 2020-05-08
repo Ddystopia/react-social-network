@@ -44,6 +44,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = { getUsers, follow, unFollow };
 
 export default compose(
-	withAuthRedirect,
 	connect(mapStateToProps, mapDispatchToProps)
 )(UsersContainer);

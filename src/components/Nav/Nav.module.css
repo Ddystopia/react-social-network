@@ -1,6 +1,8 @@
 .nav {
 	grid-area: nav;
 	background-color: var(--standard_color);
+	position: relative;
+	padding: 0;
 }
 
 .menuButton {
@@ -41,7 +43,7 @@ li {
 	display: block;
 }
 
-[hidden]{
+[hidden] {
 	display: none !important;
 }
 
@@ -52,7 +54,7 @@ li {
 		justify-content: space-around;
 		align-items: center;
 	}
-	.nav > ul > li > a{
+	.nav > ul > li > a {
 		padding: 5px 3.5vw;
 	}
 	.nav > ul > li.empty {
@@ -63,12 +65,14 @@ li {
 @media screen and (max-width: 760px) {
 	.nav > ul {
 		flex-direction: column;
-		/* display: none; */
 		align-self: stretch;
+		position: absolute;
+		width: 100%;
+		background-color: var(--standard_color);
 	}
-	.nav > ul > li{
+	.nav > ul > li {
 		text-align: center;
-		width: 50%;	
+		width: 50%;
 	}
 	.menuButton {
 		display: block;

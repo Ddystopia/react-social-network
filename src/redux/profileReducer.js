@@ -1,10 +1,9 @@
 import { profileAPI } from "../api/api";
 
-const ADD_POST = "ADD_POST";
-const CHANGE_TEXTAREA_VALUE = "CHANGE_TEXTAREA_VALUE";
-const SET_PROFILE_USER = "SET_PROFILE_USER";
-const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
-const SET_USER_STATUS = "SET_USER_STATUS";
+const ADD_POST = Symbol();
+const SET_PROFILE_USER = Symbol();
+const TOGGLE_IS_FETCHING = Symbol();
+const SET_USER_STATUS = Symbol();
 
 const initial = {
 	postsData: [
@@ -34,7 +33,6 @@ const initial = {
 		},
 	],
 	profile: null,
-	textareaValue: "",
 	isFetching: false,
 	status: "",
 };
@@ -42,23 +40,15 @@ const initial = {
 const profileReducer = (state = initial, action) => {
 	switch (action.type) {
 		case ADD_POST:
-			if (
-				state.textareaValue.trim().length < 10 ||
-				state.textareaValue.trim().length > 1000
-			)
-				return state;
 			const postObj = {
 				id: state.postsData[state.postsData.length - 1].id + 1,
-				message: state.textareaValue.trim(),
+				message: action.message,
 				likesCount: 0,
 			};
 			return {
 				...state,
 				postsData: [...state.postsData, postObj],
-				textareaValue: "",
 			};
-		case CHANGE_TEXTAREA_VALUE:
-			return { ...state, textareaValue: action.value };
 		case SET_PROFILE_USER:
 			return { ...state, profile: action.profile };
 		case SET_USER_STATUS:
@@ -73,14 +63,16 @@ const profileReducer = (state = initial, action) => {
 	}
 };
 
-const addPost = () => ({ type: ADD_POST });
-const changeTextareaValue = (value) => ({ type: CHANGE_TEXTAREA_VALUE, value });
+const addPost = (message) => ({ type: ADD_POST, message });
 const setProfileUser = (profile) => ({ type: SET_PROFILE_USER, profile });
 const setUserStatus = (status) => ({ type: SET_USER_STATUS, status });
+const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
 
 const setProfile = (userId) => (dispatch) => {
+	dispatch(toggleIsFetching(true))
 	profileAPI.getProfile(userId).then((data) => {
 		dispatch(setProfileUser(data));
+		dispatch(toggleIsFetching(false))
 	});
 };
 
@@ -99,4 +91,4 @@ const updateUserStatus = (status) => (dispatch) => {
 };
 
 export default profileReducer;
-export { setProfile, getUserStatus, updateUserStatus, addPost, changeTextareaValue };
+export { setProfile, getUserStatus, updateUserStatus, addPost };

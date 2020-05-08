@@ -12,13 +12,25 @@
 	justify-content: flex-start;
 }
 
-.statusContainer > .input,
-.statusContainer > .status {
+.statusContainer .textarea > textarea,
+.statusContainer .status {
 	display: block;
 	padding: 4px;
 	width: 100%;
 	min-width: 120px;
 	margin-left: 3px;
+	border: 0;
+}
+
+.statusContainer .textarea {
+	width: 100%;
+}
+
+.statusContainer .textarea > textarea {
+	height: 1.3rem;
+	resize: vertical;
+	min-height: 1.2rem;
+	max-height: 5rem;
 }
 
 .circle {

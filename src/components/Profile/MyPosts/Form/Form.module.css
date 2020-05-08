@@ -1,0 +1,21 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.form > .textarea {
+	width: 100%;
+}
+
+.form > .textarea > textarea{
+	width: 100%;
+	padding: 5px;
+	border-radius: 5px;
+	resize: vertical;
+	min-height: 50px;
+	height: 100px;
+	max-height: 150px;
+	margin: 5px;
+}
+

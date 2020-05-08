@@ -10,3 +10,14 @@
 .header > img {
   width: 55px;
 }
+
+.header > .loginDiv {
+  display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.loginDiv > .logAct {
+	cursor: pointer;
+	padding: auto 10px;
+}

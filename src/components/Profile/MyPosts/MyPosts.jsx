@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import Form from "./Form/Form";
 
 const MyPosts = (props) => {
 	const postMessages = props.data
@@ -15,25 +16,14 @@ const MyPosts = (props) => {
 		))
 		.reverse();
 
-	const changeTextareaValue = (event) => {
-		const value = event.target.value;
-		props.changeTextareaValue(value)
-	};
-	const addPost = () => {
-		props.addPost();
+	const addPost = (message) => {
+		props.addPost(message);
 	};
 
 	return (
 		<div className={classNames.posts}>
 			<h2>My posts</h2>
-			<form name="newPost" className="newPost">
-				<textarea
-					placeholder="Type new post"
-					onChange={changeTextareaValue}
-					value={props.textareaValue}
-				/>
-				<input onClick={addPost} value="Send" type="button" />
-			</form>
+			<Form addPost={addPost} />
 			<section>{postMessages}</section>
 		</div>
 	);

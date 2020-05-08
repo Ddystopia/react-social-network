@@ -30,13 +30,19 @@ const profileAPI = {
 		return instance.get(`profile/status/${userId}`).then((r) => r.data);
 	},
 	setUserStatus(status) {
-		return instance.put(`profile/status/`, { status }).then((r) => r.data);
+		return instance.put("profile/status/", { status }).then((r) => r.data);
 	},
 };
 
 const authAPI = {
-	me: () => {
-		return instance.get(`auth/me`).then((r) => r.data);
+	me() {
+		return instance.get("auth/me").then((r) => r.data);
+	},
+	login(formData) {
+		return instance.post("auth/login", { ...formData }).then((r) => r.data);
+	},
+	logout() {
+		return instance.delete("auth/login").then((r) => r.data);
 	},
 };
 

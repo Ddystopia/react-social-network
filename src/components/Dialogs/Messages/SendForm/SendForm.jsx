@@ -1,34 +1,30 @@
 import React from "react";
 import classNames from "./SendForm.module.css";
+import { reduxForm, Field } from "redux-form";
+import { Textarea } from "../../../common/FormControls/FormControls";
+import { required, maxLengthCreator } from "../../../../utils/validators/validators";
 
-function textareaAdjust(o) {
-  o.style.height = "1px";
-  o.style.height = `${4 + o.scrollHeight}px`;
-}
+const maxLength300 = maxLengthCreator(300);
 
 const SendForm = (props) => {
-	
-	const sendMessage = () => {
-		props.sendMessage()
-	};
-	const changeTextareaValue = (event) => {
-		const textarea = event.target;
-		const value = textarea.value;
-		textareaAdjust(textarea)
-		
-		if (value.length > 1000) textarea.classList.add(classNames.warning);
-		else textarea.classList.remove(classNames.warning)
-		
-		props.changeTextareaValue(value);
-	};
 	return (
-		<div className={classNames.posts}>
-			<form name="newPost" className="newPost">
-				<textarea className={classNames.textarea} onChange={changeTextareaValue} value={props.textareaValue}/>
-				<input onClick={sendMessage} value="Send" type="button" />
-			</form>
-		</div>
+		<form onSubmit={props.handleSubmit} className={classNames.posts}>
+			<Field
+				className={classNames.textarea}
+				component={Textarea}
+				name={"message"}
+				placeholder={"Type new message"}
+				validate={[required, maxLength300]}
+			/>
+			<button>Send</button>
+		</form>
 	);
 };
 
-export default SendForm;
+const SendMessageReduxForm = reduxForm({ form: "sendMessage" })(SendForm);
+
+export default (props) => (
+	<SendMessageReduxForm
+		onSubmit={(formData) => props.sendMessage(formData.message)}
+	/>
+);
