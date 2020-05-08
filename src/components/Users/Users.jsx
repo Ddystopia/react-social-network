@@ -14,7 +14,7 @@ const Users = (props) => {
 		/>
 	));
 
-	const pages = Math.ceil(props.usersCount / props.count);
+	const pages = Math.ceil(props.usersCount / props.pageCount);
 	const pageListItems = [];
 	const centerPage = Math.max(props.page - 7, 1);
 
