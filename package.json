@@ -9,6 +9,7 @@
 		"react-redux": "^7.2.0",
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "3.4.1",
+		"react-test-renderer": "^16.13.1",
 		"redux": "^4.0.5",
 		"redux-form": "~8.3.5",
 		"redux-thunk": "^2.3.0",
@@ -34,5 +35,9 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^5.7.0",
+		"eslint-plugin-jest-dom": "^2.1.0"
 	}
 }

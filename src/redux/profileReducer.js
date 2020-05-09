@@ -1,6 +1,7 @@
 import { profileAPI } from "../api/api";
 
 const ADD_POST = Symbol();
+const REMOVE_POST = Symbol();
 const SET_PROFILE_USER = Symbol();
 const TOGGLE_IS_FETCHING = Symbol();
 const SET_USER_STATUS = Symbol();
@@ -40,14 +41,18 @@ const initial = {
 const profileReducer = (state = initial, action) => {
 	switch (action.type) {
 		case ADD_POST:
-			const postObj = {
-				id: state.postsData[state.postsData.length - 1].id + 1,
-				message: action.message,
-				likesCount: 0,
-			};
 			return {
 				...state,
-				postsData: [...state.postsData, postObj],
+				postsData: [...state.postsData, {
+					id: state.postsData[state.postsData.length - 1].id + 1,
+					message: action.message,
+					likesCount: 0,
+				}],
+			};
+		case REMOVE_POST:
+			return {
+				...state,
+				postsData: state.postsData.filter(post => post.id !== action.id),
 			};
 		case SET_PROFILE_USER:
 			return { ...state, profile: action.profile };
@@ -64,6 +69,7 @@ const profileReducer = (state = initial, action) => {
 };
 
 const addPost = (message) => ({ type: ADD_POST, message });
+const removePost = (id) => ({ type: REMOVE_POST, id });
 const setProfileUser = (profile) => ({ type: SET_PROFILE_USER, profile });
 const setUserStatus = (status) => ({ type: SET_USER_STATUS, status });
 const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
@@ -91,4 +97,4 @@ const updateUserStatus = (status) => (dispatch) => {
 };
 
 export default profileReducer;
-export { setProfile, getUserStatus, updateUserStatus, addPost };
+export { setProfile, getUserStatus, updateUserStatus, addPost, removePost, setProfileUser, setUserStatus };

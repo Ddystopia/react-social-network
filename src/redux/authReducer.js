@@ -81,5 +81,5 @@ const logout = () => (dispatch) => {
 	});
 };
 
-export { authUser, login, logout };
+export { authUser, login, logout, setAuthUser ,toggleIsFetching };
 export default authReducer;

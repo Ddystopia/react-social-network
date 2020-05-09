@@ -1,6 +1,6 @@
-const SEND_MESSAGE = Symbol();
-const REMOVE_MESSAGE = Symbol();
-const initial = {
+import dialogReducer, { sendMessage, removeMessage } from "../dialogReducer";
+
+const state = {
 	chatsData: [
 		{ chatName: "Sasha", id: 0 },
 		{ chatName: "Dasha", id: 1 },
@@ -41,30 +41,26 @@ const initial = {
 	],
 };
 
-const dialogReducer = (state = initial, action) => {
-	switch (action.type) {
-		case SEND_MESSAGE:
-			return {
-				...state,
-				messagesData: [...state.messagesData, {
-					id: state.messagesData[state.messagesData.length - 1].id + 1,
-					self: true,
-					date: new Date(),
-					message: action.message,
-				}],
-			};
-		case REMOVE_MESSAGE:
-			return {
-				...state,
-				messagesData: state.messagesData.filter(message => message.id !== action.id)
-			};
-		default:
-			return state;
-	}
-};
+test("length should increment", () => {
+	const action = sendMessage("New message");
 
-const sendMessage = (message) => ({ type: SEND_MESSAGE, message });
-const removeMessage = (id) => ({ type: REMOVE_MESSAGE, id });
+	const newState = dialogReducer(state, action);
 
-export default dialogReducer;
-export { sendMessage, removeMessage };
+	expect(newState.messagesData.length).toBe(5);
+});
+
+test("after delete length should decrement", () => {
+	const action = removeMessage(2);
+
+	const newState = dialogReducer(state, action);
+
+	expect(newState.messagesData.length).toBe(3);
+});
+
+test("message should be correct", () => {
+	const action = sendMessage("New message");
+
+	const newState = dialogReducer(state, action);
+
+	expect(newState.messagesData[4].message).toBe("New message");
+});

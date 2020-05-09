@@ -4,6 +4,7 @@ const FOLLOW = Symbol();
 const UNFOLLOW = Symbol();
 const SET_USERS = Symbol();
 const SET_PAGE = Symbol();
+const SET_COUNT = Symbol();
 const SET_USERS_COUNT = Symbol();
 const TOGGLE_IS_FETCHING = Symbol();
 const TOGGLE_IS_FOLLOWING = Symbol();
@@ -43,6 +44,11 @@ const usersReducer = (state = initial, action) => {
 				...state,
 				page: action.page,
 			};
+		case SET_COUNT:
+			return {
+				...state,
+				count: action.count,
+			};
 		case SET_USERS_COUNT:
 			return {
 				...state,
@@ -69,16 +75,10 @@ const acceptFollow = (userId) => ({ type: FOLLOW, userId });
 const acceptUnFollow = (userId) => ({ type: UNFOLLOW, userId });
 const setUsers = (users) => ({ type: SET_USERS, users });
 const setPage = (page) => ({ type: SET_PAGE, page });
+const setCount = (count) => ({ type: SET_COUNT, count });
 const setUsersCount = (usersCount) => ({ type: SET_USERS_COUNT, usersCount });
-const toggleIsFetching = (isFetching) => ({
-	type: TOGGLE_IS_FETCHING,
-	isFetching,
-});
-const toggleIsFollowing = (isFetching, id) => ({
-	type: TOGGLE_IS_FOLLOWING,
-	isFetching,
-	id,
-});
+const toggleIsFetching = (isFetching) => ({	type: TOGGLE_IS_FETCHING,	isFetching });
+const toggleIsFollowing = (isFetching, id) => ({ type: TOGGLE_IS_FOLLOWING,	isFetching,	id });
 
 const getUsers = (page, count) => (dispatch) => {
 	dispatch(setPage(page));
@@ -110,3 +110,4 @@ const unFollow = (id) => (dispatch) => {
 
 export default usersReducer;
 export { follow, unFollow, getUsers };
+export { acceptFollow, acceptUnFollow, setUsers, setPage, setCount, setUsersCount };
