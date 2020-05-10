@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "./Users.module.css";
 import User from "./User/User";
-import Pagination from "./Pagination";
+import Pagination from "./Pagination/Pagination";
 
 const Users = ({ data, isFollowing, follow, unFollow, usersCount, pageCount, page, changePage }) => {
 	const users = data.map((u) => (
@@ -17,7 +17,7 @@ const Users = ({ data, isFollowing, follow, unFollow, usersCount, pageCount, pag
 
 	return (
 		<section className={classNames.content}>
-			<Pagination usersCount={usersCount} pageCount={pageCount} page={page} changePage={changePage} />
+			<Pagination itemsCount={usersCount} pageCount={pageCount} page={page} changePage={changePage} />
 			<ul className={classNames.usersList}>{users}</ul>
 		</section>
 	);

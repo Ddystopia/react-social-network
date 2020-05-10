@@ -1,0 +1,13 @@
+.pagination {
+	display: flex;
+	justify-content: space-between;
+	width: max-content;
+	justify-self: center;
+	cursor: pointer;
+	/* margin: 5px; */
+}
+
+.pagination > li.active,
+.pagination > li:hover {
+	background-color: #b4b4b4;
+}
