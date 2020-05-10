@@ -1,37 +1,23 @@
 import React from "react";
 import classNames from "./Users.module.css";
 import User from "./User/User";
+import Pagination from "./Pagination";
 
-const Users = (props) => {
-	const users = props.data.map((u) => (
+const Users = ({ data, isFollowing, follow, unFollow, usersCount, pageCount, page, changePage }) => {
+	const users = data.map((u) => (
 		<User
 			key={u.id}
-			disabled={props.isFollowing.includes(u.id)}
+			disabled={isFollowing.includes(u.id)}
 			id={u.id}
 			data={u}
-			follow={props.follow}
-			unFollow={props.unFollow}
+			follow={follow}
+			unFollow={unFollow}
 		/>
 	));
 
-	const pages = Math.ceil(props.usersCount / props.pageCount);
-	const pageListItems = [];
-	const centerPage = Math.max(props.page - 7, 1);
-
-	for (let i = centerPage; i <= pages && i <= centerPage + 14; i++)
-		pageListItems.push(
-			<li
-				className={props.page === i ? classNames.active : ''}
-				onClick={() => props.changePage(i)}
-				key={i}
-			>
-				{i}
-			</li>
-		);
-
 	return (
 		<section className={classNames.content}>
-			<ul className={classNames.pagination}>{pageListItems}</ul>
+			<Pagination usersCount={usersCount} pageCount={pageCount} page={page} changePage={changePage} />
 			<ul className={classNames.usersList}>{users}</ul>
 		</section>
 	);

@@ -5,26 +5,22 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { sendMessage } from "../../redux/dialogReducer";
 
-class DialogsContainer extends React.Component {
-	render() {
-		return (
-			<Dialogs
-				chatsData={this.props.chatsData}
-				messagesData={this.props.messagesData}
-				sendMessage={this.props.sendMessage}
-			/>
-		);
-	}
-}
+const DialogsContainer = ({chatsData, messagesData, sendMessage}) => {
+	return (
+		<Dialogs
+			chatsData={chatsData}
+			messagesData={messagesData}
+			sendMessage={sendMessage}
+		/>
+	);
+};
 
 const mapStateToProps = (state) => ({
 	chatsData: state.dialogData.chatsData,
 	messagesData: state.dialogData.messagesData,
 });
 
-const mapDispatchToProps = { sendMessage };
-
 export default compose(
-	connect(mapStateToProps, mapDispatchToProps),
+	connect(mapStateToProps, { sendMessage }),
 	withAuthRedirect
 )(DialogsContainer);

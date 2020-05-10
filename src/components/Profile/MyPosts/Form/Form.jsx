@@ -11,12 +11,12 @@ import { Textarea } from "../../../common/FormControls/FormControls";
 const maxLength300 = maxLengthCreator(300);
 const minLength10 = minLengthCreator(10);
 
-const Form = (props) => {
+const Form = ({ handleSubmit }) => {
 	return (
-		<form className={classNames.form} onSubmit={props.handleSubmit}>
+		<form className={classNames.form} onSubmit={handleSubmit}>
 			<Field
 				component={Textarea}
-				className={classNames.textarea} 
+				className={classNames.textarea}
 				placeholder="Type new post"
 				name="message"
 				validate={[required, maxLength300, minLength10]}
@@ -28,6 +28,6 @@ const Form = (props) => {
 
 const ReduxForm = reduxForm({ form: "addPost" })(Form);
 
-export default (props) => (
-	<ReduxForm onSubmit={(formData) => props.addPost(formData.message)} />
+export default ({ addPost }) => (
+	<ReduxForm onSubmit={(formData) => addPost(formData.message)} />
 );

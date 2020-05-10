@@ -2,9 +2,9 @@ import React from "react";
 import classNames from "./Chats.module.css";
 import ChatListItem from "./ChatListItem/ChatListItem";
 
-const Chats = (props) => {
-	const listItems = props.data.map((item) => (
-		<ChatListItem key={item.id} chatName={item.chatName} id={item.id} />
+const Chats = ({ data }) => {
+	const listItems = data.map((item) => (
+		<ChatListItem key={item.id} {...item} />
 	));
 	return (
 		<section className={classNames.chats}>

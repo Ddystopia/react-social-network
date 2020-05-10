@@ -3,7 +3,7 @@ import UserInfo from "./UserInfo/UserInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import classNames from "./Profile.module.css";
 
-const Profile = (props) => {
+const Profile = ({ profile, status, updateUserStatus, authUserId }) => {
 	return (
 		<section className={classNames.content}>
 			{/* <img
@@ -12,10 +12,10 @@ const Profile = (props) => {
 				alt="Some back"
 			/> */}
 			<UserInfo
-				profile={props.profile}
-				status={props.status}
-				updateUserStatus={props.updateUserStatus}
-				authUserId={props.authUserId}
+				profile={profile}
+				status={status}
+				updateUserStatus={updateUserStatus}
+				authUserId={authUserId}
 			/>
 			<MyPostsContainer />
 		</section>

@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from "react";
 import classNames from "./UserData.module.css";
 
-const UserData = (props) => {
+const UserData = ({ propStatus, authUserId, profile, updateUserStatus }) => {
 	const [editMode, setEditMode] = useState(false);
-	const [status, setStatus] = useState(props.status);
+	const [status, setStatus] = useState(propStatus);
 	useEffect(() => {
-		setStatus(props.status)		
-	}, [props.status])
-	
+		setStatus(propStatus);
+	}, [propStatus]);
+
 	const statusOnChange = (e) => {
 		setStatus(e.target.value);
 	};
 
 	const anabelEditMode = () => {
-		if (props.authUserId !== props.profile.userId) return;
+		if (authUserId !== profile.userId) return;
 		setEditMode(true);
 	};
 
 	const disableEditMode = () => {
 		setEditMode(false);
-		if (props.status !== status) props.updateUserStatus(status || "");
+		if (propStatus !== status) updateUserStatus(status || "");
 	};
-	
+
 	return (
 		<article className={classNames.user_info_text}>
-			<h3>{props.profile.fullName || "-----"}</h3>
-			<div>About me: {props.profile.aboutMe || "-----"}</div>
+			<h3>{profile.fullName || "-----"}</h3>
+			<div>About me: {profile.aboutMe || "-----"}</div>
 			<div className={classNames.statusContainer}>
 				Status:
 				{editMode ? (
@@ -40,7 +40,7 @@ const UserData = (props) => {
 					</div>
 				) : (
 					<div className={classNames.status} onDoubleClick={anabelEditMode}>
-						{props.status || "-----"}
+						{propStatus || "-----"}
 					</div>
 				)}
 			</div>
@@ -49,10 +49,10 @@ const UserData = (props) => {
 				<div
 					className={classNames.circle}
 					style={{
-						backgroundColor: props.profile.lookingForAJob ? "green" : "red",
+						backgroundColor: profile.lookingForAJob ? "green" : "red",
 					}}
 				></div>
-				{props.profile.lookingForAJobDescription || props.profile.lookingForAJob
+				{profile.lookingForAJobDescription || profile.lookingForAJob
 					? "-----"
 					: ""}
 			</div>

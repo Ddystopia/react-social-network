@@ -3,28 +3,30 @@ import classNames from "./User.module.css";
 import standardAvatar from "../../../assets/images/standardAvatar.jpg";
 import { NavLink } from "react-router-dom";
 
-const User = (props) => {
+const User = ({ data, id, disabled, unFollow, follow }) => {
 	return (
 		<li className={classNames.li}>
 			<div className={classNames.info}>
-				<h3>{props.data.name}</h3>
+				<h3>{data.name}</h3>
 				<h4>Male</h4>
-				<p>{props.data.status}</p>
+				<p>{data.status}</p>
 			</div>
-			<NavLink className={classNames.avatarWrapper} to={`profile/${props.id}`}>
+			<NavLink className={classNames.avatarWrapper} to={`profile/${id}`}>
 				<img
 					className={classNames.avatar}
-					src={props.data.photos.small || standardAvatar}
+					src={data.photos.small || standardAvatar}
 					alt="avatar"
 				/>
 			</NavLink>
 			{
 				<button
 					className={classNames.butt}
-					disabled={props.disabled}
-					onClick={props.data.followed ?  () => props.unFollow(props.data.id) : () => props.follow(props.data.id)}
+					disabled={disabled}
+					onClick={
+						data.followed ? () => unFollow(data.id) : () => follow(data.id)
+					}
 				>
-					{props.data.followed ? "Unfollow" : "Follow"}
+					{data.followed ? "Unfollow" : "Follow"}
 				</button>
 			}
 		</li>

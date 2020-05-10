@@ -23,7 +23,6 @@ const initializeSuccess = () => ({ type: SET_INITIALIZED_SUCCESS });
 const initializeApp = () => (dispatch) => {
 	const dispatchResult = dispatch(authUser());
 	Promise.all([dispatchResult]).then(() => {
-		debugger
 		dispatch(initializeSuccess());
 	});
 };

@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "./FormControls.module.css";
 
-const FormControl = ({ input, meta, element, className, ...props }) => {
-	const hasError = meta.touched && meta.error;
+const FormControl = ({ input, meta: {touched, error}, element, className, ...props }) => {
+	const hasError = touched && error;
 	return (
 		<div className={className}>
 			{React.createElement(element, {
@@ -10,7 +10,7 @@ const FormControl = ({ input, meta, element, className, ...props }) => {
 				...props,
 				className: hasError ? classNames.error : "",
 			})}
-			{hasError && <span>{meta.error}</span>}
+			{hasError && <span>{error}</span>}
 		</div>
 	);
 };

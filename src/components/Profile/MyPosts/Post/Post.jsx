@@ -1,19 +1,16 @@
 import React from "react";
 import classNames from "./Post.module.css";
+import standardAvatar from "../../../../assets/images/standardAvatar.jpg";
 
-const Post = (props) => {
-  return (
-    <article className={classNames.post}>
-      <img
-        src="https://66.media.tumblr.com/0275b304a43db7298da2fb7d84fded83/tumblr_nacu2a5MJE1r1y69ho3_500.jpg"
-        alt="avatar"
-      />
-      <div className={classNames.messageObj}>
-        <h4> {props.header} </h4>
-        <p> {props.message} </p>
-      </div>
-    </article>
-  );
-}
+const Post = ({ header, message }) => {
+	return (
+		<article className={classNames.post}>
+			<img src={standardAvatar} alt="avatar" />
+			<div className={classNames.messageObj}>
+				<h4> {header} </h4>
+				<p> {message} </p>
+			</div>
+		</article>
+	);
+};
 export default Post;
-

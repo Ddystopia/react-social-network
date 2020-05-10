@@ -47,39 +47,36 @@ const toggleIsFetching = (isFetching) => ({
 	isFetching,
 });
 
-const authUser = () => (dispatch) => {
+const authUser = () => async (dispatch) => {
 	dispatch(toggleIsFetching(true));
-	return authAPI.me().then((r) => {
-		if (r.resultCode === 0) {
-			const { id, email, login } = r.data;
-			dispatch(setAuthUser(id, email, login));
-		} else dispatch(logoutUser());
-		dispatch(toggleIsFetching(false));
-	});
+	const r = await authAPI.me();
+
+	if (r.resultCode === 0) {
+		const { id, email, login } = r.data;
+		dispatch(setAuthUser(id, email, login));
+	} else dispatch(logoutUser());
+
+	dispatch(toggleIsFetching(false));
 };
 
-const login = (formData) => (dispatch) => {
-	authAPI.login(formData).then((r) => {
-		switch (r.resultCode) {
-			case 0:
-				dispatch(authUser())
-				break;
-			case 1:
-				dispatch(stopSubmit("login", { _error: r.messages.join('\n') }));
-				break;
-			default:
-				dispatch(stopSubmit("login", { _error: "something wrong" }));
-		}
-	});
+const login = (formData) => async (dispatch) => {
+	const r = await authAPI.login(formData);
+	switch (r.resultCode) {
+		case 0:
+			dispatch(authUser());
+			break;
+		case 1:
+			dispatch(stopSubmit("login", { _error: r.messages.join("\n") }));
+			break;
+		default:
+			dispatch(stopSubmit("login", { _error: "something wrong" }));
+	}
 };
 
-const logout = () => (dispatch) => {
-	authAPI.logout().then((r) => {
-		if (r.resultCode === 0) {
-			dispatch(authUser())
-		}
-	});
+const logout = () => async (dispatch) => {
+	const r = await authAPI.logout();
+	if (r.resultCode === 0) dispatch(authUser());
 };
 
-export { authUser, login, logout, setAuthUser ,toggleIsFetching };
+export { authUser, login, logout, setAuthUser, toggleIsFetching };
 export default authReducer;

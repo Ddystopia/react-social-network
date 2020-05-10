@@ -3,27 +3,19 @@ import classNames from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import Form from "./Form/Form";
 
-const MyPosts = (props) => {
-	const postMessages = props.data
-		.map((item) => (
-			<Post
-				message={item.message}
-				header={item.header}
-				likesCount={item.likesCount}
-				id={item.id}
-				key={item.id}
-			/>
-		))
+const MyPosts = ({ data, addPost }) => {
+	const postMessages = data
+		.map((item) => <Post {...item} key={item.id} />)
 		.reverse();
 
-	const addPost = (message) => {
-		props.addPost(message);
+	const addPostHandle = (message) => {
+		addPost(message);
 	};
 
 	return (
 		<div className={classNames.posts}>
 			<h2>My posts</h2>
-			<Form addPost={addPost} />
+			<Form addPost={addPostHandle} />
 			<section>{postMessages}</section>
 		</div>
 	);

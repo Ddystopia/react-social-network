@@ -3,11 +3,11 @@ import classNames from "./Dialogs.module.css";
 import Chats from "./Chats/Chats";
 import Messages from "./Messages/Messages";
 
-const Dialogs = (props) => {
+const Dialogs = ({ chatsData, messagesData, sendMessage }) => {
 	return (
 		<section className={classNames.content}>
-			<Chats data={props.chatsData} />
-			<Messages data={props.messagesData} sendMessage={props.sendMessage} />
+			<Chats data={chatsData} />
+			<Messages data={messagesData} sendMessage={sendMessage} />
 		</section>
 	);
 };

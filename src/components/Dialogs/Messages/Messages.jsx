@@ -2,32 +2,26 @@ import React from "react";
 import Message from "./Message/Message";
 import classNames from "./Messages.module.css";
 import SendForm from "./SendForm/SendForm";
-function scrollToDown() {
-	const element = document.getElementById("messagesDiv");
+function scrollToDown(e) {
+	const element = e.target;
 	element.scrollTop = element.scrollHeight;
 }
 
-const Messages = (props) => {
-	const messages = props.data
+export default ({ data, textareaValue, sendMessage, changeTextareaValue }) => {
+	const messages = data
 		.sort((a, b) => a.date - b.date)
-		.slice(0, Math.min(props.data.length, 100))
+		.slice(0, Math.min(data.length, 100))
 		.map((item) => <Message key={item.id} data={item} />);
 	return (
 		<section className={classNames.content}>
-			<div
-				onLoad={scrollToDown}
-				id="messagesDiv"
-				className={classNames.messages}
-			>
+			<div onLoad={scrollToDown} className={classNames.messages}>
 				{messages}
 			</div>
 			<SendForm
-				textareaValue={props.textareaValue}
-				sendMessage={props.sendMessage}
-				changeTextareaValue={props.changeTextareaValue}
+				textareaValue={textareaValue}
+				sendMessage={sendMessage}
+				changeTextareaValue={changeTextareaValue}
 			/>
 		</section>
 	);
 };
-
-export default Messages;

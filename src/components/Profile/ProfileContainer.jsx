@@ -11,6 +11,10 @@ import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
+
+	// TODO:
+	// To useEffect(fn, [this.props.profile])
+
 	componentDidMount() {
 		const userId = +this.props.match.params.userId || this.props.authUserId;
 		if(this.props.profile && this.props.profile.userId === userId) return;
