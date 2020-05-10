@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Profile from "./Profile";
 import Preloader from "../common/Preloader/Preloader";
@@ -10,34 +10,42 @@ import {
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 
-class ProfileContainer extends React.Component {
-
+const ProfileContainer = ({
+	match,
+	authUserId,
+	profile,
+	history,
+	setProfile,
+	getUserStatus,
+	status,
+	updateUserStatus,
+	isFetching,
+}) => {
 	// TODO:
-	// To useEffect(fn, [this.props.profile])
+	// To useEffect(fn, [profile])
 
-	componentDidMount() {
-		const userId = +this.props.match.params.userId || this.props.authUserId;
-		if(this.props.profile && this.props.profile.userId === userId) return;
-		if(!userId) return this.props.history.push("/login")
-		this.getProfile(userId);
-	}
-	getProfile(userId) {
-		this.props.setProfile(userId);
-		this.props.getUserStatus(userId);
-	}
-	render() {
-		return this.props.profile && !this.props.isFetching ? (
-			<Profile
-				profile={this.props.profile}
-				status={this.props.status}
-				updateUserStatus={this.props.updateUserStatus}
-				authUserId={this.props.authUserId}
-			/>
-		) : (
-			<Preloader />
-		);
-	}
-}
+	useEffect(() => {
+		const userId = +match.params.userId || authUserId;
+		if (profile && profile.userId === userId) return;
+		if (!userId) return history.push("/login");
+
+		const getProfile = (userId) => {
+			setProfile(userId);
+			getUserStatus(userId);
+		};
+		getProfile(userId);
+	}, [match.params.userId, authUserId, profile, history, setProfile, getUserStatus]);
+	return profile && !isFetching ? (
+		<Profile
+			profile={profile}
+			status={status}
+			updateUserStatus={updateUserStatus}
+			authUserId={authUserId}
+		/>
+	) : (
+		<Preloader />
+	);
+};
 
 const mapStateToProps = (state) => ({
 	profile: state.profileData.profile,
@@ -50,5 +58,5 @@ const mapDispatchToProps = { setProfile, getUserStatus, updateUserStatus };
 
 export default compose(
 	connect(mapStateToProps, mapDispatchToProps),
-	withRouter,
+	withRouter
 )(ProfileContainer);

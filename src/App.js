@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
@@ -15,12 +15,13 @@ import { withSuspense } from "./hoc/withSuspense";
 
 const UsersContainer = React.lazy(() =>	import("./components/Users/UsersContainer"));
 const LoginContainer = React.lazy(() =>	import("./components/Login/LoginContainer"));
-class App extends React.Component {
-	componentDidMount() {
-		this.props.initializeApp();
-	}
-	render() {
-		return this.props.initialized ? (
+
+const App = ({initializeApp, initialized}) => {
+	useEffect(()=>{
+		initializeApp();
+	},[initializeApp])
+
+		return initialized ? (
 			<div className="app_wrapper">
 				<HeaderContainer />
 				<Nav />
@@ -34,7 +35,7 @@ class App extends React.Component {
 		) : (
 			<Preloader />
 		);
-	}
+	
 }
 
 const mapStateToProps = (state) => ({
