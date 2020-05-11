@@ -11,9 +11,15 @@ import { Textarea } from "../../../common/FormControls/FormControls";
 const maxLength300 = maxLengthCreator(300);
 const minLength10 = minLengthCreator(10);
 
-const Form = ({ handleSubmit }) => {
+const Form = ({ handleSubmit, addPost, reset }) => {
 	return (
-		<form className={classNames.form} onSubmit={handleSubmit}>
+		<form
+			className={classNames.form}
+			onSubmit={handleSubmit((formData) => {
+				addPost(formData.message);
+				reset()
+			})}
+		>
 			<Field
 				component={Textarea}
 				className={classNames.textarea}
@@ -26,8 +32,4 @@ const Form = ({ handleSubmit }) => {
 	);
 };
 
-const ReduxForm = reduxForm({ form: "addPost" })(Form);
-
-export default ({ addPost }) => (
-	<ReduxForm onSubmit={(formData) => addPost(formData.message)} />
-);
+export default reduxForm({ form: "addPost" })(Form);

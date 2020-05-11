@@ -3,11 +3,16 @@ const required = value => {
 }
 
 const maxLengthCreator = maxLength => value => {
-	return value.length > maxLength ? `Max length is ${maxLength}` : undefined;
+	return value && value.length > maxLength ? `Max length is ${maxLength}` : undefined;
 }
 
 const minLengthCreator = minLength => value => {
-	return value.length < minLength ? `Min length is ${minLength}` : undefined;
+	return value && value.length < minLength ? `Min length is ${minLength}` : undefined;
 }
 
-export { required, maxLengthCreator, minLengthCreator }
+const urlValidator = (value) => {
+	
+	return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'(\\)*+,;=.]+$/gm.test(value) ? undefined : "Invalid Email"
+}
+
+export { required, maxLengthCreator, minLengthCreator, urlValidator }

@@ -32,6 +32,18 @@ const profileAPI = {
 	setUserStatus(status) {
 		return instance.put("profile/status/", { status }).then((r) => r.data);
 	},
+	setProfileData(formData) {
+		return instance.put("profile/", formData).then((r) => r.data);
+	},
+	setPhoto(photo) {
+		const formData = new FormData();
+		formData.append("image", photo);
+		return instance
+			.put("profile/photo/", formData, {
+				headers: { "Content-Type": "multipart/form-data" },
+			})
+			.then((r) => r.data);
+	},
 };
 
 const authAPI = {

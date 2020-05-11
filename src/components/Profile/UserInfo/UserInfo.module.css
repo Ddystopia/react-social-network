@@ -1,11 +1,25 @@
 .user_info {
 	display: grid;
-	grid-template-columns: 100px 1fr 1fr;
+	grid-template-columns: 135px 1fr 1fr;
+	gap: 10px;
 }
 
-.user_info > .avatar {
-	width: 100px;
-	height: 100px;
+.user_info > .avatar > img {
+	width: 135px;
+	max-width: none;
+}
+
+.user_info > .avatar > div {
+	height: 25px;
+}
+
+.user_info > .avatar input {
+	display: none;
+	width: 111px;
+}
+
+.user_info > .avatar:hover input{
+	display: block;
 }
 
 .linkList {
@@ -16,6 +30,8 @@
 	display: inline-block;
 	color: #025fa0;
 }
+
+
 
 @media screen and (max-width: 425px) {
 	.user_info {

@@ -4,9 +4,24 @@ import classNamesSelf from "./MessageSelf.module.css";
 import classNamesElse from "./MessageElse.module.css";
 import standardAvatar from "../../../../assets/images/standardAvatar.jpg"
 
-const Message = (props) => {
+export default ({data}) => {
+	const date = calcDate(data.date);
+	return (
+		<article className={data.self ? classNamesSelf.message : classNamesElse.message}>
+			<img
+				alt="avatar"
+				src={standardAvatar}
+			/>
+			<div className={classNames.content}>
+				{data.message}
+				<div className={data.self ? classNamesSelf.date : classNamesElse.date}>{date}</div>
+			</div>
+		</article>
+	);
+};
+
+const calcDate = (date) =>{
 	const thisDate = new Date();
-	const date = props.data.date;
 	const dateObj = {
 		y: date.getFullYear(),
 		month: date.getMonth(),
@@ -15,9 +30,10 @@ const Message = (props) => {
 		m: date.getMinutes(),
 	};
 	for(const item in dateObj){
-		if(dateObj[item] < 10) dateObj[item] = `0${dateObj[item]}`;
+		let elem = dateObj[item];
+		if(elem < 10) elem = `0${elem}`;
 	}
-	let resDate = "";
+	let resDate = [];
 
 	if (thisDate.getDate() !== dateObj.d) {
 		if (
@@ -25,23 +41,9 @@ const Message = (props) => {
 			thisDate.getMonth() === +dateObj.month &&
 			thisDate.getFullYear() === +dateObj.y
 		)
-			resDate += "Yesterday ";
-		else resDate += `${dateObj.y}-${dateObj.month}-${dateObj.d} `;
+			resDate.push("Yesterday");
+		else resDate.push(`${dateObj.y}-${dateObj.month}-${dateObj.d}`);
 	}
-	resDate += `${dateObj.h} : ${dateObj.m}`;
-
-	return (
-		<article className={props.data.self ? classNamesSelf.message : classNamesElse.message}>
-			<img
-				alt="avatar"
-				src={standardAvatar}
-			/>
-			<div className={classNames.content}>
-				{props.data.message}
-				<div className={props.data.self ? classNamesSelf.date : classNamesElse.date}>{resDate}</div>
-			</div>
-		</article>
-	);
-};
-
-export default Message;
+	resDate.push(`${dateObj.h}:${dateObj.m}`);
+	return resDate.join(' / ');
+}

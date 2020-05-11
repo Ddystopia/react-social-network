@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classNames from "./UserData.module.css";
 
-const UserData = ({ propStatus, authUserId, profile, updateUserStatus }) => {
+const UserData = ({ propStatus, profile, updateUserStatus, isOwner }) => {
 	const [editMode, setEditMode] = useState(false);
 	const [status, setStatus] = useState(propStatus);
 	useEffect(() => {
@@ -13,7 +13,7 @@ const UserData = ({ propStatus, authUserId, profile, updateUserStatus }) => {
 	};
 
 	const anabelEditMode = () => {
-		if (authUserId !== profile.userId) return;
+		if (!isOwner) return;
 		setEditMode(true);
 	};
 
@@ -39,7 +39,11 @@ const UserData = ({ propStatus, authUserId, profile, updateUserStatus }) => {
 						/>
 					</div>
 				) : (
-					<div className={classNames.status} onDoubleClick={anabelEditMode}>
+					<div
+						className={classNames.status}
+						title={"Double click to edit"}
+						onDoubleClick={anabelEditMode}
+					>
 						{propStatus || "-----"}
 					</div>
 				)}
@@ -52,9 +56,7 @@ const UserData = ({ propStatus, authUserId, profile, updateUserStatus }) => {
 						backgroundColor: profile.lookingForAJob ? "green" : "red",
 					}}
 				></div>
-				{profile.lookingForAJobDescription || profile.lookingForAJob
-					? "-----"
-					: ""}
+				{profile.lookingForAJobDescription}
 			</div>
 		</article>
 	);

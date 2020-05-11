@@ -11,12 +11,12 @@ const Nav = (props) => {
 				Menu
 			</div>
 			<ul id="menu" hidden={menuState}>
-				<ListItem text={"Profile"} to={"/profile"} key={1} active={classNames.active} />
-				<ListItem text={"Messages"} to={"/dialogs"} key={2} active={classNames.active} />
-				<ListItem text={"Users"} to={"/users"} key={3} active={classNames.active} />
-				<ListItem text={"News"} to={"/news"} key={4} active={classNames.active} />
-				<ListItem text={"Music"} to={"/music"} key={5} active={classNames.active} />
-				<ListItem text={"Settings"} to={"/settings"} key={6} active={classNames.active} />
+				<ListItem text={"Profile"} to={"/profile"} keyProp={1} active={classNames.active} />
+				<ListItem text={"Messages"} to={"/dialogs"} keyProp={2} active={classNames.active} />
+				<ListItem text={"Users"} to={"/users"} keyProp={3} active={classNames.active} />
+				<ListItem text={"News"} to={"/news"} keyProp={4} active={classNames.active} />
+				<ListItem text={"Music"} to={"/music"} keyProp={5} active={classNames.active} />
+				<ListItem text={"Settings"} to={"/settings"} keyProp={6} active={classNames.active} />
 			</ul>
 		</nav>
 	);

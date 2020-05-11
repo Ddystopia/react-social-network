@@ -6,6 +6,8 @@ import {
 	setProfile,
 	getUserStatus,
 	updateUserStatus,
+	setPhoto,
+	setProfileData
 } from "../../redux/profileReducer";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
@@ -20,10 +22,10 @@ const ProfileContainer = ({
 	status,
 	updateUserStatus,
 	isFetching,
+	setPhoto,
+	setProfileData
 }) => {
-	// TODO:
-	// To useEffect(fn, [profile])
-
+	
 	useEffect(() => {
 		const userId = +match.params.userId || authUserId;
 		if (profile && profile.userId === userId) return;
@@ -41,6 +43,9 @@ const ProfileContainer = ({
 			status={status}
 			updateUserStatus={updateUserStatus}
 			authUserId={authUserId}
+			setPhoto={setPhoto}
+			isOwner={!match.params.userId || authUserId === profile.userId}
+			setProfile={setProfileData}
 		/>
 	) : (
 		<Preloader />
@@ -54,7 +59,7 @@ const mapStateToProps = (state) => ({
 	isFetching: state.profileData.isFetching,
 });
 
-const mapDispatchToProps = { setProfile, getUserStatus, updateUserStatus };
+const mapDispatchToProps = { setProfile, getUserStatus, updateUserStatus, setPhoto, setProfileData };
 
 export default compose(
 	connect(mapStateToProps, mapDispatchToProps),

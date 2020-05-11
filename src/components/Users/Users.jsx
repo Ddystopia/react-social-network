@@ -17,7 +17,7 @@ const Users = ({ data, isFollowing, follow, unFollow, usersCount, pageCount, pag
 
 	return (
 		<section className={classNames.content}>
-			<Pagination itemsCount={usersCount} pageCount={pageCount} page={page} changePage={changePage} />
+			<Pagination itemsCount={usersCount} pageSize={pageCount} page={page} changePage={changePage} />
 			<ul className={classNames.usersList}>{users}</ul>
 		</section>
 	);

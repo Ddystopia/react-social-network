@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Message from "./Message/Message";
 import classNames from "./Messages.module.css";
 import SendForm from "./SendForm/SendForm";
@@ -7,21 +7,22 @@ function scrollToDown(e) {
 	element.scrollTop = element.scrollHeight;
 }
 
-export default ({ data, textareaValue, sendMessage, changeTextareaValue }) => {
+export default ({ data, sendMessage }) => {
+	const messagesDiv = React.createRef();
 	const messages = data
 		.sort((a, b) => a.date - b.date)
 		.slice(0, Math.min(data.length, 100))
 		.map((item) => <Message key={item.id} data={item} />);
+	useEffect(() => {
+		const element = messagesDiv.current;
+		element.scrollTop = element.scrollHeight;
+	});
 	return (
 		<section className={classNames.content}>
-			<div onLoad={scrollToDown} className={classNames.messages}>
+			<div ref={messagesDiv} className={classNames.messages}>
 				{messages}
 			</div>
-			<SendForm
-				textareaValue={textareaValue}
-				sendMessage={sendMessage}
-				changeTextareaValue={changeTextareaValue}
-			/>
+			<SendForm sendMessage={sendMessage} />
 		</section>
 	);
 };

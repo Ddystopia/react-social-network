@@ -1,10 +1,20 @@
+.wrapper{
+	display: flex;
+	justify-content: center;
+}
+
 .pagination {
 	display: flex;
 	justify-content: space-between;
 	width: max-content;
 	justify-self: center;
 	cursor: pointer;
-	/* margin: 5px; */
+	min-width: 40vw;
+	max-width: 50vw;
+}
+
+.button {
+	width: 50px;
 }
 
 .pagination > li.active,

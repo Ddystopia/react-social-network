@@ -2,13 +2,22 @@ import React from "react";
 import classNames from "./SendForm.module.css";
 import { reduxForm, Field } from "redux-form";
 import { Textarea } from "../../../common/FormControls/FormControls";
-import { required, maxLengthCreator } from "../../../../utils/validators/validators";
+import {
+	required,
+	maxLengthCreator,
+} from "../../../../utils/validators/validators";
 
 const maxLength300 = maxLengthCreator(300);
 
-const SendForm = (props) => {
+const SendForm = ({ handleSubmit, sendMessage, reset }) => {
 	return (
-		<form onSubmit={props.handleSubmit} className={classNames.posts}>
+		<form
+			onSubmit={handleSubmit((formData) => {
+				sendMessage(formData.message);
+				reset();
+			})}
+			className={classNames.posts}
+		>
 			<Field
 				className={classNames.textarea}
 				component={Textarea}
@@ -21,10 +30,4 @@ const SendForm = (props) => {
 	);
 };
 
-const SendMessageReduxForm = reduxForm({ form: "sendMessage" })(SendForm);
-
-export default (props) => (
-	<SendMessageReduxForm
-		onSubmit={(formData) => props.sendMessage(formData.message)}
-	/>
-);
+export default reduxForm({ form: "sendMessage" })(SendForm);

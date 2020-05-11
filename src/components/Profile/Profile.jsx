@@ -3,7 +3,7 @@ import UserInfo from "./UserInfo/UserInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import classNames from "./Profile.module.css";
 
-const Profile = ({ profile, status, updateUserStatus, authUserId }) => {
+const Profile = ({ profile, status, updateUserStatus, isOwner, setPhoto, setProfile }) => {
 	return (
 		<section className={classNames.content}>
 			{/* <img
@@ -15,7 +15,9 @@ const Profile = ({ profile, status, updateUserStatus, authUserId }) => {
 				profile={profile}
 				status={status}
 				updateUserStatus={updateUserStatus}
-				authUserId={authUserId}
+				setPhoto={setPhoto}
+				isOwner={isOwner}
+				setProfile={setProfile}
 			/>
 			<MyPostsContainer />
 		</section>

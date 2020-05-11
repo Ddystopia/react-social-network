@@ -5,9 +5,9 @@ import { Input } from "../common/FormControls/FormControls";
 import { required } from "../../utils/validators/validators";
 import Row from "./Row/Row";
 
-const LoginForm = ({handleSubmit,	error}) => {
+const LoginForm = ({handleSubmit,	error, loginUser}) => {
 	return (
-		<form onSubmit={handleSubmit}>			
+		<form onSubmit={handleSubmit(loginUser)}>			
 			<Row component={Input} type={"email"} name={"email"} placeholder={"Email"} validate={[required]} />		
 			<Row component={Input} type={"text"} name={"password"} placeholder={"Password"} validate={[required]} />
 			<Row component={"input"} type={"checkbox"} name={"rememberMe"} text={"Remember me"}/>
@@ -21,16 +21,11 @@ const LoginForm = ({handleSubmit,	error}) => {
 
 const LoginReduxForm = reduxForm({ form: "login" })(LoginForm);
 
-const Login = ({loginUser}) => {
-	const onSubmit = (formData) => {
-		loginUser(formData)
-	}
+export default ({loginUser}) => {
 	return (
 		<section>
 			<h2>Login</h2>
-			<LoginReduxForm onSubmit={onSubmit} />
+			<LoginReduxForm loginUser={loginUser} />
 		</section>
 	);
 };
-
-export default Login;

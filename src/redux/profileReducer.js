@@ -1,35 +1,32 @@
 import { profileAPI } from "../api/api";
 
-const ADD_POST = Symbol();
-const REMOVE_POST = Symbol();
-const SET_PROFILE_USER = Symbol();
-const TOGGLE_IS_FETCHING = Symbol();
-const SET_USER_STATUS = Symbol();
+const ADD_POST = Symbol("ADD_POST");
+const REMOVE_POST = Symbol("REMOVE_POST");
+const SET_PROFILE_USER = Symbol("SET_PROFILE_USER");
+const TOGGLE_IS_FETCHING = Symbol("TOGGLE_IS_FETCHING");
+const SET_USER_STATUS = Symbol("SET_USER_STATUS");
+const SET_PHOTO_SUCCESS = Symbol("SET_PHOTO_SUCCESS");
 
 const initial = {
 	postsData: [
 		{
 			id: 1,
-			message:
-				"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit eaque, facere aperiam pariatur excepturi",
+			message: "My first Post!",
 			likesCount: 0,
 		},
 		{
 			id: 2,
-			message:
-				" quis ex reiciendis nulla quas impedit tempore reprehenderit ad harum, explicabo itaque praesentium optio saepe. Tempora alias consequatur aliquam ad! Natus animi aliquam magni ullam tempora qui, deserunt id eos rem harum, velit sed tempore corporis aliquid eligendi saepe cum dolorem ipsa totam placeat? Voluptas distinctio ullam animi consectetur at dolore enim laborum amet, nam minima non, doloribus aliquam! Cumque sequi sed",
+			message: "I like dogs",
 			likesCount: 0,
 		},
 		{
 			id: 3,
-			message:
-				"tempora qui, deserunt id eos rem harum, velit sed tempore corporis aliquid eligendi saepe cum dolorem ipsa totam placeat? Voluptas distinctio ullam animi consectetur at dolore enim laborum amet, nam minima non, doloribus aliquam! Cumque sequi sed",
+			message: "Yesterday I ate delicious pasta",
 			likesCount: 0,
 		},
 		{
 			id: 4,
-			message:
-				"et blanditiis, nostrum neque. Facere ipsa odio a nisi pariatur tempora sequi. Enim expedita numquam voluptatibus sint nemo et fuga nulla blanditiis qu",
+			message: "My best day",
 			likesCount: 0,
 		},
 	],
@@ -61,6 +58,8 @@ const profileReducer = (state = initial, action) => {
 			return { ...state, profile: action.profile };
 		case SET_USER_STATUS:
 			return { ...state, status: action.status };
+		case SET_PHOTO_SUCCESS:
+			return { ...state, profile: { ...state.profile, photos: action.photos } };
 		case TOGGLE_IS_FETCHING:
 			return {
 				...state,
@@ -75,6 +74,7 @@ const addPost = (message) => ({ type: ADD_POST, message });
 const removePost = (id) => ({ type: REMOVE_POST, id });
 const setProfileUser = (profile) => ({ type: SET_PROFILE_USER, profile });
 const setUserStatus = (status) => ({ type: SET_USER_STATUS, status });
+const setPhotoSuccess = (photos) => ({ type: SET_PHOTO_SUCCESS, photos });
 const toggleIsFetching = (isFetching) => ({
 	type: TOGGLE_IS_FETCHING,
 	isFetching,
@@ -99,6 +99,20 @@ const updateUserStatus = (status) => async (dispatch) => {
 	}
 };
 
+const setPhoto = (photo) => async (dispatch) => {
+	const response = await profileAPI.setPhoto(photo);
+	if (response.resultCode === 0) {
+		dispatch(setPhotoSuccess(response.data.photos));
+	}
+};
+
+const setProfileData = (formData) => async (dispatch) => {
+	const response = await profileAPI.setProfileData(formData);
+	if (response.resultCode === 0) {
+		dispatch(setProfile(formData.userId));
+	} else return Promise.reject() 
+};
+
 export default profileReducer;
 export {
 	setProfile,
@@ -108,4 +122,6 @@ export {
 	removePost,
 	setProfileUser,
 	setUserStatus,
+	setPhoto,
+	setProfileData,
 };
