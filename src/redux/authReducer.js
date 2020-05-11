@@ -1,8 +1,9 @@
-import { authAPI } from "../api/api";
+import { authAPI, securityAPI } from "../api/api";
 import { stopSubmit } from "redux-form";
 
 const TOGGLE_IS_FETCHING = Symbol();
 const SET_AUTH_USER = Symbol();
+const SET_CAPTCHA_URL = Symbol();
 
 const initial = {
 	email: null,
@@ -10,6 +11,7 @@ const initial = {
 	userId: null,
 	isAuth: false,
 	isFetching: false,
+	captchaUrl: null,
 };
 
 const authReducer = (state = initial, action) => {
@@ -24,6 +26,11 @@ const authReducer = (state = initial, action) => {
 			return {
 				...state,
 				isFetching: action.isFetching,
+			};
+		case SET_CAPTCHA_URL:
+			return {
+				...state,
+				captchaUrl: action.captchaUrl,
 			};
 		default:
 			return state;
@@ -47,6 +54,11 @@ const toggleIsFetching = (isFetching) => ({
 	isFetching,
 });
 
+const setCaptchaUrl = (captchaUrl) => ({
+	type: SET_CAPTCHA_URL,
+	captchaUrl,
+});
+
 const authUser = () => async (dispatch) => {
 	dispatch(toggleIsFetching(true));
 	const r = await authAPI.me();
@@ -64,10 +76,14 @@ const login = (formData) => async (dispatch) => {
 	switch (r.resultCode) {
 		case 0:
 			dispatch(authUser());
+			dispatch(setCaptchaUrl(null))
 			break;
 		case 1:
 			dispatch(stopSubmit("login", { _error: r.messages.join("\n") }));
 			break;
+		case 10:
+			dispatch(getCaptchaUrl())
+		// eslint-disable-next-line no-fallthrough
 		default:
 			dispatch(stopSubmit("login", { _error: "something wrong" }));
 	}
@@ -78,5 +94,10 @@ const logout = () => async (dispatch) => {
 	if (r.resultCode === 0) dispatch(authUser());
 };
 
-export { authUser, login, logout, setAuthUser, toggleIsFetching };
+const getCaptchaUrl = () => async (dispatch) => {
+	const r = await securityAPI.getCaptchaUrl();
+	dispatch(setCaptchaUrl(r.url));
+};
+
+export { authUser, login, logout, setAuthUser, toggleIsFetching, getCaptchaUrl };
 export default authReducer;

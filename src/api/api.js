@@ -58,4 +58,10 @@ const authAPI = {
 	},
 };
 
-export { usersAPI, authAPI, profileAPI };
+const securityAPI = {
+	getCaptchaUrl() {
+		return instance.get("security/get-captcha-url").then((r) => r.data);
+	},
+};
+
+export { usersAPI, authAPI, profileAPI, securityAPI };

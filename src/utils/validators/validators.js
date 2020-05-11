@@ -11,8 +11,11 @@ const minLengthCreator = minLength => value => {
 }
 
 const urlValidator = (value) => {
-	
-	return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'(\\)*+,;=.]+$/gm.test(value) ? undefined : "Invalid Email"
+	return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'(\\)*+,;=.]+$/gm.test(value) ? undefined : "Invalid URL"
 }
 
-export { required, maxLengthCreator, minLengthCreator, urlValidator }
+const emailValidation = (value) => {
+	return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value) ? undefined : "Invalid Email"
+}
+
+export { required, maxLengthCreator, minLengthCreator, urlValidator, emailValidation }

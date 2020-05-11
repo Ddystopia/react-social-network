@@ -1,30 +1,31 @@
 import React from "react";
 import Login from "./Login";
-import { login } from "../../redux/authReducer";
+import { login, getCaptchaUrl } from "../../redux/authReducer";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import Preloader from "../common/Preloader/Preloader";
 
-const LoginContainer = (props) => {
+const LoginContainer = ({login, isAuth, isFetching, captchaUrl }) => {
 	const loginUser = (formData) => {
-		props.login(formData);
+		login(formData);
 	};
-	return props.isFetching ? (
+	return isFetching ? (
 		<Preloader />
-	) : props.isAuth ? (
+	) : isAuth ? (
 		<Redirect to="/profile" />
 	) : (
-		<Login loginUser={loginUser} />
+		<Login captchaUrl={captchaUrl} loginUser={loginUser} />
 	);
 };
 
 const mapStateToProps = (state) => ({
 	isAuth: state.auth.isAuth,
 	isFetching: state.auth.isFetching,
+	captchaUrl: state.auth.captchaUrl,
 });
 
-const mapDispatchToProps = { login };
+const mapDispatchToProps = { login, getCaptchaUrl };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps))(
 	LoginContainer
