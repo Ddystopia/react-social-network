@@ -60,7 +60,7 @@ const Form = ({ contacts, userId, handleSubmit, setProfile, setEditMode }) => {
 				<ul className={classNames.contacts}>
 					{Object.keys(contacts).map((el) => (
 						<li key={el}>
-							{el}:{" "}
+							{el}:
 							<Field
 								type="text"
 								component={Input}
