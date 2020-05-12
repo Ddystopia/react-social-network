@@ -4,8 +4,9 @@ import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { sendMessage } from "../../redux/dialogReducer";
+import { getChatsData, getMessagesData } from "../../redux/selectors/selectors";
 
-const DialogsContainer = ({chatsData, messagesData, sendMessage}) => {
+const DialogsContainer = ({ chatsData, messagesData, sendMessage }) => {
 	return (
 		<Dialogs
 			chatsData={chatsData}
@@ -16,8 +17,8 @@ const DialogsContainer = ({chatsData, messagesData, sendMessage}) => {
 };
 
 const mapStateToProps = (state) => ({
-	chatsData: state.dialogData.chatsData,
-	messagesData: state.dialogData.messagesData,
+	chatsData: getChatsData(state),
+	messagesData: getMessagesData(state),
 });
 
 export default compose(

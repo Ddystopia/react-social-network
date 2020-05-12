@@ -6,37 +6,53 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 // import LoginContainer from "./components/Login/LoginContainer";
 import Nav from "./components/Nav/Nav";
 import "./App.css";
-import { Route } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { initializeApp } from "./redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
+import swal from 'sweetalert2';
 import { withSuspense } from "./hoc/withSuspense";
 
-const UsersContainer = React.lazy(() =>	import("./components/Users/UsersContainer"));
-const LoginContainer = React.lazy(() =>	import("./components/Login/LoginContainer"));
+const UsersContainer = React.lazy(() =>
+	import("./components/Users/UsersContainer")
+);
+const LoginContainer = React.lazy(() =>
+	import("./components/Login/LoginContainer")
+);
 
-const App = ({initializeApp, initialized}) => {
-	useEffect(()=>{
+const App = ({ initializeApp, initialized }) => {
+	useEffect(() => {
 		initializeApp();
-	},[initializeApp])
+	}, [initializeApp]);
 
-		return initialized ? (
-			<div className="app_wrapper">
-				<HeaderContainer />
-				<Nav />
-				<main className="main">
+	useEffect(() => {
+		const catchAllUnhandledErrors = (err) => {
+			swal.fire(err.name, err.message, 'error')
+		};
+		window.addEventListener("unhandledRejection", catchAllUnhandledErrors);
+		return window.removeEventListener("unhandledRejection",	catchAllUnhandledErrors);
+	});
+
+	return initialized ? (
+		<div className="app_wrapper">
+			<HeaderContainer />
+			<Nav />
+			<main className="main">
+				<Switch>
+					<Redirect exact from="/" to="/profile" />
 					<Route path="/profile/:userId?" render={() => <ProfileContainer />} />
 					<Route path="/dialogs" render={() => <DialogsContainer />} />
 					<Route path="/users" render={withSuspense(UsersContainer)} />
 					<Route path="/login" render={withSuspense(LoginContainer)} />
-				</main>
-			</div>
-		) : (
-			<Preloader />
-		);
-	
-}
+					<Route path="*" render={() => <div>404 not found</div>} />
+				</Switch>
+			</main>
+		</div>
+	) : (
+		<Preloader />
+	);
+};
 
 const mapStateToProps = (state) => ({
 	initialized: state.app.initialized,

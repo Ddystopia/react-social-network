@@ -1,5 +1,6 @@
 import { usersAPI } from "../api/api";
 import { arrayMapHelper } from "../utils/arrayMapHelper";
+import { errorHandler } from "../utils/errorHandlers";
 
 const FOLLOW = Symbol();
 const UNFOLLOW = Symbol();
@@ -100,11 +101,15 @@ const getUsers = (page, count) => async (dispatch) => {
 
 const followUnfollowFlow = async (dispatch, method, action, id) => {
 	dispatch(toggleIsFollowing(true, id));
-	const data = await method(id);
-	if (data.resultCode === 0) {
-		dispatch(action(id));
-		dispatch(toggleIsFollowing(false, id))
+	try {
+		const data = await method(id);
+		if (data.resultCode === 0) {
+			dispatch(action(id));
+		}
+	} catch (err) {
+		errorHandler(err);
 	}
+	dispatch(toggleIsFollowing(false, id));
 };
 
 const follow = (id) => async (dispatch) => {
@@ -113,7 +118,6 @@ const follow = (id) => async (dispatch) => {
 
 const unFollow = (id) => async (dispatch) => {
 	followUnfollowFlow(dispatch, usersAPI.unFollowAjax, acceptUnFollow, id);
-	
 };
 
 export default usersReducer;

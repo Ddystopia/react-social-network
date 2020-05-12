@@ -11,6 +11,7 @@ import {
 } from "../../redux/profileReducer";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
+import { getProfile, getAuthUserId, getStatus, getIsFetchingProfile } from "../../redux/selectors/selectors";
 
 const ProfileContainer = ({
 	match,
@@ -53,10 +54,10 @@ const ProfileContainer = ({
 };
 
 const mapStateToProps = (state) => ({
-	profile: state.profileData.profile,
-	authUserId: state.auth.userId,
-	status: state.profileData.status,
-	isFetching: state.profileData.isFetching,
+	profile: getProfile(state),
+	authUserId: getAuthUserId(state),
+	status: getStatus(state),
+	isFetching: getIsFetchingProfile(state),
 });
 
 const mapDispatchToProps = { setProfile, getUserStatus, updateUserStatus, setPhoto, setProfileData };

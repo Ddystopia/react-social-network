@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import Preloader from "../common/Preloader/Preloader";
+import { getIsAuth, getCaptchaUrlSelector, getIsFetchingAuth } from "../../redux/selectors/selectors";
 
 const LoginContainer = ({login, isAuth, isFetching, captchaUrl }) => {
 	const loginUser = (formData) => {
@@ -20,9 +21,9 @@ const LoginContainer = ({login, isAuth, isFetching, captchaUrl }) => {
 };
 
 const mapStateToProps = (state) => ({
-	isAuth: state.auth.isAuth,
-	isFetching: state.auth.isFetching,
-	captchaUrl: state.auth.captchaUrl,
+	isAuth: getIsAuth(state),
+	isFetching: getIsFetchingAuth(state),
+	captchaUrl: getCaptchaUrlSelector(state),
 });
 
 const mapDispatchToProps = { login, getCaptchaUrl };

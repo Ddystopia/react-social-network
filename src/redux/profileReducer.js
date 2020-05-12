@@ -1,4 +1,5 @@
 import { profileAPI } from "../api/api";
+import { errorHandler } from "../utils/errorHandlers";
 
 const ADD_POST = Symbol("ADD_POST");
 const REMOVE_POST = Symbol("REMOVE_POST");
@@ -82,9 +83,14 @@ const toggleIsFetching = (isFetching) => ({
 
 const setProfile = (userId) => async (dispatch) => {
 	dispatch(toggleIsFetching(true));
-	const data = await profileAPI.getProfile(userId);
-	dispatch(setProfileUser(data));
-	dispatch(toggleIsFetching(false));
+	try {
+		const data = await profileAPI.getProfile(userId);
+		dispatch(setProfileUser(data));
+	} catch (err) {
+		errorHandler(err);
+	} finally {
+		dispatch(toggleIsFetching(false));
+	}
 };
 
 const getUserStatus = (userId) => async (dispatch) => {
@@ -93,24 +99,36 @@ const getUserStatus = (userId) => async (dispatch) => {
 };
 
 const updateUserStatus = (status) => async (dispatch) => {
-	const data = await profileAPI.setUserStatus(status);
-	if (data.resultCode === 0) {
-		dispatch(setUserStatus(status));
+	try {
+		const data = await profileAPI.setUserStatus(status);
+		if (data.resultCode === 0) {
+			dispatch(setUserStatus(status));
+		}
+	} catch (err) {
+		errorHandler(err);
 	}
 };
 
 const setPhoto = (photo) => async (dispatch) => {
-	const response = await profileAPI.setPhoto(photo);
-	if (response.resultCode === 0) {
-		dispatch(setPhotoSuccess(response.data.photos));
+	try {
+		const response = await profileAPI.setPhoto(photo);
+		if (response.resultCode === 0) {
+			dispatch(setPhotoSuccess(response.data.photos));
+		}
+	} catch (err) {
+		errorHandler(err);
 	}
 };
 
 const setProfileData = (formData) => async (dispatch) => {
-	const response = await profileAPI.setProfileData(formData);
-	if (response.resultCode === 0) {
-		dispatch(setProfile(formData.userId));
-	} else return Promise.reject() 
+	try {
+		const response = await profileAPI.setProfileData(formData);
+		if (response.resultCode === 0) {
+			dispatch(setProfile(formData.userId));
+		} else return Promise.reject();
+	} catch (err) {
+		errorHandler(err);
+	}
 };
 
 export default profileReducer;

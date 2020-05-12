@@ -1,5 +1,6 @@
 import { authAPI, securityAPI } from "../api/api";
 import { stopSubmit } from "redux-form";
+import { errorHandler } from "../utils/errorHandlers";
 
 const TOGGLE_IS_FETCHING = Symbol();
 const SET_AUTH_USER = Symbol();
@@ -60,6 +61,7 @@ const setCaptchaUrl = (captchaUrl) => ({
 });
 
 const authUser = () => async (dispatch) => {
+	dispatch(getCaptchaUrl());
 	dispatch(toggleIsFetching(true));
 	const r = await authAPI.me();
 
@@ -72,20 +74,22 @@ const authUser = () => async (dispatch) => {
 };
 
 const login = (formData) => async (dispatch) => {
-	const r = await authAPI.login(formData);
-	switch (r.resultCode) {
-		case 0:
-			dispatch(authUser());
-			dispatch(setCaptchaUrl(null))
-			break;
-		case 1:
-			dispatch(stopSubmit("login", { _error: r.messages.join("\n") }));
-			break;
-		case 10:
-			dispatch(getCaptchaUrl())
-		// eslint-disable-next-line no-fallthrough
-		default:
-			dispatch(stopSubmit("login", { _error: "something wrong" }));
+	try {
+		const r = await authAPI.login(formData);
+		switch (r.resultCode) {
+			case 0:
+				dispatch(authUser());
+				dispatch(setCaptchaUrl(null));
+				break;
+			case 10:
+				dispatch(getCaptchaUrl());
+			// eslint-disable-next-line no-fallthrough
+			default:
+				dispatch(stopSubmit("login", {/*  _error: r.messages.join("\n") || "something wrong" */ }));
+				throw new Error(r.messages.join("\n") || "Something wrong");
+		}
+	} catch (err) {
+		errorHandler(err);
 	}
 };
 
@@ -99,5 +103,12 @@ const getCaptchaUrl = () => async (dispatch) => {
 	dispatch(setCaptchaUrl(r.url));
 };
 
-export { authUser, login, logout, setAuthUser, toggleIsFetching, getCaptchaUrl };
+export {
+	authUser,
+	login,
+	logout,
+	setAuthUser,
+	toggleIsFetching,
+	getCaptchaUrl,
+};
 export default authReducer;

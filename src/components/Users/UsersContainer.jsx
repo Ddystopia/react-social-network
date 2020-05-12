@@ -9,9 +9,9 @@ import {
 	getPage,
 	getPageCount,
 	getUsersCount,
-	getIsFetching,
+	getIsFetchingUserData,
 	getIsFollowing,
-} from "../../redux/selectors/usersSelector";
+} from "../../redux/selectors/selectors";
 
 const UsersContainer = ({data, page, pageCount, usersCount, getUsers, isFetching, isFollowing, follow, unFollow }) => {
 	useEffect(() => {
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => ({
 	page: getPage(state),
 	pageCount: getPageCount(state),
 	usersCount: getUsersCount(state),
-	isFetching: getIsFetching(state),
+	isFetching: getIsFetchingUserData(state),
 	isFollowing: getIsFollowing(state),
 });
 

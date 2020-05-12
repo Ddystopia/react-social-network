@@ -6,7 +6,7 @@ import {
 	minLengthCreator,
 	maxLengthCreator,
 	required,
-} from "../../../../utils/validators/validators";
+} from "../../../../utils/validators";
 import { Input } from "../../../common/FormControls/FormControls";
 
 const minLength2 = minLengthCreator(2);

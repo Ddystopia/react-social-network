@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "./Login.module.css";
 import { reduxForm } from "redux-form";
 import { Input } from "../common/FormControls/FormControls";
-import { required, emailValidation } from "../../utils/validators/validators";
+import { required, emailValidation } from "../../utils/validators";
 import Row from "./Row/Row";
 
 const LoginForm = ({handleSubmit,	error, loginUser, captchaUrl}) => {
