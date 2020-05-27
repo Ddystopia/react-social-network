@@ -1,37 +1,37 @@
-.posts  {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
+.posts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .posts > .textarea {
-	width: 100%;
-	margin: 0;
-	padding: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .posts > .textarea > textarea {
-	--size: 1.18rem;
-	width: 100%;
-	padding: 5px;
-	border-radius: 5px;
-	resize: none;
-	height: calc(var(--size) + 14px);
-	font-size: var(--size);
-	line-height: var(--size);
-	max-height: 140px;
-	overflow: hidden auto;
+  --size: 1.18rem;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  resize: none;
+  height: calc(var(--size) + 14px);
+  font-size: var(--size);
+  line-height: var(--size);
+  max-height: 140px;
+  overflow: hidden auto;
 }
 
 .posts > button {
-	width: 50px;
-	font-size: 1.05rem;
-	text-align: center;
-	padding: 3px;
-	margin: 5px;
-	cursor: pointer;
+  width: 50px;
+  font-size: 1.05rem;
+  text-align: center;
+  padding: 3px;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .warning {
-	box-shadow: 0 0 3pt 2pt tomato;
+  box-shadow: 0 0 3pt 2pt tomato;
 }

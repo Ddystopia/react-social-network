@@ -1,31 +1,31 @@
-import { authUser } from "./authReducer";
+import { authUser } from './authReducer'
 
-const SET_INITIALIZED_SUCCESS = Symbol();
+const SET_INITIALIZED_SUCCESS = 'appReducer/SET_INITIALIZED_SUCCESS'
 
 const initial = {
-	initialized: false,
-};
+  initialized: false,
+}
 
 const appReducer = (state = initial, action) => {
-	switch (action.type) {
-		case SET_INITIALIZED_SUCCESS:
-			return {
-				...state,
-				initialized: true,
-			};
-		default:
-			return state;
-	}
-};
+  switch (action.type) {
+    case SET_INITIALIZED_SUCCESS:
+      return {
+        ...state,
+        initialized: true,
+      }
+    default:
+      return state
+  }
+}
 
-const initializeSuccess = () => ({ type: SET_INITIALIZED_SUCCESS });
+const initializeSuccess = () => ({ type: SET_INITIALIZED_SUCCESS })
 
 const initializeApp = () => (dispatch) => {
-	const dispatchResult = dispatch(authUser());
-	Promise.all([dispatchResult]).then(() => {
-		dispatch(initializeSuccess());
-	});
-};
+  const dispatchResult = dispatch(authUser())
+  Promise.all([dispatchResult]).then(() => {
+    dispatch(initializeSuccess())
+  })
+}
 
-export { initializeApp, initializeSuccess };
-export default appReducer;
+export { initializeApp, initializeSuccess }
+export default appReducer

@@ -1,80 +1,80 @@
 .nav {
-	grid-area: nav;
-	background-color: var(--standard_color);
-	position: relative;
-	padding: 0;
+  grid-area: nav;
+  background-color: var(--standard_color);
+  position: relative;
+  padding: 0;
 }
 
 .menuButton {
-	display: none;
-	text-align: center;
-	font-size: 2rem;
-	line-height: 2rem;
+  display: none;
+  text-align: center;
+  font-size: 2rem;
+  line-height: 2rem;
 }
 
 .nav > ul {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav > ul > li {
-	min-height: 1.5rem;
-	font-size: 1.5rem;
-	padding: 0;
-	margin: 2px;
+  min-height: 1.5rem;
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 2px;
 }
 
 .nav > ul > li:hover,
 .active {
-	background-color: #186d29;
-	cursor: pointer;
+  background-color: #186d29;
+  cursor: pointer;
 }
 
 .nav > ul > li.empty:hover {
-	background-color: var(--standard_color);
-	cursor: auto;
+  background-color: var(--standard_color);
+  cursor: auto;
 }
 
 .nav > ul > li > a {
-	padding: 5px;
+  padding: 5px;
 }
 
 li {
-	display: block;
+  display: block;
 }
 
 [hidden] {
-	display: none !important;
+  display: none !important;
 }
 
 @media screen and (max-width: 1100px) {
-	.nav > ul {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-around;
-		align-items: center;
-	}
-	.nav > ul > li > a {
-		padding: 5px 3.5vw;
-	}
-	.nav > ul > li.empty {
-		display: none;
-	}
+  .nav > ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .nav > ul > li > a {
+    padding: 5px 3.5vw;
+  }
+  .nav > ul > li.empty {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 760px) {
-	.nav > ul {
-		flex-direction: column;
-		align-self: stretch;
-		position: absolute;
-		width: 100%;
-		background-color: var(--standard_color);
-	}
-	.nav > ul > li {
-		text-align: center;
-		width: 50%;
-	}
-	.menuButton {
-		display: block;
-	}
+  .nav > ul {
+    flex-direction: column;
+    align-self: stretch;
+    position: absolute;
+    width: 100%;
+    background-color: var(--standard_color);
+  }
+  .nav > ul > li {
+    text-align: center;
+    width: 50%;
+  }
+  .menuButton {
+    display: block;
+  }
 }

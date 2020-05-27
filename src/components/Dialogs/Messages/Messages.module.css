@@ -1,7 +1,7 @@
-.content{
-	position: relative;
+.content {
+  position: relative;
 }
-.messages{
-	height: 60vh;
-	overflow-y: auto;
+.messages {
+  height: 60vh;
+  overflow-y: auto;
 }

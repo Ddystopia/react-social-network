@@ -1,14 +1,14 @@
 .li:hover,
 .active {
-	background-color: #91a595;
-	cursor: pointer;
+  background-color: #91a595;
+  cursor: pointer;
 }
 
 .li {
-	padding: 0;
-	margin: 2px;
+  padding: 0;
+  margin: 2px;
 }
 
 .li > a {
-	padding: 5px;
+  padding: 5px;
 }

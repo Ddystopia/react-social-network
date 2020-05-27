@@ -1,15 +1,15 @@
-.post{
-	display: flex;
-	align-items: flex-start;
-	max-width: 70vw;
-	overflow-wrap: anywhere;
+.post {
+  display: flex;
+  align-items: flex-start;
+  max-width: 70vw;
+  overflow-wrap: anywhere;
 }
 
-.post > img{
-	width: 100px;
-	height: auto;
+.post > img {
+  width: 100px;
+  height: auto;
 }
 
-.post > .messageObj{
-	margin: 7px 0;
+.post > .messageObj {
+  margin: 7px 0;
 }

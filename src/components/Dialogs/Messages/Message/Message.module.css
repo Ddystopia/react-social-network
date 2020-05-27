@@ -1,8 +1,8 @@
 .content {
-	padding: 11px 13px;
-	border: 1px #3b3a3a solid;
-	border-radius: 10px;
-	position: relative;
-	overflow-wrap: anywhere;
-	max-width: 350px;
+  padding: 11px 13px;
+  border: 1px #3b3a3a solid;
+  border-radius: 10px;
+  position: relative;
+  overflow-wrap: anywhere;
+  max-width: 350px;
 }

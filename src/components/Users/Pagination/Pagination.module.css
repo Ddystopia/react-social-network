@@ -1,23 +1,23 @@
-.wrapper{
-	display: flex;
-	justify-content: center;
+.wrapper {
+  display: flex;
+  justify-content: center;
 }
 
 .pagination {
-	display: flex;
-	justify-content: space-between;
-	width: max-content;
-	justify-self: center;
-	cursor: pointer;
-	min-width: 40vw;
-	max-width: 50vw;
+  display: flex;
+  justify-content: space-between;
+  width: max-content;
+  justify-self: center;
+  cursor: pointer;
+  min-width: 40vw;
+  max-width: 50vw;
 }
 
 .button {
-	width: 50px;
+  width: 50px;
 }
 
 .pagination > li.active,
 .pagination > li:hover {
-	background-color: #b4b4b4;
+  background-color: #b4b4b4;
 }

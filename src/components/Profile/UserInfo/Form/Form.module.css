@@ -1,37 +1,37 @@
 .form {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
 }
-.contacts{
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: repeat(4, 1fr);
+.contacts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
 }
 
 .form input {
-	margin: 10px auto;
-	width: 200px;
+  margin: 10px auto;
+  width: 200px;
 }
 
 .form .submit {
-	position: absolute;
-	bottom: -10px;
-	right: 12px;
+  position: absolute;
+  bottom: -10px;
+  right: 12px;
 }
 
 .form .close {
-	cursor: pointer;
-	background-color: rgb(165, 165, 165);
+  cursor: pointer;
+  background-color: rgb(165, 165, 165);
 }
 
 .job {
-	display: grid;
-	align-items: center;
-	justify-items: stretch;
-	grid-template-columns: 20px 1fr;
+  display: grid;
+  align-items: center;
+  justify-items: stretch;
+  grid-template-columns: 20px 1fr;
 }
 
 .job input {
-	width: auto;
+  width: auto;
 }

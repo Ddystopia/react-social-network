@@ -1,8 +1,9 @@
-.content, .content > .usersList{
-	display: grid;
-	gap: 20px;
+.content,
+.content > .usersList {
+  display: grid;
+  gap: 20px;
 }
 
-.content > .usersList > li{
-	height: calc(70vh / 4 - 32px);
+.content > .usersList > li {
+  height: calc(70vh / 4 - 32px);
 }

@@ -1,42 +1,42 @@
 .user_info > .user_info_text {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .user_info_text > .statusContainer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .statusContainer .textarea > textarea,
 .statusContainer .status {
-	display: block;
-	padding: 4px;
-	width: 100%;
-	min-width: 120px;
-	margin-left: 3px;
-	border: 0;
+  display: block;
+  padding: 4px;
+  width: 100%;
+  min-width: 120px;
+  margin-left: 3px;
+  border: 0;
 }
 
 .statusContainer .textarea {
-	width: 100%;
+  width: 100%;
 }
 
 .statusContainer .textarea > textarea {
-	height: 1.3rem;
-	resize: vertical;
-	min-height: 1.2rem;
-	max-height: 5rem;
+  height: 1.3rem;
+  resize: vertical;
+  min-height: 1.2rem;
+  max-height: 5rem;
 }
 
 .circle {
-	width: 13px;
-	height: 13px;
-	border-radius: 50%;
-	display: inline-block;
-	margin: 0px 4px -2px 3px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0px 4px -2px 3px;
 }
