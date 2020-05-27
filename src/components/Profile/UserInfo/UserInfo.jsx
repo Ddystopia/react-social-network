@@ -33,7 +33,7 @@ export default ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfi
             isOwner={isOwner}
           />
           <Contacts contacts={profile.contacts} />
-          <button onClick={() => setEditMode(true)}>Edit</button>
+          {isOwner && <button onClick={() => setEditMode(true)}>Edit</button>}
         </>
       )}
     </section>
