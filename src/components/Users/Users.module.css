@@ -4,6 +4,11 @@
   gap: 20px;
 }
 
+.navWrapper{
+	display: flex;
+	justify-content: space-around;
+}
+
 .content > .usersList > li {
   height: calc(70vh / 4 - 32px);
 }

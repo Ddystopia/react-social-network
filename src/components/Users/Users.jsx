@@ -12,6 +12,7 @@ const Users = ({
   pageCount,
   page,
   changePage,
+  setPageCount,
 }) => {
   const users = data.map((u) => (
     <User
@@ -26,12 +27,25 @@ const Users = ({
 
   return (
     <section className={classNames.content}>
-      <Pagination
-        itemsCount={usersCount}
-        pageSize={pageCount}
-        page={page}
-        changePage={changePage}
-      />
+      <div className={classNames.navWrapper}>
+        <Pagination
+          itemsCount={usersCount}
+          pageSize={pageCount}
+          page={page}
+          changePage={changePage}
+        />
+        <select
+          onChange={(e) => {
+            setPageCount(e.target.value)
+          }}
+        >
+          {new Array(7).fill(null).map((item, i) => (
+            <option value={i + 2} key={i + 2} selected={i + 2 === +pageCount}>
+              {i + 2}
+            </option>
+          ))}
+        </select>
+      </div>
       <ul className={classNames.usersList}>{users}</ul>
     </section>
   )

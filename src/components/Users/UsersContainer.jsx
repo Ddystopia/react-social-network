@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Users from './Users'
 import Preloader from '../common/Preloader/Preloader'
-import { getUsers, follow, unFollow } from '../../redux/usersReducer'
+import { getUsers, follow, unFollow, setCount } from '../../redux/usersReducer'
 import { compose } from 'redux'
 import {
   getUsersData,
@@ -22,7 +22,8 @@ const UsersContainer = ({
   isFetching,
   isFollowing,
   follow,
-  unFollow,
+	unFollow,
+	setCount
 }) => {
   useEffect(() => {
     if (data.length === 0) getUsers(page, pageCount)
@@ -40,7 +41,8 @@ const UsersContainer = ({
       isFollowing={isFollowing}
       follow={follow}
       unFollow={unFollow}
-      changePage={changePage}
+			changePage={changePage}
+			setPageCount={setCount}
     />
   )
 }
@@ -54,6 +56,6 @@ const mapStateToProps = (state) => ({
   isFollowing: getIsFollowing(state),
 })
 
-const mapDispatchToProps = { getUsers, follow, unFollow }
+const mapDispatchToProps = { getUsers, follow, unFollow, setCount }
 
 export default compose(connect(mapStateToProps, mapDispatchToProps))(UsersContainer)

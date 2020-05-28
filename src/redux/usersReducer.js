@@ -77,7 +77,7 @@ const acceptFollow = (userId) => ({ type: FOLLOW, userId })
 const acceptUnFollow = (userId) => ({ type: UNFOLLOW, userId })
 const setUsers = (users) => ({ type: SET_USERS, users })
 const setPage = (page) => ({ type: SET_PAGE, page })
-const setCount = (count) => ({ type: SET_COUNT, count })
+const acceptSetCount = (count) => ({ type: SET_COUNT, count })
 const setUsersCount = (usersCount) => ({ type: SET_USERS_COUNT, usersCount })
 const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
@@ -88,6 +88,11 @@ const toggleIsFollowing = (isFetching, id) => ({
   isFetching,
   id,
 })
+
+const setCount = (count) => async (dispatch) => {
+  dispatch(acceptSetCount(count))
+  dispatch(getUsers(1, count))
+}
 
 const getUsers = (page, count) => async (dispatch) => {
   dispatch(setPage(page))
