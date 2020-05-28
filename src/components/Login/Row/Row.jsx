@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default ({ error, touched, children }) => (
-  <div>
-		{touched && error && <p>{error}</p>}
-		{children}
+export const Row = ({ error, touched, children, className }) => (
+  <div className={className}>
+    {touched && error && <p>{error}</p>}
+    {children}
   </div>
 )

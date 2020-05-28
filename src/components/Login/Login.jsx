@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from './Login.module.css'
 import * as yup from 'yup'
-import Row from './Row/Row'
+import { Row } from './Row/Row'
 import { Form, Field, withFormik } from 'formik'
 
 const LoginForm = ({ values, errors, touched, captchaUrl }) => {
