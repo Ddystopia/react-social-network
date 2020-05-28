@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+input:focus,
+select:focus,
+button:focus,
+textarea:focus {
+	border-color: #1995e7;
+	outline: none;
+}
+
 html {
   font-size: 16px;
   --standard_color: #1aa135;

@@ -2,10 +2,6 @@ import React, { useEffect } from 'react'
 import Message from './Message/Message'
 import classNames from './Messages.module.css'
 import SendForm from './SendForm/SendForm'
-function scrollToDown(e) {
-  const element = e.target
-  element.scrollTop = element.scrollHeight
-}
 
 export default ({ data, sendMessage }) => {
   const messagesDiv = React.createRef()
