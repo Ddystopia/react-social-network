@@ -11,6 +11,19 @@ export default ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfi
     if (e.target.files.length) setPhoto(e.target.files[0])
   }
 
+  const nullToEmptyString = (elem) => {
+    if (elem === null) return ''
+    else if (typeof elem !== 'object') return elem
+    else {
+      const newElem = { ...elem }
+      for (let subElem of Object.entries(newElem)) {
+        newElem[subElem[0]] = nullToEmptyString(subElem[1])
+      }
+      return newElem
+    }
+  }
+  const initialValues = nullToEmptyString(profile)
+
   return (
     <section className={classNames.user_info}>
       <article className={classNames.avatar}>
@@ -20,7 +33,7 @@ export default ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfi
       {editMode ? (
         <Form
           {...profile}
-          initialValues={{ ...profile, ...profile.contacts }}
+          initialValues={initialValues}
           setEditMode={setEditMode}
           setProfile={setProfile}
         />

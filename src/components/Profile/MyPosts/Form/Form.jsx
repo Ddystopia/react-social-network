@@ -7,8 +7,8 @@ import { Row } from '../../../Login/Row/Row'
 const SendForm = ({ errors, touched }) => {
   return (
     <Form className={classNames.form}>
-      <Row error={errors.message} touched={touched.message} className={classNames.textarea}>
-        <Field component="textarea" name={'message'} placeholder={'Type new post'} />
+      <Row error={errors.post} touched={touched.post} className={classNames.textarea}>
+        <Field component="textarea" name={'post'} placeholder={'Type new post'} />
       </Row>
       <button type="submit">Send</button>
     </Form>
@@ -18,14 +18,14 @@ const SendForm = ({ errors, touched }) => {
 export default withFormik({
   mapPropsToValues() {
     return {
-      message: '',
+      post: '',
     }
   },
   handleSubmit(values, { resetForm, props: { addPost } }) {
-    addPost(values.message)
+    addPost(values.post)
     resetForm()
   },
   validationSchema: yup.object().shape({
-    message: yup.string().max(300).min(10).required(),
+    post: yup.string().max(300).min(10).required(),
   }),
 })(SendForm)
