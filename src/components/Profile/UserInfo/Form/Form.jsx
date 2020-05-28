@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from './Form.module.css'
-import { reduxForm, Field } from 'redux-form'
+import * as yup from 'yup'
+import { Form, Field, withFormik } from 'formik'
+import { Row } from '../../../Login/Row/Row'
 import {
   urlValidator,
   minLengthCreator,
@@ -13,7 +15,7 @@ const minLength2 = minLengthCreator(2)
 const maxLength20 = maxLengthCreator(20)
 const maxLength100 = maxLengthCreator(100)
 
-const Form = ({ contacts, userId, handleSubmit, setProfile, setEditMode }) => {
+const SendForm = ({ contacts, userId, handleSubmit, setProfile, setEditMode }) => {
   const onSubmit = (formData) => {
     setProfile({
       ...formData,
@@ -22,7 +24,7 @@ const Form = ({ contacts, userId, handleSubmit, setProfile, setEditMode }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classNames.form}>
+    <Form onSubmit={handleSubmit(onSubmit)} className={classNames.form}>
       <article className={classNames.user_info_text}>
         <h3>
           Name:{' '}
@@ -74,9 +76,11 @@ const Form = ({ contacts, userId, handleSubmit, setProfile, setEditMode }) => {
       <div className={classNames.close} onClick={() => setEditMode(false)}>
         Close
       </div>
-      <button className={classNames.submit}>Submit</button>
-    </form>
+      <button type="submit" className={classNames.submit}>Submit</button>
+    </Form>
   )
 }
 
-export default reduxForm({ form: 'profile' })(Form)
+export default withFormik({
+	handleSubmit(values, {resetForm, props: {userId, setEditMode}})
+})(SendForm)

@@ -1,31 +1,31 @@
 import React from 'react'
-import { reduxForm, Field } from 'redux-form'
 import classNames from './Form.module.css'
-import { required, maxLengthCreator, minLengthCreator } from '../../../../utils/validators'
-import { Textarea } from '../../../common/FormControls/FormControls'
+import * as yup from 'yup'
+import { Form, Field, withFormik } from 'formik'
+import { Row } from '../../../Login/Row/Row'
 
-const maxLength300 = maxLengthCreator(300)
-const minLength10 = minLengthCreator(10)
-
-const Form = ({ handleSubmit, addPost, reset }) => {
+const SendForm = ({ errors, touched }) => {
   return (
-    <form
-      className={classNames.form}
-      onSubmit={handleSubmit((formData) => {
-        addPost(formData.message)
-        reset()
-      })}
-    >
-      <Field
-        component={Textarea}
-        className={classNames.textarea}
-        placeholder="Type new post"
-        name="message"
-        validate={[required, maxLength300, minLength10]}
-      />
-      <button>Send</button>
-    </form>
+    <Form className={classNames.form}>
+      <Row error={errors.message} touched={touched.message} className={classNames.textarea}>
+        <Field component="textarea" name={'message'} placeholder={'Type new post'} />
+      </Row>
+      <button type="submit">Send</button>
+    </Form>
   )
 }
 
-export default reduxForm({ form: 'addPost' })(Form)
+export default withFormik({
+  mapPropsToValues() {
+    return {
+      message: '',
+    }
+  },
+  handleSubmit(values, { resetForm, props: { addPost } }) {
+    addPost(values.message)
+    resetForm()
+  },
+  validationSchema: yup.object().shape({
+    message: yup.string().max(300).min(10).required(),
+  }),
+})(SendForm)
