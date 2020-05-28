@@ -1,9 +1,8 @@
 import React from 'react'
-import { Field } from 'redux-form'
 
-export default ({ text = '', ...props }) => (
+export default ({ error, touched, children }) => (
   <div>
-    {text && <span>{text}</span>}
-    <Field {...props} />
+		{touched && error && <p>{error}</p>}
+		{children}
   </div>
 )
