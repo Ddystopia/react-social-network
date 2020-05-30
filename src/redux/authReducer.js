@@ -1,5 +1,4 @@
 import { authAPI, securityAPI } from '../api/api'
-import { stopSubmit } from 'redux-form'
 import { errorHandler } from '../utils/errorHandlers'
 
 const TOGGLE_IS_FETCHING = 'authReducer/TOGGLE_IS_FETCHING'
@@ -85,11 +84,6 @@ const login = (formData) => async (dispatch) => {
         dispatch(getCaptchaUrl())
       // eslint-disable-next-line no-fallthrough
       default:
-        dispatch(
-          stopSubmit('login', {
-            /*  _error: r.messages.join("\n") || "something wrong" */
-          })
-        )
         throw new Error(r.messages.join('\n') || 'Something wrong')
     }
   } catch (err) {
