@@ -22,8 +22,8 @@ const UsersContainer = ({
   isFetching,
   isFollowing,
   follow,
-	unFollow,
-	setCount
+  unFollow,
+  setCount,
 }) => {
   useEffect(() => {
     if (data.length === 0) getUsers(page, pageCount)
@@ -41,8 +41,8 @@ const UsersContainer = ({
       isFollowing={isFollowing}
       follow={follow}
       unFollow={unFollow}
-			changePage={changePage}
-			setPageCount={setCount}
+      changePage={changePage}
+      setPageCount={setCount}
     />
   )
 }

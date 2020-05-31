@@ -69,8 +69,8 @@ const authUser = () => async (dispatch) => {
     dispatch(setAuthUser(id, email, login))
   } else dispatch(logoutUser())
 
-	dispatch(toggleIsFetching(false))
-	return r.data.id
+  dispatch(toggleIsFetching(false))
+  return r.data.id
 }
 
 const login = (formData) => async (dispatch) => {

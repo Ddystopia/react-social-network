@@ -7,7 +7,12 @@ const Dialogs = ({ chatsData, messagesData, messageActions, chatActions, haveCha
   return (
     <section className={classNames.content}>
       <Chats data={chatsData} chatActions={chatActions} />
-      <Messages data={messagesData} messageActions={messageActions} login={login} haveChats={haveChats} />
+      <Messages
+        data={messagesData}
+        messageActions={messageActions}
+        login={login}
+        haveChats={haveChats}
+      />
     </section>
   )
 }

@@ -6,7 +6,7 @@ export default ({ itemsCount, pageSize, page = 0, changePage }) => {
   const pagesCount = Math.ceil(itemsCount / pageSize)
 
   const handleChangePage = ({ selected }) => {
-		changePage(selected + 1)
+    changePage(selected + 1)
   }
 
   return (

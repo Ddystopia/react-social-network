@@ -48,10 +48,7 @@ const dialogReducer = (state = initial, action) => {
     case SEND_MESSAGE:
       return {
         ...state,
-        messagesData: [
-          ...state.messagesData,
-          action.messageObj,
-        ],
+        messagesData: [...state.messagesData, action.messageObj],
       }
     case REMOVE_MESSAGE:
       return {
@@ -117,7 +114,7 @@ const getNewMessagesCount = () => async (dispatch) => {
 
 const sendMessage = (userId, message) => async (dispatch) => {
   const response = await dialogsAPI.sendMessage(userId, message)
-  if(response.resultCode === 0) dispatch(accessSendMessage(response.data.message))
+  if (response.resultCode === 0) dispatch(accessSendMessage(response.data.message))
 }
 
 const checkIsViewed = (messageId) => async (dispatch) => {

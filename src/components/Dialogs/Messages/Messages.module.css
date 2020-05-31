@@ -10,8 +10,8 @@
 .empty {
   display: flex;
   align-items: center;
-	flex-direction: column;
-	font-size: 2rem;
+  flex-direction: column;
+  font-size: 2rem;
 }
 
 .empty > img {

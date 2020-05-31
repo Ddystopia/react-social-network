@@ -3,8 +3,8 @@ import dialogReducer, {
   accessRemoveMessage,
   setDialogs,
   setNewMessagesCount,
-	setMessages,
-	setCurrentDialogId
+  setMessages,
+  setCurrentDialogId,
 } from '../dialogReducer'
 
 const state = {
@@ -46,8 +46,8 @@ const state = {
       id: 4,
     },
   ],
-	newMessagesCount: 0,
-	currentDialogId: null
+  newMessagesCount: 0,
+  currentDialogId: null,
 }
 
 test('length should increment', () => {
@@ -59,12 +59,14 @@ test('length should increment', () => {
 })
 
 test('length should be 1', () => {
-  const action = setMessages([{
-    self: false,
-    date: new Date(2020, 3, 13, 15, 47, 18),
-    message: 'Hi bro',
-    id: 1,
-  }])
+  const action = setMessages([
+    {
+      self: false,
+      date: new Date(2020, 3, 13, 15, 47, 18),
+      message: 'Hi bro',
+      id: 1,
+    },
+  ])
 
   const newState = dialogReducer(state, action)
 

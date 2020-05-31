@@ -1,24 +1,24 @@
 .chats > header {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.newChat{
-	width: 40px;
-	height: 25px;
-	background-color: #e6e6e6;
-	border-radius: 15px;
-	margin: 0 10px;
-	padding: 0px 13px;
-	line-height: 1.2rem;
-	font-size: 1.2rem;
-	font-weight: bold;
-	cursor: pointer;
-	user-select: none;
+.newChat {
+  width: 40px;
+  height: 25px;
+  background-color: #e6e6e6;
+  border-radius: 15px;
+  margin: 0 10px;
+  padding: 0px 13px;
+  line-height: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
 }
 
 .newChat > span {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }

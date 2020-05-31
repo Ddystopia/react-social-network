@@ -38,7 +38,7 @@ const DialogsContainer = ({
   removeMessage,
   restoreMessage,
   setCurrentDialogId,
-	currentDialogId,
+  currentDialogId,
 }) => {
   const chatActions = { getAllDialogs, createNewChat, getMessages, setCurrentDialogId }
   const messageActions = {
@@ -66,7 +66,7 @@ const DialogsContainer = ({
   return (
     <Dialogs
       chatsData={chatsData}
-			messagesData={messagesData}
+      messagesData={messagesData}
       chatActions={chatActions}
       messageActions={messageActions}
       haveChats={!!currentDialogId ?? false}
