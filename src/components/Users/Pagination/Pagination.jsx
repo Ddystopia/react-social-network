@@ -26,37 +26,4 @@ export default ({ itemsCount, pageSize, page = 0, changePage }) => {
       disableInitialCallback={true}
     />
   )
-  //   <div className={classNames.wrapper}>
-  //     <div className={classNames.button}>
-  //       {portionNumber > 1 && (
-  //         <button id="prev" onClick={() => setPortionNumber(portionNumber - 1)}>
-  //           Prev
-  //         </button>
-  //       )}
-  //     </div>
-  //     <ul className={classNames.pagination}>
-  //       {pages
-  //         .filter((i) => i >= leftSideNum && i <= rightSideNum)
-  //         .map((i) => (
-  //           <li
-  //             key={i}
-  //             onClick={() => {
-  //               changePage(i)
-  //               setPortionNumber(Math.ceil(i / portionSize))
-  //             }}
-  //             className={i === page ? classNames.active : ''}
-  //           >
-  //             {i}
-  //           </li>
-  //         ))}
-  //     </ul>
-  //     <div className={classNames.button}>
-  //       {portionNumber < portionsCount && (
-  //         <button id="next" onClick={() => setPortionNumber(portionNumber + 1)}>
-  //           Next
-  //         </button>
-  //       )}
-  //     </div>
-  //   </div>
-  // )
 }
