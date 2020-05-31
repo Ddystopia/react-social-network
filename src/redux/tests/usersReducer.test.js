@@ -3,8 +3,8 @@ import usersReducer, {
   acceptUnFollow,
   setUsers,
   setPage,
-  setCount,
   setUsersCount,
+  acceptSetCount,
 } from '../usersReducer'
 
 const state = {
@@ -53,7 +53,7 @@ test('should set page number 2', () => {
 })
 
 test('should set count to 2', () => {
-  const action = setCount(2)
+  const action = acceptSetCount(2)
 
   const newState = usersReducer(state, action)
 

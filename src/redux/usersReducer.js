@@ -127,4 +127,4 @@ const unFollow = (id) => async (dispatch) => {
 
 export default usersReducer
 export { follow, unFollow, getUsers }
-export { acceptFollow, acceptUnFollow, setUsers, setPage, setCount, setUsersCount }
+export { acceptFollow, acceptUnFollow, setUsers, setPage, setCount, setUsersCount, acceptSetCount }
