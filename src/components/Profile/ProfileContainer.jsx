@@ -33,7 +33,7 @@ const ProfileContainer = ({
 }) => {
   useEffect(() => {
     const userId = +match.params.userId || authUserId
-    if (profile && profile.userId === userId) return
+    if (profile?.userId === userId) return
     if (!userId) return history.push('/login')
 
     const getProfile = (userId) => {

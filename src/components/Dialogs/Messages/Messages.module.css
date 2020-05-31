@@ -1,7 +1,19 @@
 .content {
   position: relative;
 }
+
 .messages {
   height: 60vh;
   overflow-y: auto;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+	flex-direction: column;
+	font-size: 2rem;
+}
+
+.empty > img {
+  width: 50%;
 }

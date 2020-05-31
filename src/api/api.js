@@ -56,10 +56,40 @@ const authAPI = {
   },
 }
 
+const dialogsAPI = {
+  getAllDialogs() {
+    return instance.get('dialogs').then((r) => r.data)
+  },
+  createNewChat(userId) {
+    return instance.put(`dialogs/${userId}`).then((r) => r.data)
+  },
+  getMessages(userId) {
+    return instance.get(`dialogs/${userId}/messages`).then((r) => r.data)
+  },
+  getNewMessagesCount() {
+    return instance.get(`dialogs/messages/new/count`).then((r) => r.data)
+  },
+  sendMessage(userId, body) {
+    return instance.post(`dialogs/${userId}/messages`, { body }).then((r) => r.data)
+  },
+  isViewed(messageId) {
+    return instance.get(`dialogs/messages/${messageId}/viewed`).then((r) => r.data)
+  },
+  toSpam(messageId) {
+    return instance.post(`dialogs/messages/${messageId}/spam`).then((r) => r.data)
+  },
+  deleteSelf(messageId) {
+    return instance.delete(`dialogs/messages/${messageId}`).then((r) => r.data)
+  },
+  restoreMessage(messageId) {
+    return instance.put(`dialogs/messages/${messageId}/restore`).then((r) => r.data)
+  },
+}
+
 const securityAPI = {
   getCaptchaUrl() {
     return instance.get('security/get-captcha-url').then((r) => r.data)
   },
 }
 
-export { usersAPI, authAPI, profileAPI, securityAPI }
+export { usersAPI, authAPI, profileAPI, securityAPI, dialogsAPI }

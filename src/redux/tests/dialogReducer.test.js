@@ -1,17 +1,24 @@
-import dialogReducer, { sendMessage, removeMessage } from '../dialogReducer'
+import dialogReducer, {
+  accessSendMessage,
+  accessRemoveMessage,
+  setDialogs,
+  setNewMessagesCount,
+	setMessages,
+	setCurrentDialogId
+} from '../dialogReducer'
 
 const state = {
   chatsData: [
-    { chatName: 'Sasha', id: 0 },
-    { chatName: 'Dasha', id: 1 },
-    { chatName: 'Viktor', id: 2 },
-    { chatName: 'Katya', id: 3 },
-    { chatName: 'Andrew', id: 4 },
-    { chatName: 'Liza', id: 5 },
-    { chatName: 'Maxim', id: 6 },
-    { chatName: 'Ann', id: 7 },
-    { chatName: 'Tom', id: 8 },
-    { chatName: 'Nastya', id: 9 },
+    { userName: 'Sasha', id: 0 },
+    { userName: 'Dasha', id: 1 },
+    { userName: 'Viktor', id: 2 },
+    { userName: 'Katya', id: 3 },
+    { userName: 'Andrew', id: 4 },
+    { userName: 'Liza', id: 5 },
+    { userName: 'Maxim', id: 6 },
+    { userName: 'Ann', id: 7 },
+    { userName: 'Tom', id: 8 },
+    { userName: 'Nastya', id: 9 },
   ],
   messagesData: [
     {
@@ -39,18 +46,33 @@ const state = {
       id: 4,
     },
   ],
+	newMessagesCount: 0,
+	currentDialogId: null
 }
 
 test('length should increment', () => {
-  const action = sendMessage('New message')
+  const action = accessSendMessage('New message')
 
   const newState = dialogReducer(state, action)
 
   expect(newState.messagesData.length).toBe(5)
 })
 
+test('length should be 1', () => {
+  const action = setMessages([{
+    self: false,
+    date: new Date(2020, 3, 13, 15, 47, 18),
+    message: 'Hi bro',
+    id: 1,
+  }])
+
+  const newState = dialogReducer(state, action)
+
+  expect(newState.messagesData.length).toBe(1)
+})
+
 test('after delete length should decrement', () => {
-  const action = removeMessage(2)
+  const action = accessRemoveMessage(2)
 
   const newState = dialogReducer(state, action)
 
@@ -58,9 +80,33 @@ test('after delete length should decrement', () => {
 })
 
 test('message should be correct', () => {
-  const action = sendMessage('New message')
+  const action = accessSendMessage('New message')
 
   const newState = dialogReducer(state, action)
 
   expect(newState.messagesData[4].message).toBe('New message')
+})
+
+test('dialogs length should be 1', () => {
+  const action = setDialogs([{ userName: 'Dad', id: 95 }])
+
+  const newState = dialogReducer(state, action)
+
+  expect(newState.chatsData.length).toBe(1)
+})
+
+test('newMessagesCount should be 5', () => {
+  const action = setNewMessagesCount(5)
+
+  const newState = dialogReducer(state, action)
+
+  expect(newState.newMessagesCount).toBe(5)
+})
+
+test('currentDialogId should be 5', () => {
+  const action = setCurrentDialogId(5)
+
+  const newState = dialogReducer(state, action)
+
+  expect(newState.currentDialogId).toBe(5)
 })

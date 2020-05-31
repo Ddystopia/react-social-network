@@ -6,3 +6,55 @@
   overflow-wrap: anywhere;
   max-width: 350px;
 }
+
+.message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.message > img {
+  width: 55px;
+  height: 55px;
+  border-radius: 40%;
+}
+.date {
+  position: absolute;
+  transform: translateY(100%);
+  font-size: 0.6rem;
+  color: gray;
+  width: max-content;
+}
+.viewed {
+  position: absolute;
+  transform: translateY(77%);
+  font-size: 1rem;
+  color: gray;
+  width: max-content;
+}
+
+.messageSelf {
+  flex-direction: row-reverse;
+}
+.messageElse {
+  flex-direction: row;
+}
+
+.messageSelf > img {
+  margin: 5px 0px 5px 15px;
+}
+.messageElse > img {
+  margin: 5px 15px 5px 0;
+}
+
+.dateSelf,
+.viewedElse {
+  right: 0;
+  bottom: 0;
+}
+.dateElse{
+  left: 0;
+  bottom: 0;
+}
+.viewedSelf{
+	display: none;
+}

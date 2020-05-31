@@ -38,7 +38,7 @@ const App = ({ initializeApp, initialized }) => {
         <Switch>
           <Redirect exact from="/" to="/profile" />
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-          <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/dialogs/:userId?" render={() => <DialogsContainer />} />
           <Route path="/users" render={withSuspense(UsersContainer)} />
           <Route path="/login" render={withSuspense(LoginContainer)} />
           <Route path="*" render={() => <div>404 not found</div>} />

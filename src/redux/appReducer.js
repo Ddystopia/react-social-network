@@ -1,4 +1,5 @@
 import { authUser } from './authReducer'
+import { setProfile, getUserStatus } from './profileReducer'
 
 const SET_INITIALIZED_SUCCESS = 'appReducer/SET_INITIALIZED_SUCCESS'
 
@@ -20,11 +21,12 @@ const appReducer = (state = initial, action) => {
 
 const initializeSuccess = () => ({ type: SET_INITIALIZED_SUCCESS })
 
-const initializeApp = () => (dispatch) => {
-  const dispatchResult = dispatch(authUser())
-  Promise.all([dispatchResult]).then(() => {
+const initializeApp = () => async (dispatch) => {
+  const id = await dispatch(authUser())
+  if (id) {
+    await Promise.all([dispatch(setProfile(id)), dispatch(getUserStatus(id))])
     dispatch(initializeSuccess())
-  })
+  }
 }
 
 export { initializeApp, initializeSuccess }

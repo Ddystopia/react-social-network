@@ -1,44 +1,46 @@
+import { dialogsAPI } from '../api/api'
+
 const SEND_MESSAGE = 'dialogReducer/SEND_MESSAGE'
 const REMOVE_MESSAGE = 'dialogReducer/REMOVE_MESSAGE'
+const SET_DIALOGS = 'dialogReducer/SET_DIALOGS'
+const SET_CURRENT_DIALOG_id = 'dialogReducer/SET_CURRENT_DIALOG_id'
+const SET_MESSAGES = 'dialogReducer/SET_MESSAGES'
+const SET_NEW_MESSAGES_COUNT = 'dialogReducer/SET_NEW_MESSAGES_COUNT'
+
 const initial = {
   chatsData: [
-    { chatName: 'Sasha', id: 0 },
-    { chatName: 'Dasha', id: 1 },
-    { chatName: 'Viktor', id: 2 },
-    { chatName: 'Katya', id: 3 },
-    { chatName: 'Andrew', id: 4 },
-    { chatName: 'Liza', id: 5 },
-    { chatName: 'Maxim', id: 6 },
-    { chatName: 'Ann', id: 7 },
-    { chatName: 'Tom', id: 8 },
-    { chatName: 'Nastya', id: 9 },
+    //   {
+    //     userName: 'Sasha',
+    //     id: 9999,
+    //     hasNewMessages: false,
+    //     lastDialogActivityDate: '2020-05-31T13:57:32.957',
+    //     lastUserActivityDate: '2019-09-30T15:43:55.087',
+    //     newMessagesCount: 0,
+    //     photos: {
+    //       small: null,
+    //       large: null,
+    //     },
+    //   },
   ],
   messagesData: [
-    {
-      self: false,
-      date: new Date(2020, 3, 13, 15, 47, 18),
-      message: 'Hi bro',
-      id: 1,
-    },
-    {
-      self: false,
-      date: new Date(2020, 3, 13, 15, 47, 46),
-      message: 'How are you bro?',
-      id: 2,
-    },
-    {
-      self: true,
-      date: new Date(2020, 3, 13, 15, 48, 15),
-      message: "Okay bro, I can't speak",
-      id: 3,
-    },
-    {
-      self: false,
-      date: new Date(2020, 3, 13, 15, 48, 30),
-      message: 'Okay, bye bro',
-      id: 4,
-    },
+    // {
+    //   addedAt: '2020-05-31T19:11:24.16',
+    //   body: 'Приветики',
+    //   deletedByRecipient: false,
+    //   deletedBySender: false,
+    //   distributionId: null,
+    //   id: '00ab27ab-c7fd-4d85-a43f-05b14c02fe1a',
+    //   isSpam: false,
+    //   recipientId: 8513,
+    //   recipientName: 'CodeBro85',
+    //   senderId: 7529,
+    //   senderName: 'Ddystopia',
+    //   translatedBody: null,
+    //   viewed: false,
+    // },
   ],
+  newMessagesCount: 0,
+  currentDialogId: null,
 }
 
 const dialogReducer = (state = initial, action) => {
@@ -48,12 +50,7 @@ const dialogReducer = (state = initial, action) => {
         ...state,
         messagesData: [
           ...state.messagesData,
-          {
-            id: state.messagesData[state.messagesData.length - 1].id + 1,
-            self: true,
-            date: new Date(),
-            message: action.message,
-          },
+          action.messageObj,
         ],
       }
     case REMOVE_MESSAGE:
@@ -61,13 +58,99 @@ const dialogReducer = (state = initial, action) => {
         ...state,
         messagesData: state.messagesData.filter((message) => message.id !== action.id),
       }
+    case SET_DIALOGS:
+      return {
+        ...state,
+        chatsData: action.chatsData,
+      }
+    case SET_CURRENT_DIALOG_id:
+      return {
+        ...state,
+        currentDialogId: action.currentDialogId,
+      }
+    case SET_MESSAGES:
+      return {
+        ...state,
+        messagesData: action.messagesData,
+      }
+    case SET_NEW_MESSAGES_COUNT:
+      return {
+        ...state,
+        newMessagesCount: action.newMessagesCount,
+      }
     default:
       return state
   }
 }
 
-const sendMessage = (message) => ({ type: SEND_MESSAGE, message })
-const removeMessage = (id) => ({ type: REMOVE_MESSAGE, id })
+const accessSendMessage = (messageObj) => ({ type: SEND_MESSAGE, messageObj })
+const accessRemoveMessage = (id) => ({ type: REMOVE_MESSAGE, id })
+const setDialogs = (chatsData) => ({ type: SET_DIALOGS, chatsData })
+const setCurrentDialogId = (currentDialogId) => ({ type: SET_CURRENT_DIALOG_id, currentDialogId })
+const setMessages = (messagesData) => ({ type: SET_MESSAGES, messagesData })
+const setNewMessagesCount = (newMessagesCount) => ({
+  type: SET_NEW_MESSAGES_COUNT,
+  newMessagesCount,
+})
+
+const getAllDialogs = () => async (dispatch) => {
+  const dialogs = await dialogsAPI.getAllDialogs()
+  dispatch(setDialogs(dialogs))
+}
+
+const createNewChat = (userId) => async (dispatch) => {
+  const response = await dialogsAPI.createNewChat(userId)
+  if (response.resultCode === 0) dispatch(getAllDialogs())
+}
+
+const getMessages = (userId) => async (dispatch) => {
+  if (!userId) return
+  const response = await dialogsAPI.getMessages(userId)
+  dispatch(setMessages(response.items))
+  dispatch(setCurrentDialogId(userId))
+}
+
+const getNewMessagesCount = () => async (dispatch) => {
+  const count = await dialogsAPI.getNewMessagesCount()
+  dispatch(setNewMessagesCount(count))
+}
+
+const sendMessage = (userId, message) => async (dispatch) => {
+  const response = await dialogsAPI.sendMessage(userId, message)
+  if(response.resultCode === 0) dispatch(accessSendMessage(response.data.message))
+}
+
+const checkIsViewed = (messageId) => async (dispatch) => {
+  const response = await dialogsAPI.isViewed(messageId)
+  // if(response.resultCode === 0) /*Some do*/
+}
+
+const messageToSpam = (messageId) => async (dispatch) => {
+  const response = await dialogsAPI.toSpam(messageId)
+  // if(response.resultCode === 0) /*Some do*/
+}
+
+const removeMessage = (messageId) => async (dispatch) => {
+  const response = await dialogsAPI.deleteSelf(messageId)
+  // if(response.resultCode === 0) dispatch(accessRemoveMessage(id))
+}
+
+const restoreMessage = (messageId) => async (dispatch) => {
+  const response = await dialogsAPI.restoreMessage(messageId)
+  // if(response.resultCode === 0) /* Some do */
+}
 
 export default dialogReducer
-export { sendMessage, removeMessage }
+export {
+  getAllDialogs,
+  createNewChat,
+  getMessages,
+  getNewMessagesCount,
+  sendMessage,
+  checkIsViewed,
+  messageToSpam,
+  removeMessage,
+  restoreMessage,
+  setCurrentDialogId,
+}
+export { accessSendMessage, accessRemoveMessage, setDialogs, setNewMessagesCount, setMessages }
