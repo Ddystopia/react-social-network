@@ -1,0 +1,11 @@
+.error {
+  position: relative;
+}
+.error::after {
+  content: '!';
+  position: absolute;
+  color: tomato;
+  right: -10px;
+  top: 7px;
+  font-size: 1.5rem;
+}

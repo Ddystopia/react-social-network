@@ -5,31 +5,38 @@ import { Row } from './Row/Row'
 import { Form, Field, withFormik } from 'formik'
 
 const LoginForm = ({ values, errors, touched, captchaUrl }) => {
+  const hasError = hasInputsError(errors, touched)
   return (
-    <Form>
-      <Row touched={touched.email} error={errors.email}>
-        <Field name={'email'} type={'email'} placeholder={'Type email'} />
+    <Form className={classNames.form}>
+      <Row hasError={hasError.email}>
+        <Field name={'email'} type={'email'} placeholder={'✉ Email'} />
       </Row>
-      <Row touched={touched.password} error={errors.password}>
-        <Field name={'password'} type={'password'} placeholder={'Type password'} />
+      <Row hasError={hasError.password}>
+        <Field name={'password'} type={'password'} placeholder={'🔐︎ Password'} />
       </Row>
       <label>
-        <p>Remember me</p>
         <Field type={'checkbox'} name={'rememberMe'} checked={values.rememberMe} />
+        <p>Remember me</p>
       </label>
       {captchaUrl && (
-        <div className={classNames.captcha}>
+        <Row hasError={hasError.captcha} className={classNames.captcha}>
           <img src={captchaUrl} alt="captcha" />
-          <Row touched={touched.captchaUrl} error={errors.captchaUrl}>
-            <Field type={'text'} name={'captcha'} placeholder={'Type captcha'} />
-          </Row>
-        </div>
+          <Field type={'text'} name={'captcha'} placeholder={'Captcha'} />
+        </Row>
       )}
       <div>
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
       </div>
     </Form>
   )
+}
+
+const hasInputsError = (errors, touched) => {
+  const hasError = {}
+  for (const input in errors) {
+    hasError[input] = touched[input] && errors[input]
+  }
+  return hasError
 }
 
 const FormikLoginForm = withFormik({
@@ -42,8 +49,9 @@ const FormikLoginForm = withFormik({
     }
   },
   validationSchema: yup.object().shape({
-    email: yup.string().email('Invalid email').max(50, 'Max length is 50').required(),
-    password: yup.string().min(8, 'Min length is 8').max(24, 'Max length is 24').required(),
+    email: yup.string().email().max(50).required(),
+    password: yup.string().min(8).max(24).required(),
+    captcha: yup.string().required(),
   }),
   handleSubmit(values, { resetForm, props: { loginUser } }) {
     loginUser(values)
@@ -53,8 +61,8 @@ const FormikLoginForm = withFormik({
 
 export default ({ loginUser, captchaUrl }) => {
   return (
-    <section>
-      <h2>Login</h2>
+    <section className={classNames.login}>
+      <h2>Log in</h2>
       <FormikLoginForm loginUser={loginUser} captchaUrl={captchaUrl} />
     </section>
   )
