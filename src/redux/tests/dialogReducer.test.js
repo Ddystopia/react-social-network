@@ -82,11 +82,24 @@ test('after delete length should decrement', () => {
 })
 
 test('message should be correct', () => {
-  const action = accessSendMessage('New message')
+  const action = accessSendMessage({
+		addedAt: '2020-05-31T19:11:24.16',
+		body: 'New message',
+		deletedByRecipient: false,
+		deletedBySender: false,
+		distributionId: null,
+		id: '00ab27ab-c7fd-4d85-a43f-05b14c02fe1a',
+		isSpam: false,
+		recipientId: 8513,
+		recipientName: 'CodeBro85',
+		senderId: 7529,
+		senderName: 'Ddystopia',
+		translatedBody: null,
+		viewed: false,
+	},)
 
   const newState = dialogReducer(state, action)
-
-  expect(newState.messagesData[4].message).toBe('New message')
+  expect(newState.messagesData[4].body).toBe('New message')
 })
 
 test('dialogs length should be 1', () => {
