@@ -45,7 +45,7 @@ const SendForm = ({ errors, touched, contacts, values, setEditMode }) => {
       <button className={classNames.close} type="button" onClick={() => setEditMode(false)}>
         Close
       </button>
-      <button type="submit" className={classNames.submit}>
+      <button type="submit">
         Submit
       </button>
     </Form>

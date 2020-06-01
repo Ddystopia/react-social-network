@@ -17,7 +17,8 @@ input,
 select,
 button,
 textarea {
-  border-style: solid;
+	border-style: solid;
+	border: 0;
 }
 html {
   font-size: 16px;

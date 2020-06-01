@@ -9,12 +9,29 @@
   grid-template-rows: repeat(4, 1fr);
 }
 
-.form input {
+/* .form input {
   margin: 10px auto;
+	width: 200px;
+	border: 1px solid black;
+} */
+
+.form input,
+.form button {
   width: 200px;
+  border: 1px solid transparent;
+  background-color: #e6e6e6;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 20px;
 }
 
-.form .submit {
+.form > div > input::placeholder {
+  color: #b3b3b3;
+  font-size: 0.8rem;
+  opacity: 1; /* Firefox */
+}
+
+.form button[type='submit'] {
   position: absolute;
   bottom: -10px;
   right: 12px;
