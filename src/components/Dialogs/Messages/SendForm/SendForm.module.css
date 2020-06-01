@@ -6,21 +6,27 @@
 
 .posts > .textarea {
   width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .posts > .textarea > textarea {
-  --size: 1.18rem;
-  width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  resize: none;
-  height: calc(var(--size) + 14px);
-  font-size: var(--size);
-  line-height: var(--size);
-  max-height: 140px;
-  overflow: hidden auto;
+	--size: 1.18rem;
+	width: 100%;
+	height: 40px;
+	border: 1px solid transparent;
+	background-color: #e6e6e6;
+	padding: 10px;
+	border-radius: 20px;
+	resize: none;
+	font-size: var(--size);
+	line-height: var(--size);
+	max-height: 140px;
+	overflow: hidden auto;
+}
+
+.posts > .textarea > textarea::placeholder {
+  color: #b3b3b3;
+  font-size: 0.8rem;
+  opacity: 1; /* Firefox */
 }
 
 .posts > button {

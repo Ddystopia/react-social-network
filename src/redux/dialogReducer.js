@@ -1,7 +1,7 @@
 import { dialogsAPI } from '../api/api'
 
 const SEND_MESSAGE = 'dialogReducer/SEND_MESSAGE'
-const REMOVE_MESSAGE = 'dialogReducer/REMOVE_MESSAGE'
+const EDIT_MESSAGE = 'dialogReducer/EDIT_MESSAGE'
 const SET_DIALOGS = 'dialogReducer/SET_DIALOGS'
 const SET_CURRENT_DIALOG_id = 'dialogReducer/SET_CURRENT_DIALOG_id'
 const SET_MESSAGES = 'dialogReducer/SET_MESSAGES'
@@ -50,10 +50,12 @@ const dialogReducer = (state = initial, action) => {
         ...state,
         messagesData: [...state.messagesData, action.messageObj],
       }
-    case REMOVE_MESSAGE:
+    case EDIT_MESSAGE:
       return {
         ...state,
-        messagesData: state.messagesData.filter((message) => message.id !== action.id),
+        messagesData: state.messagesData.map((message) =>
+          message.id === action.id ? action.newMessage : message
+        ),
       }
     case SET_DIALOGS:
       return {
@@ -81,7 +83,7 @@ const dialogReducer = (state = initial, action) => {
 }
 
 const accessSendMessage = (messageObj) => ({ type: SEND_MESSAGE, messageObj })
-const accessRemoveMessage = (id) => ({ type: REMOVE_MESSAGE, id })
+const editMessageProperties = (id, newMessage) => ({ type: EDIT_MESSAGE, id, newMessage })
 const setDialogs = (chatsData) => ({ type: SET_DIALOGS, chatsData })
 const setCurrentDialogId = (currentDialogId) => ({ type: SET_CURRENT_DIALOG_id, currentDialogId })
 const setMessages = (messagesData) => ({ type: SET_MESSAGES, messagesData })
@@ -122,19 +124,15 @@ const checkIsViewed = (messageId) => async (dispatch) => {
   // if(response.resultCode === 0) /*Some do*/
 }
 
-const messageToSpam = (messageId) => async (dispatch) => {
-  const response = await dialogsAPI.toSpam(messageId)
-  // if(response.resultCode === 0) /*Some do*/
-}
-
-const removeMessage = (messageId) => async (dispatch) => {
+const removeMessage = (messageId, message) => async (dispatch) => {
   const response = await dialogsAPI.deleteSelf(messageId)
-  // if(response.resultCode === 0) dispatch(accessRemoveMessage(id))
+  if (response.resultCode === 0)
+    dispatch(editMessageProperties(messageId, { ...message, deletedBySender: true }))
 }
 
 const restoreMessage = (messageId) => async (dispatch) => {
   const response = await dialogsAPI.restoreMessage(messageId)
-  // if(response.resultCode === 0) /* Some do */
+  // if(response.resultCode === 0)
 }
 
 export default dialogReducer
@@ -145,9 +143,8 @@ export {
   getNewMessagesCount,
   sendMessage,
   checkIsViewed,
-  messageToSpam,
   removeMessage,
   restoreMessage,
   setCurrentDialogId,
 }
-export { accessSendMessage, accessRemoveMessage, setDialogs, setNewMessagesCount, setMessages }
+export { accessSendMessage, setDialogs, setNewMessagesCount, setMessages, editMessageProperties }

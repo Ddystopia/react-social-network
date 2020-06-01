@@ -10,5 +10,16 @@
 }
 
 .li > a {
+  display: flex;
+  align-items: center;
   padding: 5px;
+}
+
+.newMessagesCount {
+  padding: 0px 6px;
+  width: 21px;
+  height: 21px;
+  line-height: 1.2em;
+  background-color: #00ff00;
+  border-radius: 50%;
 }

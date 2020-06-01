@@ -1,19 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import classNames from './Message.module.css'
+import CMClassNames from './ContextMenu.module.css'
 import standardAvatar from '../../../../assets/images/standardAvatar.jpg'
 
-export default ({ data, profile, classEnd }) => {
+export default ({ data, profile, classEnd, removeMessage }) => {
   const date = calcDate(data.addedAt)
   const messageClassName = getClassName('message', classEnd)
   const dateClassName = getClassName('date', classEnd)
   const viewedClassName = getClassName('viewed', classEnd)
+
+  const contextMenuRef = React.createRef()
+  const [hidden, setHidden] = useState(true)
+  const openContextMenu = (e) => {
+    e.preventDefault()
+    setHidden(false)
+    const contextMenu = contextMenuRef.current
+    contextMenu.style.left = e.clientX + 'px'
+    contextMenu.style.top = e.clientY + 'px'
+  }
+  useEffect(() => {
+    hidden || contextMenuRef.current.focus()
+  })
+
   return (
     <article className={messageClassName}>
       <img alt="avatar" src={profile.photos.small || standardAvatar} />
-      <div className={classNames.content}>
+      <div className={classNames.content} onContextMenu={openContextMenu}>
         {data.body}
         <div className={dateClassName}>{date}</div>
         {data.viewed && <div className={viewedClassName}>👁</div>}
+      </div>
+      <div
+        className={CMClassNames.contextMenu}
+        ref={contextMenuRef}
+        onBlur={() => setHidden(true)}
+        hidden={hidden}
+        tabIndex="-1"
+      >
+        <ul>
+          <li onClick={() => removeMessage(data.id)}>Remove self</li>
+          <li>{data.viewed ? 'Viewed' : 'Not viewed'}</li>
+        </ul>
       </div>
     </article>
   )

@@ -11,12 +11,12 @@ const Messages = ({ data, messageActions, haveChats, profile, elseProfile }) => 
     sendMessage,
     // getNewMessagesCount,
     // checkIsViewed,
-    // messageToSpam,
-    // removeMessage,
+    removeMessage,
     // restoreMessage,
   } = messageActions
   const messagesDiv = React.createRef()
-  const messages = data
+	const messages = data
+		.filter(item => !item.deletedBySender)
     .map((item) => ({ ...item, addedAt: new Date(item.addedAt) }))
     .sort((a, b) => a.addedAt - b.addedAt)
     .slice(0, Math.min(data.length, 100))
@@ -28,6 +28,7 @@ const Messages = ({ data, messageActions, haveChats, profile, elseProfile }) => 
           data={item}
           classEnd={self ? 'Self' : 'Else'}
           profile={self ? profile : elseProfile}
+          removeMessage={removeMessage}
         />
       )
     })

@@ -11,17 +11,11 @@ import {
   getNewMessagesCount,
   sendMessage,
   checkIsViewed,
-  messageToSpam,
   removeMessage,
   restoreMessage,
   setCurrentDialogId,
 } from '../../redux/dialogReducer'
-import {
-  getChatsData,
-  getMessagesData,
-  getCurrentDialogId,
-  getLogin,
-} from '../../redux/selectors/selectors'
+import { getChatsData, getMessagesData, getCurrentDialogId } from '../../redux/selectors/selectors'
 
 const DialogsContainer = ({
   match,
@@ -34,7 +28,6 @@ const DialogsContainer = ({
   getNewMessagesCount,
   sendMessage,
   checkIsViewed,
-  messageToSpam,
   removeMessage,
   restoreMessage,
   setCurrentDialogId,
@@ -47,7 +40,6 @@ const DialogsContainer = ({
       sendMessage(+match.params.userId, message)
     },
     checkIsViewed,
-    messageToSpam,
     removeMessage,
     restoreMessage,
   }
@@ -89,7 +81,6 @@ export default compose(
     getNewMessagesCount,
     sendMessage,
     checkIsViewed,
-    messageToSpam,
     removeMessage,
     restoreMessage,
     setCurrentDialogId,

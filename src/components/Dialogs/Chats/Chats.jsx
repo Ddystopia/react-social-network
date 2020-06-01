@@ -4,13 +4,15 @@ import ChatListItem from './ChatListItem/ChatListItem'
 import Swal from 'sweetalert2'
 
 const Chats = ({ data, chatActions }) => {
-  const { getAllDialogs, createNewChat, getMessages, setCurrentDialogId } = chatActions
+	const { getAllDialogs, createNewChat, getMessages, setCurrentDialogId } = chatActions
+	
   const firstElemId = data[0]?.id
   useEffect(() => {
     getAllDialogs()
     getMessages(+firstElemId)
     setCurrentDialogId(+firstElemId)
-  }, [firstElemId, getAllDialogs, getMessages, setCurrentDialogId])
+	}, [firstElemId, getAllDialogs, getMessages, setCurrentDialogId])
+	
   const onNewChatClick = async () => {
     const { value: id } = await Swal.fire({
       title: 'Who to start a dialogue with?',
@@ -21,7 +23,8 @@ const Chats = ({ data, chatActions }) => {
     })
     if (+id > 0) createNewChat(id)
     else Swal.fire('Invalid id', '', 'error')
-  }
+	}
+	
   const listItems = data.map((item) => (
     <ChatListItem key={item.id} {...item} onClick={() => getMessages(item.id)} />
   ))
