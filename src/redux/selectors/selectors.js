@@ -55,7 +55,7 @@ const getDialogFriendProfile = createSelector(
   getChatsData,
   getCurrentDialogId,
   (chatsData, currentDialogIed) => {
-    return chatsData.filter((profile) => profile.id === currentDialogIed)[0]
+    return chatsData.find((profile) => profile.id === currentDialogIed)
   }
 )
 
