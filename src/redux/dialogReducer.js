@@ -104,6 +104,7 @@ const createNewChat = (userId) => async (dispatch) => {
 
 const getMessages = (userId) => async (dispatch) => {
   if (!userId) return
+  dispatch(setMessages([]))
   const response = await dialogsAPI.getMessages(userId)
   dispatch(setMessages(response.items))
   dispatch(setCurrentDialogId(userId))
