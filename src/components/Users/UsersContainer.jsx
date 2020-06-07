@@ -26,8 +26,8 @@ const UsersContainer = ({
   setCount,
 }) => {
   useEffect(() => {
-    if (data.length === 0) getUsers(page, pageCount)
-  })
+    if (data.length === 0 && !isFetching) getUsers(page, pageCount)
+  }, [data.length, getUsers, isFetching, page, pageCount])
   const changePage = (p) => getUsers(p, pageCount)
 
   return isFetching ? (

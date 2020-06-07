@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from './Users.module.css'
 import User from './User/User'
 import Pagination from './Pagination/Pagination'
+const MIN_COUNT = 2
 
 const Users = ({
   data,
@@ -37,11 +38,12 @@ const Users = ({
         <select
           onChange={(e) => {
             setPageCount(e.target.value)
-          }}
+          }}	
+          value={pageCount}
         >
           {new Array(7).fill(null).map((item, i) => (
-            <option value={i + 2} key={i + 2} selected={i + 2 === +pageCount}>
-              {i + 2}
+            <option value={i + MIN_COUNT} key={i + MIN_COUNT}>
+              {i + MIN_COUNT}
             </option>
           ))}
         </select>

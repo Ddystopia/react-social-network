@@ -2,6 +2,7 @@
 .content > .usersList {
   display: grid;
   gap: 20px;
+  padding-bottom: 10px;
 }
 
 .navWrapper {
