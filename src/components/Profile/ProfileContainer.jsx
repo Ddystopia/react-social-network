@@ -16,12 +16,14 @@ import {
   getAuthUserId,
   getStatus,
   getIsFetchingProfile,
+  getAuthProfile,
 } from '../../redux/selectors/selectors'
 
 const ProfileContainer = ({
   match,
   authUserId,
   profile,
+  authProfile,
   history,
   setProfile,
   getUserStatus,
@@ -31,25 +33,28 @@ const ProfileContainer = ({
   setPhoto,
   setProfileData,
 }) => {
+  const paramId = +match.params.userId
   useEffect(() => {
-    const userId = +match.params.userId || authUserId
+    const userId = paramId || authUserId
     if (profile?.userId === userId) return
     if (!userId) return history.push('/login')
 
     const getProfile = (userId) => {
-      setProfile(userId)
+      if (userId === authUserId && authProfile) return
+      setProfile(userId, userId === authUserId)
       getUserStatus(userId)
     }
     getProfile(userId)
-  }, [match.params.userId, authUserId, profile, history, setProfile, getUserStatus])
+  }, [paramId, authUserId, profile, history, setProfile, getUserStatus, authProfile])
+
   return profile && !isFetching ? (
     <Profile
-      profile={profile}
+      profile={paramId === authUserId || !paramId ? authProfile : profile}
       status={status}
       updateUserStatus={updateUserStatus}
       authUserId={authUserId}
       setPhoto={setPhoto}
-      isOwner={!match.params.userId || authUserId === profile.userId}
+      isOwner={!paramId || authUserId === profile.userId}
       setProfile={setProfileData}
     />
   ) : (
@@ -59,6 +64,7 @@ const ProfileContainer = ({
 
 const mapStateToProps = (state) => ({
   profile: getProfile(state),
+  authProfile: getAuthProfile(state),
   authUserId: getAuthUserId(state),
   status: getStatus(state),
   isFetching: getIsFetchingProfile(state),

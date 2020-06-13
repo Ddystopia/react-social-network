@@ -42,6 +42,9 @@ const getMessagesData = (state) => {
 const getProfile = (state) => {
   return state.profileData.profile
 }
+const getAuthProfile = (state) => {
+  return state.profileData.authProfile
+}
 const getStatus = (state) => {
   return state.profileData.status
 }
@@ -77,7 +80,8 @@ export {
   getLogin,
   getCaptchaUrlSelector,
   getIsFetchingAuth,
-  getProfile,
+	getProfile,
+	getAuthProfile,
 	getStatus,
 	getIsFetchingMessages,
   getIsFetchingProfile,

@@ -19,8 +19,8 @@ const LoginContainer = React.lazy(() => import('./components/Login/LoginContaine
 
 const App = ({ initializeApp, initialized }) => {
   useEffect(() => {
-    initializeApp()
-  }, [initializeApp])
+    if (!initialized) initializeApp()
+  }, [initializeApp, initialized])
 
   useEffect(() => {
     const catchAllUnhandledErrors = (err) => {

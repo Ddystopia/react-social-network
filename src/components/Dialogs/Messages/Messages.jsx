@@ -5,15 +5,26 @@ import SendForm from './SendForm/SendForm'
 import empty from '../../../assets/images/mailbox-empty.svg'
 import { connect } from 'react-redux'
 import Preloader from '../../common/Preloader/Preloader'
-import { getProfile, getDialogFriendProfile, getIsFetchingMessages } from '../../../redux/selectors/selectors'
+import { setProfile } from '../../../redux/profileReducer'
+import {
+  getAuthProfile,
+  getDialogFriendProfile,
+	getIsFetchingMessages,
+} from '../../../redux/selectors/selectors'
 
-
-const Messages = ({ data, messageActions, haveChats, profile, elseProfile, isFetching }) => {
+const Messages = ({
+  data,
+  messageActions,
+  haveChats,
+  profile,
+  elseProfile,
+  isFetching,
+}) => {
   const {
     sendMessage,
+    removeMessage,
     // getNewMessagesCount,
     // checkIsViewed,
-    removeMessage,
     // restoreMessage,
   } = messageActions
   const messagesDiv = React.createRef()
@@ -36,10 +47,11 @@ const Messages = ({ data, messageActions, haveChats, profile, elseProfile, isFet
     })
 
   useEffect(() => {
-		const element = messagesDiv.current
-		if(!element) return
+    const element = messagesDiv.current
+    if (!element) return
     element.scrollTop = element.scrollHeight
   })
+
   if (isFetching) return <Preloader />
 
   return (
@@ -61,9 +73,9 @@ const Messages = ({ data, messageActions, haveChats, profile, elseProfile, isFet
 
 export default connect(
   (state) => ({
-    profile: getProfile(state),
+    profile: getAuthProfile(state),
     elseProfile: getDialogFriendProfile(state),
     isFetching: getIsFetchingMessages(state),
   }),
-  {}
+  { setProfile }
 )(Messages)

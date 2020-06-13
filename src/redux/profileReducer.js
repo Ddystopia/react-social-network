@@ -4,6 +4,7 @@ import { errorHandler } from '../utils/errorHandlers'
 const ADD_POST = 'profileReducer/ADD_POST'
 const REMOVE_POST = 'profileReducer/REMOVE_POST'
 const SET_PROFILE_USER = 'profileReducer/SET_PROFILE_USER'
+const SET_PROFILE_AUTH = 'profileReducer/AUTH'
 const TOGGLE_IS_FETCHING = 'profileReducer/TOGGLE_IS_FETCHING'
 const SET_USER_STATUS = 'profileReducer/SET_USER_STATUS'
 const SET_PHOTO_SUCCESS = 'profileReducer/SET_PHOTO_SUCCESS'
@@ -32,6 +33,7 @@ const initial = {
     },
   ],
   profile: null,
+  authProfile: null,
   isFetching: false,
   status: '',
 }
@@ -57,6 +59,8 @@ const profileReducer = (state = initial, action) => {
       }
     case SET_PROFILE_USER:
       return { ...state, profile: action.profile }
+    case SET_PROFILE_AUTH:
+      return { ...state, authProfile: action.authProfile }
     case SET_USER_STATUS:
       return { ...state, status: action.status }
     case SET_PHOTO_SUCCESS:
@@ -74,6 +78,7 @@ const profileReducer = (state = initial, action) => {
 const addPost = (message) => ({ type: ADD_POST, message })
 const removePost = (id) => ({ type: REMOVE_POST, id })
 const setProfileUser = (profile) => ({ type: SET_PROFILE_USER, profile })
+const setProfileAuth = (authProfile) => ({ type: SET_PROFILE_AUTH, authProfile })
 const setUserStatus = (status) => ({ type: SET_USER_STATUS, status })
 const setPhotoSuccess = (photos) => ({ type: SET_PHOTO_SUCCESS, photos })
 const toggleIsFetching = (isFetching) => ({
@@ -81,10 +86,11 @@ const toggleIsFetching = (isFetching) => ({
   isFetching,
 })
 
-const setProfile = (userId) => async (dispatch) => {
+const setProfile = (userId, isAuthUser = false) => async (dispatch) => {
   dispatch(toggleIsFetching(true))
   try {
     const data = await profileAPI.getProfile(userId)
+    if (isAuthUser) dispatch(setProfileAuth(data))
     dispatch(setProfileUser(data))
   } catch (err) {
     errorHandler(err)
@@ -142,4 +148,5 @@ export {
   setUserStatus,
   setPhoto,
   setProfileData,
+  setProfileAuth,
 }

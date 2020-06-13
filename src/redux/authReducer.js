@@ -1,5 +1,7 @@
 import { authAPI, securityAPI } from '../api/api'
 import { errorHandler } from '../utils/errorHandlers'
+import { setProfileAuth, setProfileUser } from './profileReducer'
+import { initializeApp, setInitialize } from './appReducer'
 
 const TOGGLE_IS_FETCHING = 'authReducer/TOGGLE_IS_FETCHING'
 const SET_AUTH_USER = 'authReducer/SET_AUTH_USER'
@@ -78,7 +80,8 @@ const login = (formData) => async (dispatch) => {
     const r = await authAPI.login(formData)
     switch (r.resultCode) {
       case 0:
-        dispatch(authUser())
+				dispatch(setInitialize(false))
+				dispatch(initializeApp())
         dispatch(setCaptchaUrl(null))
         break
       case 10:
@@ -94,7 +97,9 @@ const login = (formData) => async (dispatch) => {
 
 const logout = () => async (dispatch) => {
   const r = await authAPI.logout()
-  if (r.resultCode === 0) dispatch(authUser())
+  if (r.resultCode === 0) {
+    dispatch(authUser())
+  }
 }
 
 const getCaptchaUrl = () => async (dispatch) => {
