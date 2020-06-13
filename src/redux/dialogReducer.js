@@ -5,6 +5,7 @@ const EDIT_MESSAGE = 'dialogReducer/EDIT_MESSAGE'
 const SET_DIALOGS = 'dialogReducer/SET_DIALOGS'
 const SET_CURRENT_DIALOG_id = 'dialogReducer/SET_CURRENT_DIALOG_id'
 const SET_MESSAGES = 'dialogReducer/SET_MESSAGES'
+const TOGGLE_IS_FETCHING = 'dialogReducer/TOGGLE_IS_FETCHING'
 const SET_NEW_MESSAGES_COUNT = 'dialogReducer/SET_NEW_MESSAGES_COUNT'
 
 const initial = {
@@ -41,6 +42,7 @@ const initial = {
   ],
   newMessagesCount: 0,
   currentDialogId: null,
+  messagesFetching: false,
 }
 
 const dialogReducer = (state = initial, action) => {
@@ -77,6 +79,11 @@ const dialogReducer = (state = initial, action) => {
         ...state,
         newMessagesCount: action.newMessagesCount,
       }
+    case TOGGLE_IS_FETCHING:
+      return {
+        ...state,
+        messagesFetching: action.messagesFetching,
+      }
     default:
       return state
   }
@@ -91,6 +98,10 @@ const setNewMessagesCount = (newMessagesCount) => ({
   type: SET_NEW_MESSAGES_COUNT,
   newMessagesCount,
 })
+const toggleIsFetching = (messagesFetching) => ({
+  type: TOGGLE_IS_FETCHING,
+  messagesFetching,
+})
 
 const getAllDialogs = () => async (dispatch) => {
   const dialogs = await dialogsAPI.getAllDialogs()
@@ -104,9 +115,10 @@ const createNewChat = (userId) => async (dispatch) => {
 
 const getMessages = (userId) => async (dispatch) => {
   if (!userId) return
-  dispatch(setMessages([]))
+  dispatch(toggleIsFetching(true))
   const response = await dialogsAPI.getMessages(userId)
   dispatch(setMessages(response.items))
+  dispatch(toggleIsFetching(false))
   dispatch(setCurrentDialogId(userId))
 }
 

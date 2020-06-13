@@ -48,6 +48,9 @@ const getStatus = (state) => {
 const getIsFetchingProfile = (state) => {
   return state.profileData.isFetching
 }
+const getIsFetchingMessages = (state) => {
+  return state.dialogData.messagesFetching
+}
 const getCurrentDialogId = (state) => {
   return state.dialogData.currentDialogId
 }
@@ -75,7 +78,8 @@ export {
   getCaptchaUrlSelector,
   getIsFetchingAuth,
   getProfile,
-  getStatus,
+	getStatus,
+	getIsFetchingMessages,
   getIsFetchingProfile,
   getDialogFriendProfile,
 }
