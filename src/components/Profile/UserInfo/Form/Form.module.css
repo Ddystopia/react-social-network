@@ -1,26 +1,49 @@
 .form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr; */
+  grid-template-areas:
+    'user-data contacts'
+    'buttons buttons';
   position: relative;
+  padding: 0;
+  justify-items: center;
 }
+
+.form article:nth-child(1) {
+  grid-area: user-data;
+}
+
+.form article:nth-child(2) {
+  grid-area: contacts;
+}
+
+.form article:nth-child(3) {
+  grid-area: buttons;
+}
+
 .contacts {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, 1fr);
+  padding: 0;
 }
 
-/* .form input {
-  margin: 10px auto;
-	width: 200px;
-	border: 1px solid black;
-} */
+.form article {
+  padding: 0;
+}
+
+.form article div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .form input,
 .form button {
-  width: 200px;
+  width: 180px;
   border: 1px solid transparent;
   background-color: #e6e6e6;
-  margin: 10px auto;
+  margin: 10px 0px 10px 2px;
   padding: 10px;
   border-radius: 20px;
 }
@@ -31,24 +54,54 @@
   opacity: 1; /* Firefox */
 }
 
-.form button[type='submit'] {
-  position: absolute;
-  bottom: -10px;
-  right: 12px;
+.form input[type='checkbox'] {
+  margin-left: 20px;
 }
 
 .form .close {
-  cursor: pointer;
+  color: white;
+  font-weight: bold;
   background-color: rgb(165, 165, 165);
 }
 
 .job {
-  display: grid;
-  align-items: center;
-  justify-items: stretch;
-  grid-template-columns: 20px 1fr;
+  display: block !important;
 }
 
-.job input {
+.job label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.job label input {
   width: auto;
+}
+
+.form .buttons {
+  display: flex;
+  justify-content: space-around;
+	justify-self: stretch;
+	flex-wrap: wrap;
+}
+
+@media screen and (max-width: 850px) {
+  .form {
+    /* grid-template-columns: 1fr; */
+    grid-template-areas:
+      'user-data'
+      'contacts'
+      'buttons';
+    justify-items: start;
+  }
+  .contacts li {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .contacts {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,15 +1,22 @@
 .user_info {
   display: grid;
-  grid-template-columns: 135px 1fr 1fr;
+  grid-template-columns: 135px 1fr;
   gap: 10px;
+}
+.user_info > .avatar {
+  padding: 0;
 }
 
 .user_info > .avatar > img {
   width: 135px;
   max-width: none;
+  padding: 0;
 }
 
 .user_info > .avatar > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 25px;
 }
 
@@ -31,10 +38,34 @@
   color: #025fa0;
 }
 
-@media screen and (max-width: 425px) {
+.edit > button {
+  font-size: 1.2rem;
+  padding: 8px 15px;
+}
+
+@media screen and (max-width: 770px) {
   .user_info {
-    display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 150px 1fr;
     grid-template-rows: 1fr 1fr;
+    font-size: 1.5rem;
+  }
+
+  .linkList {
+    margin-left: 7px;
+  }
+
+  .edit > button {
+    letter-spacing: 2px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .user_info {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-template-rows: 150px 1fr;
+  }
+  .linkList > li > a {
+    overflow-wrap: anywhere;
   }
 }

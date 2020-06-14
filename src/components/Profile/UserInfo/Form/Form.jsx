@@ -7,29 +7,30 @@ const SendForm = ({ errors, touched, contacts, values, setEditMode }) => {
   return (
     <Form className={classNames.form}>
       <article className={classNames.user_info_text}>
-        <h3>
-          Name: <Field name={'fullName'} />
-        </h3>
+        <div>
+          <h3>Name: </h3>
+          <Field name={'fullName'} />
+        </div>
         <div>
           About me: <Field name={'aboutMe'} />
         </div>
-        <div>
+        <div className={classNames.job}>
           Looking for a job:
-          <label className={classNames.job}>
+          <label>
             <Field name="lookingForAJob" type="checkbox" checked={values.lookingForAJob} />
             <Field name="lookingForAJobDescription" />
           </label>
         </div>
       </article>
       <article>
-        <div>Contacts:</div>
+        <h3>Contacts:</h3>
         <ul className={classNames.contacts}>
           {Object.keys(contacts).map((el) => {
             const hasError =
               errors.contacts && touched.contacts && errors.contacts[el] && touched.contacts[el]
             return (
               <li key={el}>
-                {el}:
+                <div>{el}:</div>
                 <Field
                   value={values.contacts[el] || ''}
                   name={`contacts.${el}`}
@@ -42,12 +43,12 @@ const SendForm = ({ errors, touched, contacts, values, setEditMode }) => {
           })}
         </ul>
       </article>
-      <button className={classNames.close} type="button" onClick={() => setEditMode(false)}>
-        Close
-      </button>
-      <button type="submit">
-        Submit
-      </button>
+      <article className={classNames.buttons}>
+        <button className={classNames.close} type="button" onClick={() => setEditMode(false)}>
+          Close
+        </button>
+        <button type="submit">Submit</button>
+      </article>
     </Form>
   )
 }
