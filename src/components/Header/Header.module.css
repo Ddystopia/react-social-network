@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+
 .header {
   display: flex;
   align-items: center;
@@ -7,17 +9,20 @@
   grid-area: header;
 }
 
-.header > img {
-  width: 55px;
-}
-
-.header > .loginDiv {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.loginDiv > .logAct {
+.header > .logAct > button {
   cursor: pointer;
-  padding: auto 10px;
+  font-size: 1.2rem;
+  padding: 7px 13px;
+  background-color: #e6e6e6;
+  border-radius: 20px;
+}
+
+.header > .welcome {
+	margin-left: 35px;
+}
+
+.header > .welcome > h1 {
+	font-family: 'Sriracha', cursive;
+  font-size: 2.3rem;
+  font-weight: normal;
 }

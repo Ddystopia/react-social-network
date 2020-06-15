@@ -10,6 +10,7 @@ const Nav = (props) => {
       <div className={classNames.menuButton} onClick={menuChange}>
         Menu
       </div>
+      <div className={classNames.leftSide} />
       <ul id="menu" hidden={menuState}>
         <ListItem text={'Profile'} to={'/profile'} keyProp={1} active={classNames.active} />
         <ListItem text={'Messages'} to={'/dialogs'} keyProp={2} active={classNames.active} />

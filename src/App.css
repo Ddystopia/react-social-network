@@ -22,7 +22,7 @@ textarea {
 }
 html {
   font-size: 16px;
-  --standard_color: #1aa135;
+  --standard_color: #7f5b5b;
 }
 
 img {
@@ -40,8 +40,8 @@ img {
   grid-template-areas:
     'header header'
     'nav main';
-  grid-template-columns: 2fr 10fr;
-  grid-template-rows: 52px 70vh;
+  grid-template-columns: 4fr 18fr;
+  grid-template-rows: 52px 75vh;
   grid-gap: 20px;
   width: 1000px;
 }

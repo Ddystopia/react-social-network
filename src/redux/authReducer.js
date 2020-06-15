@@ -1,6 +1,5 @@
 import { authAPI, securityAPI } from '../api/api'
 import { errorHandler } from '../utils/errorHandlers'
-import { setProfileAuth, setProfileUser } from './profileReducer'
 import { initializeApp, setInitialize } from './appReducer'
 
 const TOGGLE_IS_FETCHING = 'authReducer/TOGGLE_IS_FETCHING'

@@ -1,8 +1,9 @@
 .nav {
-  grid-area: nav;
-  background-color: var(--standard_color);
-  position: relative;
+  display: grid;
+  grid-template-areas: 'ls ul';
   padding: 0;
+  position: relative;
+  grid-area: nav;
 }
 
 .menuButton {
@@ -10,11 +11,24 @@
   text-align: center;
   font-size: 2rem;
   line-height: 2rem;
+  grid-area: butt;
+  background-color: var(--standard_color);
+}
+
+.leftSide {
+  width: 40px;
+  background: url('../../assets/images/gross.png') no-repeat #000;
+  background-size: cover;
+  grid-area: ls;
 }
 
 .nav > ul {
   display: flex;
   flex-direction: column;
+  padding-top: 5px;
+  background-color: var(--standard_color);
+  border-radius: 0 15px 15px 0;
+  grid-area: ul;
   z-index: 2;
 }
 
@@ -23,21 +37,18 @@
   font-size: 1.5rem;
   padding: 0;
   margin: 2px;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
 .nav > ul > li:hover,
 .active {
-  background-color: #186d29;
+  background-color: #584646;
   cursor: pointer;
 }
 
-.nav > ul > li.empty:hover {
-  background-color: var(--standard_color);
-  cursor: auto;
-}
-
 .nav > ul > li > a {
-  padding: 5px;
+  padding: 6px 13px;
 }
 
 li {
@@ -49,21 +60,31 @@ li {
 }
 
 @media screen and (max-width: 1100px) {
+  .nav {
+    grid-template-areas: 'ul';
+  }
   .nav > ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    border-radius: 0;
   }
   .nav > ul > li > a {
     padding: 5px 2.5vw;
   }
-  .nav > ul > li.empty {
+  .leftSide {
     display: none;
   }
 }
 
 @media screen and (max-width: 760px) {
+  .nav {
+    border-radius: 0;
+    grid-template-areas:
+      'butt'
+      'ul';
+  }
   .nav > ul {
     flex-direction: column;
     align-self: stretch;

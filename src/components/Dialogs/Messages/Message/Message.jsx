@@ -11,6 +11,8 @@ export default ({ data, profile, classEnd, removeMessage }) => {
 
   const contextMenuRef = React.createRef()
   const [hidden, setHidden] = useState(true)
+  let buttonPressTimer
+
   const openContextMenu = (e) => {
     e.preventDefault()
     setHidden(false)
@@ -21,12 +23,24 @@ export default ({ data, profile, classEnd, removeMessage }) => {
   useEffect(() => {
     hidden || contextMenuRef.current.focus()
   })
+  const handleButtonPress = (e) => {
+    buttonPressTimer = setTimeout(() => openContextMenu(e), 1500)
+  }
+
+  const handleButtonRelease = () => {
+    clearTimeout(buttonPressTimer)
+  }
 
   return (
     <article className={messageClassName}>
       <img alt="avatar" src={profile.photos.small || standardAvatar} />
-      <div className={classNames.content} onContextMenu={openContextMenu}>
-        {data.body}
+      <div
+        className={classNames.content}
+        onContextMenu={openContextMenu}
+        onTouchStart={handleButtonPress}
+        onTouchEnd={handleButtonRelease}
+      >
+        <p>{data.body}</p>
         <div className={dateClassName}>{date}</div>
         {data.viewed && <div className={viewedClassName}>👁</div>}
       </div>

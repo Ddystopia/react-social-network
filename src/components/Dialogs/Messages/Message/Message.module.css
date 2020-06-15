@@ -7,6 +7,10 @@
   max-width: 350px;
 }
 
+.content > p {
+	padding: 0;
+}
+
 .message {
   display: flex;
   align-items: center;
