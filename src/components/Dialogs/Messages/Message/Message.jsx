@@ -3,7 +3,7 @@ import classNames from './Message.module.css'
 import CMClassNames from './ContextMenu.module.css'
 import standardAvatar from '../../../../assets/images/standardAvatar.jpg'
 
-export default ({ data, profile, classEnd, removeMessage }) => {
+export default ({ data, profile, classEnd, removeMessage, restoreMessage }) => {
   const date = calcDate(data.addedAt)
   const messageClassName = getClassName('message', classEnd)
   const dateClassName = getClassName('date', classEnd)
@@ -52,7 +52,11 @@ export default ({ data, profile, classEnd, removeMessage }) => {
         tabIndex="-1"
       >
         <ul>
-          <li onClick={() => removeMessage(data.id)}>Remove self</li>
+          {!!data.deletedBySender ? (
+            <li onClick={() => restoreMessage(data)}>Restore self</li>
+          ) : (
+            <li onClick={() => removeMessage(data)}>Remove self</li>
+          )}
           <li>{data.viewed ? 'Viewed' : 'Not viewed'}</li>
         </ul>
       </div>

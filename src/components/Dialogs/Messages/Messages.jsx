@@ -5,11 +5,14 @@ import SendForm from './SendForm/SendForm'
 import empty from '../../../assets/images/mailbox-empty.svg'
 import { connect } from 'react-redux'
 import Preloader from '../../common/Preloader/Preloader'
-import { setProfile } from '../../../redux/profileReducer'
+import { getNewMessages } from '../../../redux/dialogReducer'
 import {
   getAuthProfile,
   getDialogFriendProfile,
-	getIsFetchingMessages,
+  getIsFetchingMessages,
+  getChatsData,
+	getCurrentDialogId,
+	getLastCheck
 } from '../../../redux/selectors/selectors'
 
 const Messages = ({
@@ -19,22 +22,37 @@ const Messages = ({
   profile,
   elseProfile,
   isFetching,
+  isBin,
+  chatsData,
+	currentDialogId,
+	getNewMessages,
+	lastCheck
 }) => {
   const {
     sendMessage,
     removeMessage,
-    // getNewMessagesCount,
+    restoreMessage,
     // checkIsViewed,
-    // restoreMessage,
   } = messageActions
+  useEffect(() => {
+		const chat = chatsData.find((item) => item.id === currentDialogId)
+		if(!chat) return
+		if(chat.newMessagesCount > 0) getNewMessages(chat.id, lastCheck)
+  }, [chatsData, currentDialogId, getNewMessages, lastCheck])
+
+  useEffect(() => {
+    const element = messagesDiv.current
+    if (!element) return
+    element.scrollTop = element.scrollHeight
+  })
   const messagesDiv = React.createRef()
   const messages = data
-    .filter((item) => !item.deletedBySender)
+    .filter((item) => isBin === !!item.deletedBySender)
     .map((item) => ({ ...item, addedAt: new Date(item.addedAt) }))
     .sort((a, b) => a.addedAt - b.addedAt)
     .slice(0, Math.min(data.length, 100))
     .map((item) => {
-      const self = profile.userName === item.userName
+      const self = profile.userId === item.senderId
       return (
         <Message
           key={item.id}
@@ -42,15 +60,10 @@ const Messages = ({
           classEnd={self ? 'Self' : 'Else'}
           profile={self ? profile : elseProfile}
           removeMessage={removeMessage}
+          restoreMessage={restoreMessage}
         />
       )
     })
-
-  useEffect(() => {
-    const element = messagesDiv.current
-    if (!element) return
-    element.scrollTop = element.scrollHeight
-  })
 
   if (isFetching) return <Preloader />
 
@@ -76,6 +89,9 @@ export default connect(
     profile: getAuthProfile(state),
     elseProfile: getDialogFriendProfile(state),
     isFetching: getIsFetchingMessages(state),
+    chatsData: getChatsData(state),
+		currentDialogId: getCurrentDialogId(state),
+		lastCheck: getLastCheck(state)
   }),
-  { setProfile }
+  { getNewMessages }
 )(Messages)

@@ -57,6 +57,12 @@ const getIsFetchingMessages = (state) => {
 const getCurrentDialogId = (state) => {
   return state.dialogData.currentDialogId
 }
+const getLastCheck = (state) => {
+  return state.dialogData.lastCheck
+}
+const getNewMessagesCountSelector = (state) => {
+  return state.dialogData.newMessagesCount
+}
 const getDialogFriendProfile = createSelector(
   getChatsData,
   getCurrentDialogId,
@@ -72,18 +78,20 @@ export {
   getUsersCount,
   getIsFetchingUserData,
   getIsFollowing,
-  getChatsData,
-  getMessagesData,
+	getChatsData,
+	getLastCheck,
+	getMessagesData,
+	getNewMessagesCountSelector,
   getCurrentDialogId,
   getAuthUserId,
   getIsAuth,
   getLogin,
   getCaptchaUrlSelector,
   getIsFetchingAuth,
-	getProfile,
-	getAuthProfile,
-	getStatus,
-	getIsFetchingMessages,
+  getProfile,
+  getAuthProfile,
+  getStatus,
+  getIsFetchingMessages,
   getIsFetchingProfile,
   getDialogFriendProfile,
 }

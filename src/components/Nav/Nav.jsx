@@ -1,10 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import classNames from './Nav.module.css'
 import ListItem from './ListItem'
 
 const Nav = (props) => {
-  const [menuState, setMenuState] = useState(window.innerWidth < 761)
-  const menuChange = () => setMenuState(!menuState)
+  const [menuState, setMenuState] = useState(false)
+  const [width, setWidth] = useState(window.innerWidth)
+  useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  })
+  useEffect(() => {
+    setMenuState(width < 761)
+  }, [width])
+	const menuChange = () => setMenuState(!menuState)
+	
   return (
     <nav className={classNames.nav}>
       <div className={classNames.menuButton} onClick={menuChange}>

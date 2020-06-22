@@ -3,10 +3,13 @@ import { dialogsAPI } from '../api/api'
 const SEND_MESSAGE = 'dialogReducer/SEND_MESSAGE'
 const EDIT_MESSAGE = 'dialogReducer/EDIT_MESSAGE'
 const SET_DIALOGS = 'dialogReducer/SET_DIALOGS'
+const SET_LAST_CHECK = 'dialogReducer/SET_LAST_CHECK'
 const SET_CURRENT_DIALOG_id = 'dialogReducer/SET_CURRENT_DIALOG_id'
 const SET_MESSAGES = 'dialogReducer/SET_MESSAGES'
+const ADD_MESSAGES = 'dialogReducer/ADD_MESSAGES'
 const TOGGLE_IS_FETCHING = 'dialogReducer/TOGGLE_IS_FETCHING'
 const SET_NEW_MESSAGES_COUNT = 'dialogReducer/SET_NEW_MESSAGES_COUNT'
+const SET_NEW_MESSAGES_COUNT_IN_CHAT = 'dialogReducer/SET_NEW_MESSAGES_COUNT_IN_CHAT'
 
 const initial = {
   chatsData: [
@@ -42,7 +45,8 @@ const initial = {
   ],
   newMessagesCount: 0,
   currentDialogId: null,
-  messagesFetching: false,
+	messagesFetching: false,
+	lastCheck: new Date()
 }
 
 const dialogReducer = (state = initial, action) => {
@@ -69,15 +73,32 @@ const dialogReducer = (state = initial, action) => {
         ...state,
         currentDialogId: action.currentDialogId,
       }
+    case SET_LAST_CHECK:
+      return {
+        ...state,
+        lastCheck: action.lastCheck,
+      }
     case SET_MESSAGES:
       return {
         ...state,
         messagesData: action.messagesData,
       }
+    case ADD_MESSAGES:
+      return {
+        ...state,
+        messagesData: [...state.messagesData, ...action.messagesData],
+      }
     case SET_NEW_MESSAGES_COUNT:
       return {
         ...state,
         newMessagesCount: action.newMessagesCount,
+      }
+    case SET_NEW_MESSAGES_COUNT_IN_CHAT:
+      return {
+        ...state,
+        chatsData: state.chatsData.map((chat) =>
+          chat.id === action.id ? { ...chat, newMessagesCount: action.newMessagesCount } : chat
+        ),
       }
     case TOGGLE_IS_FETCHING:
       return {
@@ -93,10 +114,17 @@ const accessSendMessage = (messageObj) => ({ type: SEND_MESSAGE, messageObj })
 const editMessageProperties = (id, newMessage) => ({ type: EDIT_MESSAGE, id, newMessage })
 const setDialogs = (chatsData) => ({ type: SET_DIALOGS, chatsData })
 const setCurrentDialogId = (currentDialogId) => ({ type: SET_CURRENT_DIALOG_id, currentDialogId })
+const setLastCheck = (lastCheck) => ({ type: SET_LAST_CHECK, lastCheck })
 const setMessages = (messagesData) => ({ type: SET_MESSAGES, messagesData })
+const addMessages = (messagesData) => ({ type: ADD_MESSAGES, messagesData })
 const setNewMessagesCount = (newMessagesCount) => ({
   type: SET_NEW_MESSAGES_COUNT,
   newMessagesCount,
+})
+const setNewMessagesCountInChat = (id, newMessagesCount) => ({
+  type: SET_NEW_MESSAGES_COUNT_IN_CHAT,
+  newMessagesCount,
+  id,
 })
 const toggleIsFetching = (messagesFetching) => ({
   type: TOGGLE_IS_FETCHING,
@@ -120,6 +148,14 @@ const getMessages = (userId) => async (dispatch) => {
   dispatch(setMessages(response.items))
   dispatch(toggleIsFetching(false))
   dispatch(setCurrentDialogId(userId))
+  dispatch(setNewMessagesCountInChat(userId, 0))
+}
+const getNewMessages = (userId, lastCheck) => async (dispatch) => {
+  if (!userId) return
+	dispatch(setLastCheck(new Date()))
+	dispatch(setNewMessagesCountInChat(userId, 0))
+  const response = await dialogsAPI.getNewMessages(userId, lastCheck)
+  dispatch(addMessages(response))
 }
 
 const getNewMessagesCount = () => async (dispatch) => {
@@ -134,18 +170,21 @@ const sendMessage = (userId, message) => async (dispatch) => {
 
 const checkIsViewed = (messageId) => async (dispatch) => {
   const response = await dialogsAPI.isViewed(messageId)
-  // if(response.resultCode === 0) /*Some do*/
+  if (response.resultCode === 0) {
+    /*Some do*/
+  }
 }
 
-const removeMessage = (messageId, message) => async (dispatch) => {
-  const response = await dialogsAPI.deleteSelf(messageId)
+const removeMessage = (message) => async (dispatch) => {
+  const response = await dialogsAPI.deleteSelf(message.id)
   if (response.resultCode === 0)
-    dispatch(editMessageProperties(messageId, { ...message, deletedBySender: true }))
+    dispatch(editMessageProperties(message.id, { ...message, deletedBySender: true }))
 }
 
-const restoreMessage = (messageId) => async (dispatch) => {
-  const response = await dialogsAPI.restoreMessage(messageId)
-  // if(response.resultCode === 0)
+const restoreMessage = (message) => async (dispatch) => {
+  const response = await dialogsAPI.restoreMessage(message.id)
+  if (response.resultCode === 0)
+    dispatch(editMessageProperties(message.id, { ...message, deletedBySender: false }))
 }
 
 export default dialogReducer
@@ -154,6 +193,7 @@ export {
   createNewChat,
   getMessages,
   getNewMessagesCount,
+  getNewMessages,
   sendMessage,
   checkIsViewed,
   removeMessage,

@@ -66,6 +66,13 @@ const dialogsAPI = {
   getMessages(userId) {
     return instance.get(`dialogs/${userId}/messages`).then((r) => r.data)
   },
+  getNewMessages(userId, lastCheck) {
+    return instance
+      .get(
+        `dialogs/${userId}/messages/new?newerThen=${lastCheck.toJSON().replace(/z[\d.]*$/i, '')}`
+      )
+      .then((r) => r.data)
+  },
   getNewMessagesCount() {
     return instance.get(`dialogs/messages/new/count`).then((r) => r.data)
   },

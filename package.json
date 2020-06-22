@@ -45,6 +45,7 @@
 		"enzyme-adapter-react-16": "^1.15.2",
 		"eslint-config-prettier": "^6.11.0",
 		"eslint-plugin-jest-dom": "^2.1.0",
-		"prettier": "2.0.5"
+		"prettier": "2.0.5",
+		"react-devtools": "^4.7.0"
 	}
 }
