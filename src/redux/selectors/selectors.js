@@ -1,68 +1,55 @@
 import { createSelector } from 'reselect'
 
-const getUsersData = (state) => {
-  return state.usersData.users
-}
-const getPage = (state) => {
-  return state.usersData.page
-}
-const getPageCount = (state) => {
-  return state.usersData.count
-}
-const getUsersCount = (state) => {
-  return state.usersData.usersCount
-}
-const getIsFetchingUserData = (state) => {
-  return state.usersData.isFetching
-}
-const getIsFollowing = (state) => {
-  return state.usersData.isFollowing
-}
-const getIsAuth = (state) => {
-  return state.auth.isAuth
-}
-const getLogin = (state) => {
-  return state.auth.login
-}
-const getCaptchaUrlSelector = (state) => {
-  return state.auth.captchaUrl
-}
-const getIsFetchingAuth = (state) => {
-  return state.auth.isFetching
-}
-const getAuthUserId = (state) => {
-  return state.auth.userId
-}
-const getChatsData = (state) => {
-  return state.dialogData.chatsData
-}
-const getMessagesData = (state) => {
-  return state.dialogData.messagesData
-}
-const getProfile = (state) => {
-  return state.profileData.profile
-}
-const getAuthProfile = (state) => {
-  return state.profileData.authProfile
-}
-const getStatus = (state) => {
-  return state.profileData.status
-}
-const getIsFetchingProfile = (state) => {
-  return state.profileData.isFetching
-}
-const getIsFetchingMessages = (state) => {
-  return state.dialogData.messagesFetching
-}
-const getCurrentDialogId = (state) => {
-  return state.dialogData.currentDialogId
-}
-const getLastCheck = (state) => {
-  return state.dialogData.lastCheck
-}
-const getNewMessagesCountSelector = (state) => {
-  return state.dialogData.newMessagesCount
-}
+const getUsersData = (state) => state.usersData.users
+
+const getUsersPage = (state) => state.usersData.page
+
+const getUsersPageCount = (state) => state.usersData.count
+
+const getUsersCount = (state) => state.usersData.usersCount
+
+const getIsFetchingUserData = (state) => state.usersData.isFetching
+
+const getIsFollowing = (state) => state.usersData.isFollowing
+
+const getIsAuth = (state) => state.auth.isAuth
+
+const getLogin = (state) => state.auth.login
+
+const getCaptchaUrlSelector = (state) => state.auth.captchaUrl
+
+const getIsFetchingAuth = (state) => state.auth.isFetching
+
+const getAuthUserId = (state) => state.auth.userId
+
+const getChatsData = (state) => state.dialogData.chatsData
+
+const getMessagesData = (state) => state.dialogData.messagesData
+
+const getProfile = (state) => state.profileData.profile
+
+const getAuthProfile = (state) => state.profileData.authProfile
+
+const getStatus = (state) => state.profileData.status
+
+const getIsFetchingProfile = (state) => state.profileData.isFetching
+
+const getIsFetchingMessages = (state) => state.dialogData.messagesFetching
+
+const getCurrentDialogId = (state) => state.dialogData.currentDialogId
+
+const getLastCheck = (state) => state.dialogData.lastCheck
+
+const getNewMessagesCountSelector = (state) => state.dialogData.newMessagesCount
+
+const getNewsData = (state) => state.newsData.articles
+
+const getNewsIsFetching = (state) => state.newsData.isFetching
+
+const getNewsPage = (state) => state.newsData.page
+
+const getNewsPageCount = (state) => state.newsData.count
+
 const getDialogFriendProfile = createSelector(
   getChatsData,
   getCurrentDialogId,
@@ -73,15 +60,15 @@ const getDialogFriendProfile = createSelector(
 
 export {
   getUsersData,
-  getPage,
-  getPageCount,
+  getUsersPage,
+  getUsersPageCount,
   getUsersCount,
   getIsFetchingUserData,
   getIsFollowing,
-	getChatsData,
-	getLastCheck,
-	getMessagesData,
-	getNewMessagesCountSelector,
+  getChatsData,
+  getLastCheck,
+  getMessagesData,
+  getNewMessagesCountSelector,
   getCurrentDialogId,
   getAuthUserId,
   getIsAuth,
@@ -93,5 +80,9 @@ export {
   getStatus,
   getIsFetchingMessages,
   getIsFetchingProfile,
+  getNewsData,
+  getNewsIsFetching,
+  getNewsPage,
+  getNewsPageCount,
   getDialogFriendProfile,
 }

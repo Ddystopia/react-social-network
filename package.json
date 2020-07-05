@@ -5,6 +5,7 @@
 	"dependencies": {
 		"axios": "^0.19.2",
 		"formik": "^2.1.4",
+		"newsapi": "^2.4.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-paginate": "^6.3.2",
@@ -45,6 +46,8 @@
 		"enzyme-adapter-react-16": "^1.15.2",
 		"eslint-config-prettier": "^6.11.0",
 		"eslint-plugin-jest-dom": "^2.1.0",
+		"eslint-plugin-react": "^7.20.0",
+		"eslint-plugin-react-hooks": "^4.0.5",
 		"prettier": "2.0.5",
 		"react-devtools": "^4.7.0"
 	}

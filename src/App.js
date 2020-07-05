@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import HeaderContainer from './components/Header/HeaderContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
 import DialogsContainer from './components/Dialogs/DialogsContainer'
+// import NewsContainer from "./components/News/NewsContainer"
 // import UsersContainer from "./components/Users/UsersContainer"
 // import LoginContainer from "./components/Login/LoginContainer"
 import Nav from './components/Nav/Nav'
@@ -14,6 +15,7 @@ import Preloader from './components/common/Preloader/Preloader'
 import swal from 'sweetalert2'
 import { withSuspense } from './hoc/withSuspense'
 
+const NewsContainer = React.lazy(() => import('./components/News/NewsContainer'))
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'))
 const LoginContainer = React.lazy(() => import('./components/Login/LoginContainer'))
 
@@ -39,6 +41,7 @@ const App = ({ initializeApp, initialized }) => {
           <Redirect exact from="/" to="/profile" />
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
           <Route path="/dialogs/:userId?" render={() => <DialogsContainer />} />
+          <Route path="/news" render={withSuspense(NewsContainer)} />
           <Route path="/users" render={withSuspense(UsersContainer)} />
           <Route path="/login" render={withSuspense(LoginContainer)} />
           <Route path="*" render={() => <div>404 not found</div>} />

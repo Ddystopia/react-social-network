@@ -1,4 +1,6 @@
 import * as axios from 'axios'
+import NewsAPI from 'newsapi'
+const newsapi = new NewsAPI('8cd00d3cacde4da2a2dcb5895d6fea47')
 
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -99,4 +101,17 @@ const securityAPI = {
   },
 }
 
-export { usersAPI, authAPI, profileAPI, securityAPI, dialogsAPI }
+const newsAPI = {
+  getArticles(page, count) {
+    return newsapi.v2
+      .everything({
+        language: 'en',
+        q: 'front-end',
+        page,
+        count,
+      })
+      .then((r) => r.articles)
+  },
+}
+
+export { usersAPI, authAPI, profileAPI, securityAPI, dialogsAPI, newsAPI }

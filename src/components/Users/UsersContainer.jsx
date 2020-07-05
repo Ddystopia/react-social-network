@@ -6,8 +6,8 @@ import { getUsers, follow, unFollow, setCount } from '../../redux/usersReducer'
 import { compose } from 'redux'
 import {
   getUsersData,
-  getPage,
-  getPageCount,
+  getUsersPage,
+  getUsersPageCount,
   getUsersCount,
   getIsFetchingUserData,
   getIsFollowing,
@@ -49,8 +49,8 @@ const UsersContainer = ({
 
 const mapStateToProps = (state) => ({
   data: getUsersData(state),
-  page: getPage(state),
-  pageCount: getPageCount(state),
+  page: getUsersPage(state),
+  pageCount: getUsersPageCount(state),
   usersCount: getUsersCount(state),
   isFetching: getIsFetchingUserData(state),
   isFollowing: getIsFollowing(state),
