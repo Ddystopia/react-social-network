@@ -20,10 +20,10 @@ const Chats = ({ data, chatActions, newMessagesCount }) => {
   }, [firstElemId, getAllDialogs, getMessages, setCurrentDialogId])
 
   useEffect(() => {
-		if (newMessagesCount > 0) getAllDialogs()
-		const checkNMC = setInterval(() => getNewMessagesCount(), 10000)
-		return () => clearInterval(checkNMC)
-	}, [getAllDialogs, getNewMessagesCount, newMessagesCount])
+    if (newMessagesCount > 0) getAllDialogs()
+    const checkNMC = setInterval(() => getNewMessagesCount(), 10000)
+    return () => clearInterval(checkNMC)
+  }, [getAllDialogs, getNewMessagesCount, newMessagesCount])
 
   const onNewChatClick = async () => {
     const { value: id } = await Swal.fire({
@@ -44,9 +44,9 @@ const Chats = ({ data, chatActions, newMessagesCount }) => {
     <section className={classNames.chats}>
       <header>
         <h2>Chats</h2>{' '}
-        <div className={classNames.newChat} onClick={onNewChatClick}>
+        <button className={classNames.newChat} onClick={onNewChatClick} aria-label="New chat">
           <span>+</span>
-        </div>
+        </button>
       </header>
       <ul>{listItems}</ul>
     </section>

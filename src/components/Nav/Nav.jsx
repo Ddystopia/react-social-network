@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import classNames from './Nav.module.css'
 import ListItem from './ListItem'
 
-const Nav = (props) => {
+const Nav = () => {
   const [menuState, setMenuState] = useState(false)
   const [width, setWidth] = useState(window.innerWidth)
   useEffect(() => {
@@ -13,8 +13,8 @@ const Nav = (props) => {
   useEffect(() => {
     setMenuState(width < 761)
   }, [width])
-	const menuChange = () => setMenuState(!menuState)
-	
+  const menuChange = () => setMenuState(!menuState)
+
   return (
     <nav className={classNames.nav}>
       <div className={classNames.menuButton} onClick={menuChange}>
@@ -26,8 +26,7 @@ const Nav = (props) => {
         <ListItem text={'Messages'} to={'/dialogs'} keyProp={2} active={classNames.active} />
         <ListItem text={'Users'} to={'/users'} keyProp={3} active={classNames.active} />
         <ListItem text={'News'} to={'/news'} keyProp={4} active={classNames.active} />
-        <ListItem text={'Music'} to={'/music'} keyProp={5} active={classNames.active} />
-        <ListItem text={'Settings'} to={'/settings'} keyProp={6} active={classNames.active} />
+        <ListItem text={'Settings'} to={'/settings'} keyProp={5} active={classNames.active} />
       </ul>
     </nav>
   )
