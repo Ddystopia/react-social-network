@@ -26,10 +26,9 @@ const Nav = () => {
         <ListItem text={'Messages'} to={'/dialogs'} keyProp={2} active={classNames.active} />
         <ListItem text={'Users'} to={'/users'} keyProp={3} active={classNames.active} />
         <ListItem text={'News'} to={'/news'} keyProp={4} active={classNames.active} />
-        <ListItem text={'Settings'} to={'/settings'} keyProp={5} active={classNames.active} />
       </ul>
     </nav>
   )
 }
 
-export default Nav
+export default React.memo(Nav)

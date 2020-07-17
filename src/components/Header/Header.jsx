@@ -20,4 +20,4 @@ const Header = ({ logout, isAuth, login }) => {
     </header>
   )
 }
-export default Header
+export default React.memo(Header)

@@ -54,3 +54,21 @@ img {
   justify-content: center;
   align-items: center;
 }
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  /* background: #f1f1f1; */
+  padding: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background: var(--standard_color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
