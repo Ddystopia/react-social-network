@@ -7,7 +7,7 @@ import { Row } from '../../../Login/Row/Row'
 const SendForm = ({ errors, touched }) => {
   return (
     <Form className={classNames.form}>
-      <Row error={errors.post} touched={touched.post} className={classNames.textarea}>
+      <Row hasError={touched.post && errors.post} className={classNames.textarea}>
         <Field component="textarea" name={'post'} placeholder={'Type new post'} />
       </Row>
       <button type="submit">Send</button>

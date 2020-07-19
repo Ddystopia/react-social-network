@@ -5,7 +5,10 @@
   content: '!';
   position: absolute;
   color: tomato;
-  right: -10px;
+  right: -17px;
   top: 7px;
   font-size: 1.5rem;
+}
+.error > * {
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px tomato;
 }

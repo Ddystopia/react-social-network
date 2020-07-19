@@ -12,7 +12,7 @@ const SendForm = ({ errors, touched, submitForm }) => {
   }
   return (
     <Form className={classNames.posts}>
-      <Row error={errors.message} touched={touched.message} className={classNames.textarea}>
+      <Row hasError={errors.message && touched.message} className={classNames.textarea}>
         <Field
           component="textarea"
           name={'message'}

@@ -59,7 +59,7 @@ const FormikLoginForm = withFormik({
   },
 })(LoginForm)
 
-export default ({ loginUser, captchaUrl }) => {
+const Login = ({ loginUser, captchaUrl }) => {
   return (
     <section className={classNames.login}>
       <h2>Log in</h2>
@@ -67,3 +67,4 @@ export default ({ loginUser, captchaUrl }) => {
     </section>
   )
 }
+export default Login

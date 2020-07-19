@@ -64,7 +64,7 @@ const profileReducer = (state = initial, action) => {
     case SET_USER_STATUS:
       return { ...state, status: action.status }
     case SET_PHOTO_SUCCESS:
-      return { ...state, profile: { ...state.profile, photos: action.photos } }
+      return { ...state, authProfile: { ...state.authProfile, photos: action.photos } }
     case TOGGLE_IS_FETCHING:
       return {
         ...state,

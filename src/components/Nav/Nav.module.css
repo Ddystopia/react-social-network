@@ -29,7 +29,7 @@
   background-color: var(--standard_color);
   border-radius: 0 15px 15px 0;
   grid-area: ul;
-  z-index: 2;
+  z-index: 3;
 }
 
 .nav > ul > li {
