@@ -4,7 +4,7 @@ import standardAvatar from '../../../assets/images/standardAvatar.jpg'
 import UserData from './UserData/UserData'
 import Form from './Form/Form'
 
-export default ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfile }) => {
+const UserInfo = ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfile }) => {
   const [editMode, setEditMode] = useState(false)
 
   const onChangeFile = (e) => {
@@ -61,7 +61,7 @@ const Contacts = ({ contacts }) => {
       const link = contacts[item]
       return (
         link && (
-          <li key={link}>
+          <li key={item}>
             {item}: <a href={link}>{link}</a>
           </li>
         )
@@ -78,3 +78,4 @@ const Contacts = ({ contacts }) => {
     </article>
   )
 }
+export default UserInfo

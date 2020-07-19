@@ -57,12 +57,11 @@ export default withFormik({
   mapPropsToValues({ initialValues }) {
     return { ...initialValues }
   },
-  handleSubmit(values, { resetForm, props: { userId, setEditMode, setProfile } }) {
+  handleSubmit(values, { props: { userId, setProfile } }) {
     setProfile({
       ...values,
       userId,
-    }).then(() => setEditMode(false))
-    resetForm()
+    })
   },
   validationSchema: yup.object().shape({
     fullName: yup.string().min(2).max(20).required(),

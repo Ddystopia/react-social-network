@@ -17,9 +17,11 @@ const News = ({ data, loadBottom, isFetching }) => {
     [isFetching, loadBottom]
   )
 
-  const articles = data.map((u, i) => (
-    <Article refTo={data.length === i + 4 && lastBookElementRef} key={i} data={u} />
-  ))
+  const articles = data
+    .reduce((arr, data) => (arr.some((d) => d.title === data.title) ? arr : [...arr, data]), [])
+    .map((u, i) => (
+      <Article refTo={data.length === i + 4 && lastBookElementRef} key={u.title} data={u} />
+    ))
 
   return (
     <section className={classNames.content}>

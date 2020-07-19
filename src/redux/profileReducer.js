@@ -130,7 +130,7 @@ const setProfileData = (formData) => async (dispatch) => {
   try {
     const response = await profileAPI.setProfileData(formData)
     if (response.resultCode === 0) {
-      dispatch(setProfile(formData.userId))
+      dispatch(setProfile(formData.userId, true))
     } else return Promise.reject()
   } catch (err) {
     errorHandler(err)
