@@ -45,8 +45,8 @@ const initial = {
   ],
   newMessagesCount: 0,
   currentDialogId: null,
-	messagesFetching: false,
-	lastCheck: new Date()
+  messagesFetching: false,
+  lastCheck: new Date(),
 }
 
 const dialogReducer = (state = initial, action) => {
@@ -152,8 +152,8 @@ const getMessages = (userId) => async (dispatch) => {
 }
 const getNewMessages = (userId, lastCheck) => async (dispatch) => {
   if (!userId) return
-	dispatch(setLastCheck(new Date()))
-	dispatch(setNewMessagesCountInChat(userId, 0))
+  dispatch(setLastCheck(new Date()))
+  dispatch(setNewMessagesCountInChat(userId, 0))
   const response = await dialogsAPI.getNewMessages(userId, lastCheck)
   dispatch(addMessages(response))
 }
@@ -168,7 +168,7 @@ const sendMessage = (userId, message) => async (dispatch) => {
   if (response.resultCode === 0) dispatch(accessSendMessage(response.data.message))
 }
 
-const checkIsViewed = (messageId) => async (dispatch) => {
+const checkIsViewed = (messageId) => async (/* dispatch */) => {
   const response = await dialogsAPI.isViewed(messageId)
   if (response.resultCode === 0) {
     /*Some do*/
