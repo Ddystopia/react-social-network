@@ -3,7 +3,7 @@ import Login from './Login'
 import { login, getCaptchaUrl } from '../../redux/authReducer'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import Preloader from '../common/Preloader/Preloader'
 import {
   getIsAuth,
@@ -11,17 +11,14 @@ import {
   getIsFetchingAuth,
 } from '../../redux/selectors/selectors'
 
-const LoginContainer = ({ login, isAuth, isFetching, captchaUrl }) => {
+const LoginContainer = ({ login, isAuth, isFetching, captchaUrl, history }) => {
   const loginUser = (formData) => {
     login(formData)
   }
-  return isFetching ? (
-    <Preloader />
-  ) : isAuth ? (
-    <Redirect to="/profile" />
-  ) : (
-    <Login captchaUrl={captchaUrl} loginUser={loginUser} />
-  )
+  if (isFetching) return <Preloader />
+  if (isAuth) history.goBack()
+  else return <Login captchaUrl={captchaUrl} loginUser={loginUser} />
+  return null
 }
 
 const mapStateToProps = (state) => ({
@@ -32,4 +29,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { login, getCaptchaUrl }
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(LoginContainer)
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(LoginContainer)

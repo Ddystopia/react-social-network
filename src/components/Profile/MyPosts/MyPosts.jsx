@@ -3,7 +3,7 @@ import classNames from './MyPosts.module.css'
 import Post from './Post/Post'
 import Form from './Form/Form'
 
-const MyPosts = ({ data, addPost }) => {
+const MyPosts = ({ data, addPost, isOwner }) => {
   const postMessages = data.map((item) => <Post {...item} key={item.id} />).reverse()
 
   const addPostHandle = (message) => {
@@ -12,8 +12,8 @@ const MyPosts = ({ data, addPost }) => {
 
   return (
     <div className={classNames.posts}>
-      <h2>My posts</h2>
-      <Form addPost={addPostHandle} />
+      <h2>Posts</h2>
+      {isOwner && <Form addPost={addPostHandle} />}
       <section>{postMessages}</section>
     </div>
   )

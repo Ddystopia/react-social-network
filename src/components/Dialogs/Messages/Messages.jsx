@@ -11,8 +11,8 @@ import {
   getDialogFriendProfile,
   getIsFetchingMessages,
   getChatsData,
-	getCurrentDialogId,
-	getLastCheck
+  getCurrentDialogId,
+  getLastCheck,
 } from '../../../redux/selectors/selectors'
 
 const Messages = ({
@@ -24,9 +24,9 @@ const Messages = ({
   isFetching,
   isBin,
   chatsData,
-	currentDialogId,
-	getNewMessages,
-	lastCheck
+  currentDialogId,
+  getNewMessages,
+  lastCheck,
 }) => {
   const {
     sendMessage,
@@ -35,9 +35,9 @@ const Messages = ({
     // checkIsViewed,
   } = messageActions
   useEffect(() => {
-		const chat = chatsData.find((item) => item.id === currentDialogId)
-		if(!chat) return
-		if(chat.newMessagesCount > 0) getNewMessages(chat.id, lastCheck)
+    const chat = chatsData.find((item) => item.id === currentDialogId)
+    if (!chat) return
+    if (chat.newMessagesCount > 0) getNewMessages(chat.id, lastCheck)
   }, [chatsData, currentDialogId, getNewMessages, lastCheck])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const Messages = ({
     .sort((a, b) => a.addedAt - b.addedAt)
     .slice(0, Math.min(data.length, 100))
     .map((item) => {
-      const self = profile.userId === item.senderId
+      const self = profile?.userId === item.senderId
       return (
         <Message
           key={item.id}
@@ -90,8 +90,8 @@ export default connect(
     elseProfile: getDialogFriendProfile(state),
     isFetching: getIsFetchingMessages(state),
     chatsData: getChatsData(state),
-		currentDialogId: getCurrentDialogId(state),
-		lastCheck: getLastCheck(state)
+    currentDialogId: getCurrentDialogId(state),
+    lastCheck: getLastCheck(state),
   }),
   { getNewMessages }
 )(Messages)

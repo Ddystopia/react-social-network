@@ -1,13 +1,12 @@
 import MyPosts from './MyPosts'
 import { addPost } from '../../../redux/profileReducer'
 import { connect } from 'react-redux'
+import { getPosts } from '../../../redux/selectors/selectors'
 
 const mapStateToProps = (state) => ({
-  data: state.profileData.postsData,
+  data: getPosts(state),
 })
 
-const mapDispatchToProps = { addPost }
-
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+const MyPostsContainer = connect(mapStateToProps, { addPost })(MyPosts)
 
 export default MyPostsContainer

@@ -8,9 +8,8 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { initializeApp } from './redux/appReducer'
-import Preloader from './components/common/Preloader/Preloader'
-import swal from 'sweetalert2'
 import { withSuspense } from './hoc/withSuspense'
+import { errorHandler } from './utils/errorHandlers'
 
 const NewsContainer = React.lazy(() => import('./components/News/NewsContainer'))
 const NotFoundPage = React.lazy(() => import('./components/NotFoundPage/NotFoundPage'))
@@ -23,14 +22,11 @@ const App = ({ initializeApp, initialized }) => {
   }, [initializeApp, initialized])
 
   useEffect(() => {
-    const catchAllUnhandledErrors = (err) => {
-      swal.fire(err.name, err.message, 'error')
-    }
-    window.addEventListener('unhandledRejection', catchAllUnhandledErrors)
-    return window.removeEventListener('unhandledRejection', catchAllUnhandledErrors)
+    window.addEventListener('unhandledRejection', errorHandler)
+    return window.removeEventListener('unhandledRejection', errorHandler)
   })
 
-  return initialized ? (
+  return (
     <div className="app_wrapper">
       <HeaderContainer />
       <Nav />
@@ -46,8 +42,6 @@ const App = ({ initializeApp, initialized }) => {
         </Switch>
       </main>
     </div>
-  ) : (
-    <Preloader />
   )
 }
 

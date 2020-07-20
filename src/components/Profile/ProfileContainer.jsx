@@ -47,9 +47,10 @@ const ProfileContainer = ({
     getProfile(userId)
   }, [paramId, authUserId, profile, history, setProfile, getUserStatus, authProfile])
 
-  return profile && !isFetching ? (
+  const profileToProps = paramId === authUserId || !paramId ? authProfile : profile
+  return profileToProps && !isFetching ? (
     <Profile
-      profile={paramId === authUserId || !paramId ? authProfile : profile}
+      profile={profileToProps}
       status={status}
       updateUserStatus={updateUserStatus}
       authUserId={authUserId}

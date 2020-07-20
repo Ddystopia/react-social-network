@@ -9,10 +9,10 @@ const LoginForm = ({ values, errors, touched, captchaUrl }) => {
   return (
     <Form className={classNames.form}>
       <Row hasError={hasError.email}>
-        <Field name={'email'} type={'email'} placeholder={'✉ Email'} autocomplete="on" />
+        <Field name={'email'} type={'email'} placeholder={'✉ Email'} autoComplete="on" />
       </Row>
       <Row hasError={hasError.password}>
-        <Field name={'password'} type={'password'} placeholder={'🔐︎ Password'} autocomplete="on" />
+        <Field name={'password'} type={'password'} placeholder={'🔐︎ Password'} autoComplete="on" />
       </Row>
       <label>
         <Field type={'checkbox'} name={'rememberMe'} checked={values.rememberMe} />

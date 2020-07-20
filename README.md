@@ -16,7 +16,9 @@ This is a social network, and have these abilities:
 - Send messages
 - Receive messages 
 - Remove messages
+- Restore messages
 - Check message was viewed
+- Check latest news
 
 ## Available Scripts
 

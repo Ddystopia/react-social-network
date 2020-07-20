@@ -19,7 +19,7 @@ const Profile = ({ profile, status, updateUserStatus, isOwner, setPhoto, setProf
         isOwner={isOwner}
         setProfile={setProfile}
       />
-      <MyPostsContainer />
+      <MyPostsContainer isOwner={isOwner} />
     </section>
   )
 }

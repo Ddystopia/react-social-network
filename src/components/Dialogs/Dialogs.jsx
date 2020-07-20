@@ -3,7 +3,15 @@ import classNames from './Dialogs.module.css'
 import Chats from './Chats/Chats'
 import Messages from './Messages/Messages'
 
-const Dialogs = ({ chatsData, messagesData, messageActions, chatActions, haveChats, login, newMessagesCount }) => {
+const Dialogs = ({
+  chatsData,
+  messagesData,
+  messageActions,
+  chatActions,
+  haveChats,
+  login,
+  newMessagesCount,
+}) => {
   const [deletedMessagesPage, setDeletedMessagesPage] = useState(false)
 
   const button = deletedMessagesPage ? (

@@ -32,6 +32,8 @@ const getAuthProfile = (state) => state.profileData.authProfile
 
 const getStatus = (state) => state.profileData.status
 
+const getPosts = (state) => state.profileData.postsData
+
 const getIsFetchingProfile = (state) => state.profileData.isFetching
 
 const getIsFetchingMessages = (state) => state.dialogData.messagesFetching
@@ -78,6 +80,7 @@ export {
   getProfile,
   getAuthProfile,
   getStatus,
+  getPosts,
   getIsFetchingMessages,
   getIsFetchingProfile,
   getNewsData,
