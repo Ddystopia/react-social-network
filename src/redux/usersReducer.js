@@ -1,12 +1,12 @@
 import { usersAPI } from '../api/api'
 import { arrayMapHelper } from '../utils/arrayMapHelper'
-import { errorHandler } from '../utils/errorHandlers'
 
 const FOLLOW = 'usersReducer/FOLLOW'
 const UNFOLLOW = 'usersReducer/UNFOLLOW'
 const SET_USERS = 'usersReducer/SET_USERS'
 const SET_PAGE = 'usersReducer/SET_PAGE'
 const SET_COUNT = 'usersReducer/SET_COUNT'
+const SET_ERROR = 'usersReducer/SET_ERROR'
 const SET_USERS_COUNT = 'usersReducer/SET_USERS_COUNT'
 const TOGGLE_IS_FETCHING = 'usersReducer/TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING = 'usersReducer/TOGGLE_IS_FOLLOWING'
@@ -18,6 +18,7 @@ const initial = {
   usersCount: 0,
   isFetching: false,
   isFollowing: [],
+  error: false,
 }
 
 const usersReducer = (state = initial, action) => {
@@ -45,6 +46,11 @@ const usersReducer = (state = initial, action) => {
       return {
         ...state,
         page: action.page,
+      }
+    case SET_ERROR:
+      return {
+        ...state,
+        error: true,
       }
     case SET_COUNT:
       return {
@@ -77,6 +83,7 @@ const acceptFollow = (userId) => ({ type: FOLLOW, userId })
 const acceptUnFollow = (userId) => ({ type: UNFOLLOW, userId })
 const setUsers = (users) => ({ type: SET_USERS, users })
 const setPage = (page) => ({ type: SET_PAGE, page })
+const setError = () => ({ type: SET_ERROR })
 const acceptSetCount = (count) => ({ type: SET_COUNT, count })
 const setUsersCount = (usersCount) => ({ type: SET_USERS_COUNT, usersCount })
 const toggleIsFetching = (isFetching) => ({
@@ -99,21 +106,18 @@ const getUsers = (page, count) => async (dispatch) => {
   dispatch(toggleIsFetching(true))
   const data = await usersAPI.getUsers(page, count)
 
-  dispatch(setUsers(data.items))
   dispatch(toggleIsFetching(false))
+  if (!data) return dispatch(setError())
+
+  dispatch(setUsers(data.items))
   dispatch(setUsersCount(data.totalCount))
 }
 
 const followUnfollowFlow = async (dispatch, method, action, id) => {
   dispatch(toggleIsFollowing(true, id))
-  try {
-    const data = await method(id)
-    if (data.resultCode === 0) {
-      dispatch(action(id))
-    }
-  } catch (err) {
-    errorHandler(err)
-  }
+  const data = (await method(id)) || {}
+
+  if (data.resultCode === 0) dispatch(action(id))
   dispatch(toggleIsFollowing(false, id))
 }
 

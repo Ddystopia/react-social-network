@@ -63,7 +63,7 @@ const setCaptchaUrl = (captchaUrl) => ({
 const authUser = () => async (dispatch) => {
   dispatch(getCaptchaUrl())
   dispatch(toggleIsFetching(true))
-  const r = await authAPI.me()
+  const r = (await authAPI.me()) || {}
 
   if (r.resultCode === 0) {
     const { id, email, login } = r.data
@@ -71,23 +71,23 @@ const authUser = () => async (dispatch) => {
   } else dispatch(logoutUser())
 
   dispatch(toggleIsFetching(false))
-  return r.data.id
+  return r?.data?.id
 }
 
 const login = (formData) => async (dispatch) => {
   try {
-    const r = await authAPI.login(formData)
+    const r = (await authAPI.login(formData)) || {}
     switch (r.resultCode) {
       case 0:
-				dispatch(setInitialize(false))
-				dispatch(initializeApp())
+        dispatch(setInitialize(false))
+        dispatch(initializeApp())
         dispatch(setCaptchaUrl(null))
         break
       case 10:
         dispatch(getCaptchaUrl())
       // eslint-disable-next-line no-fallthrough
       default:
-        throw new Error(r.messages.join('\n') || 'Something wrong')
+        throw new Error(r?.messages?.join('\n') || 'Something wrong')
     }
   } catch (err) {
     errorHandler(err)
@@ -95,15 +95,15 @@ const login = (formData) => async (dispatch) => {
 }
 
 const logout = () => async (dispatch) => {
-  const r = await authAPI.logout()
+  const r = (await authAPI.logout()) || {}
   if (r.resultCode === 0) {
     dispatch(authUser())
   }
 }
 
 const getCaptchaUrl = () => async (dispatch) => {
-  const r = await securityAPI.getCaptchaUrl()
-  dispatch(setCaptchaUrl(r.url))
+  const r = (await securityAPI.getCaptchaUrl()) || {}
+  dispatch(setCaptchaUrl(r.url || null))
 }
 
 export { authUser, login, logout, setAuthUser, toggleIsFetching, getCaptchaUrl }

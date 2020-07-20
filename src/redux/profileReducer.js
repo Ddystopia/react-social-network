@@ -89,7 +89,7 @@ const toggleIsFetching = (isFetching) => ({
 const setProfile = (userId, isAuthUser = false) => async (dispatch) => {
   dispatch(toggleIsFetching(true))
   try {
-    const data = await profileAPI.getProfile(userId)
+    const data = await profileAPI.getProfile(userId) || null
     if (isAuthUser) dispatch(setProfileAuth(data))
     dispatch(setProfileUser(data))
   } catch (err) {
@@ -100,13 +100,13 @@ const setProfile = (userId, isAuthUser = false) => async (dispatch) => {
 }
 
 const getUserStatus = (userId) => async (dispatch) => {
-  const data = await profileAPI.getUserStatus(userId)
+  const data = await profileAPI.getUserStatus(userId) || ''
   dispatch(setUserStatus(data))
 }
 
 const updateUserStatus = (status) => async (dispatch) => {
   try {
-    const data = await profileAPI.setUserStatus(status)
+    const data = await profileAPI.setUserStatus(status) || {}
     if (data.resultCode === 0) {
       dispatch(setUserStatus(status))
     }
@@ -117,7 +117,7 @@ const updateUserStatus = (status) => async (dispatch) => {
 
 const setPhoto = (photo) => async (dispatch) => {
   try {
-    const response = await profileAPI.setPhoto(photo)
+    const response = await profileAPI.setPhoto(photo) || {}
     if (response.resultCode === 0) {
       dispatch(setPhotoSuccess(response.data.photos))
     }
@@ -128,7 +128,7 @@ const setPhoto = (photo) => async (dispatch) => {
 
 const setProfileData = (formData) => async (dispatch) => {
   try {
-    const response = await profileAPI.setProfileData(formData)
+    const response = await profileAPI.setProfileData(formData) || {}
     if (response.resultCode === 0) {
       dispatch(setProfile(formData.userId, true))
     } else return Promise.reject()

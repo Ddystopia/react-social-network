@@ -56,7 +56,7 @@ const setCount = (count) => async (dispatch) => {
 const getArticles = (page, count) => async (dispatch) => {
   try {
     dispatch(toggleIsFetching(true))
-    const data = await newsAPI.getArticles(page, count)
+    const data = await newsAPI.getArticles(page, count) || []
 
     dispatch(addArticles(data))
   } catch (err) {

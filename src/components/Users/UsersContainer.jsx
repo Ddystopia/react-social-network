@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Users from './Users'
 import Preloader from '../common/Preloader/Preloader'
+import ErrorPage from '../common/ErrorPage/ErrorPage'
 import { getUsers, follow, unFollow, setCount } from '../../redux/usersReducer'
 import { compose } from 'redux'
 import {
@@ -11,6 +12,7 @@ import {
   getUsersCount,
   getIsFetchingUserData,
   getIsFollowing,
+  getUsersError,
 } from '../../redux/selectors/selectors'
 
 const UsersContainer = ({
@@ -24,15 +26,16 @@ const UsersContainer = ({
   follow,
   unFollow,
   setCount,
+  hasError,
 }) => {
   useEffect(() => {
-    if (data.length === 0 && !isFetching) getUsers(page, pageCount)
-  }, [data.length, getUsers, isFetching, page, pageCount])
+    if (data.length === 0 && !isFetching && !hasError) getUsers(page, pageCount)
+  }, [data, getUsers, hasError, isFetching, page, pageCount])
   const changePage = (p) => getUsers(p, pageCount)
 
-  return isFetching ? (
-    <Preloader />
-  ) : (
+  if (isFetching) return <Preloader />
+  if (hasError) return <ErrorPage />
+  return (
     <Users
       data={data}
       page={page}
@@ -54,6 +57,7 @@ const mapStateToProps = (state) => ({
   usersCount: getUsersCount(state),
   isFetching: getIsFetchingUserData(state),
   isFollowing: getIsFollowing(state),
+  hasError: getUsersError(state),
 })
 
 const mapDispatchToProps = { getUsers, follow, unFollow, setCount }

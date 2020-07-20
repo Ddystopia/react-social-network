@@ -8,6 +8,8 @@ const getUsersPageCount = (state) => state.usersData.count
 
 const getUsersCount = (state) => state.usersData.usersCount
 
+const getUsersError = (state) => state.usersData.error
+
 const getIsFetchingUserData = (state) => state.usersData.isFetching
 
 const getIsFollowing = (state) => state.usersData.isFollowing
@@ -65,6 +67,7 @@ export {
   getUsersPage,
   getUsersPageCount,
   getUsersCount,
+  getUsersError,
   getIsFetchingUserData,
   getIsFollowing,
   getChatsData,

@@ -6,7 +6,7 @@ const newsapi = new NewsAPI('8cd00d3cacde4da2a2dcb5895d6fea47')
 const instance = {
   axiosInstance: createAxiosInstance({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-    headers: { 'API-KEY': '6bd488a7-8102-4f56-8668-0ba795d69754' },
+    headers: { 'API-KEY': 'a87d05fc-fb38-4038-beb2-94a7f0e49597' },
     withCredentials: true,
   }),
   fetch(urlPiesQuery, method, data) {

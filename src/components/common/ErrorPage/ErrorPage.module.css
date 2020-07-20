@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container > h1 {
+  color: #7c7c7c;
+  font-size: 4rem;
+  margin-bottom: 15px;
+}
+
+.container > p {
+  font-size: 1.5rem;
+}

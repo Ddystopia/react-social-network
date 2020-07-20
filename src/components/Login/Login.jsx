@@ -51,7 +51,7 @@ const FormikLoginForm = withFormik({
   validationSchema: yup.object().shape({
     email: yup.string().email().max(50).required(),
     password: yup.string().min(8).max(24).required(),
-    captcha: yup.string().required(),
+    captcha: yup.string(),
   }),
   handleSubmit(values, { resetForm, props: { loginUser } }) {
     loginUser(values)
