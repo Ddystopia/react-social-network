@@ -47,7 +47,7 @@ const profileReducer = (state = initial, action) => {
           ...state.postsData,
           {
             id: state.postsData[state.postsData.length - 1].id + 1,
-            message: action.message,
+            message: action.payload,
             likesCount: 0,
           },
         ],
@@ -55,41 +55,38 @@ const profileReducer = (state = initial, action) => {
     case REMOVE_POST:
       return {
         ...state,
-        postsData: state.postsData.filter((post) => post.id !== action.id),
+        postsData: state.postsData.filter(post => post.id !== action.payload),
       }
     case SET_PROFILE_USER:
-      return { ...state, profile: action.profile }
+      return { ...state, profile: action.payload }
     case SET_PROFILE_AUTH:
-      return { ...state, authProfile: action.authProfile }
+      return { ...state, authProfile: action.payload }
     case SET_USER_STATUS:
-      return { ...state, status: action.status }
+      return { ...state, status: action.payload }
     case SET_PHOTO_SUCCESS:
-      return { ...state, authProfile: { ...state.authProfile, photos: action.photos } }
+      return { ...state, authProfile: { ...state.authProfile, photos: action.payload } }
     case TOGGLE_IS_FETCHING:
       return {
         ...state,
-        isFetching: action.isFetching,
+        isFetching: action.payload,
       }
     default:
       return state
   }
 }
 
-const addPost = (message) => ({ type: ADD_POST, message })
-const removePost = (id) => ({ type: REMOVE_POST, id })
-const setProfileUser = (profile) => ({ type: SET_PROFILE_USER, profile })
-const setProfileAuth = (authProfile) => ({ type: SET_PROFILE_AUTH, authProfile })
-const setUserStatus = (status) => ({ type: SET_USER_STATUS, status })
-const setPhotoSuccess = (photos) => ({ type: SET_PHOTO_SUCCESS, photos })
-const toggleIsFetching = (isFetching) => ({
-  type: TOGGLE_IS_FETCHING,
-  isFetching,
-})
+const addPost = payload => ({ type: ADD_POST, payload })
+const removePost = payload => ({ type: REMOVE_POST, payload })
+const setProfileUser = payload => ({ type: SET_PROFILE_USER, payload })
+const setProfileAuth = payload => ({ type: SET_PROFILE_AUTH, payload })
+const setUserStatus = payload => ({ type: SET_USER_STATUS, payload })
+const setPhotoSuccess = payload => ({ type: SET_PHOTO_SUCCESS, payload })
+const toggleIsFetching = payload => ({ type: TOGGLE_IS_FETCHING, payload })
 
-const setProfile = (userId, isAuthUser = false) => async (dispatch) => {
+const setProfile = (userId, isAuthUser = false) => async dispatch => {
   dispatch(toggleIsFetching(true))
   try {
-    const data = await profileAPI.getProfile(userId) || null
+    const data = (await profileAPI.getProfile(userId)) || null
     if (isAuthUser) dispatch(setProfileAuth(data))
     dispatch(setProfileUser(data))
   } catch (err) {
@@ -99,14 +96,14 @@ const setProfile = (userId, isAuthUser = false) => async (dispatch) => {
   }
 }
 
-const getUserStatus = (userId) => async (dispatch) => {
-  const data = await profileAPI.getUserStatus(userId) || ''
+const getUserStatus = userId => async dispatch => {
+  const data = (await profileAPI.getUserStatus(userId)) || ''
   dispatch(setUserStatus(data))
 }
 
-const updateUserStatus = (status) => async (dispatch) => {
+const updateUserStatus = status => async dispatch => {
   try {
-    const data = await profileAPI.setUserStatus(status) || {}
+    const data = (await profileAPI.setUserStatus(status)) || {}
     if (data.resultCode === 0) {
       dispatch(setUserStatus(status))
     }
@@ -115,9 +112,9 @@ const updateUserStatus = (status) => async (dispatch) => {
   }
 }
 
-const setPhoto = (photo) => async (dispatch) => {
+const setPhoto = photo => async dispatch => {
   try {
-    const response = await profileAPI.setPhoto(photo) || {}
+    const response = (await profileAPI.setPhoto(photo)) || {}
     if (response.resultCode === 0) {
       dispatch(setPhotoSuccess(response.data.photos))
     }
@@ -126,9 +123,9 @@ const setPhoto = (photo) => async (dispatch) => {
   }
 }
 
-const setProfileData = (formData) => async (dispatch) => {
+const setProfileData = formData => async dispatch => {
   try {
-    const response = await profileAPI.setProfileData(formData) || {}
+    const response = (await profileAPI.setProfileData(formData)) || {}
     if (response.resultCode === 0) {
       dispatch(setProfile(formData.userId, true))
     } else return Promise.reject()

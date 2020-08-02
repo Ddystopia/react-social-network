@@ -1,9 +1,9 @@
 import React from 'react'
-import UserInfo from './UserInfo/UserInfo'
-import MyPostsContainer from './MyPosts/MyPostsContainer'
+import { UserInfo } from './UserInfo/UserInfo'
+import { MyPosts } from './MyPosts/MyPosts'
 import classNames from './Profile.module.css'
 
-const Profile = ({ profile, status, updateUserStatus, isOwner, setPhoto, setProfile }) => {
+export const Profile = ({ profile, status, updateUserStatus, isOwner, setPhoto, setProfile }) => {
   return (
     <section className={classNames.content}>
       {/* <img
@@ -19,8 +19,7 @@ const Profile = ({ profile, status, updateUserStatus, isOwner, setPhoto, setProf
         isOwner={isOwner}
         setProfile={setProfile}
       />
-      <MyPostsContainer isOwner={isOwner} />
+      <MyPosts isOwner={isOwner} />
     </section>
   )
 }
-export default Profile

@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from './Post.module.css'
 import standardAvatar from '../../../../assets/images/standardAvatar.jpg'
 
-const Post = ({ header, message }) => {
+export const Post = ({ header, message }) => {
   return (
     <article className={classNames.post}>
       <img src={standardAvatar} alt="avatar" />
@@ -13,4 +13,3 @@ const Post = ({ header, message }) => {
     </article>
   )
 }
-export default Post

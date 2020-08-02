@@ -3,7 +3,7 @@ import classNames from './Message.module.css'
 import CMClassNames from './ContextMenu.module.css'
 import standardAvatar from '../../../../assets/images/standardAvatar.jpg'
 
-const Message = ({ data, profile, classEnd, removeMessage, restoreMessage }) => {
+export const Message = ({ data, profile, classEnd, removeMessage, restoreMessage }) => {
   const date = calcDate(data.addedAt)
   const messageClassName = getClassName('message', classEnd)
   const dateClassName = getClassName('date', classEnd)
@@ -13,7 +13,7 @@ const Message = ({ data, profile, classEnd, removeMessage, restoreMessage }) => 
   const [hidden, setHidden] = useState(true)
   let buttonPressTimer
 
-  const openContextMenu = (e) => {
+  const openContextMenu = e => {
     e.preventDefault()
     setHidden(false)
     const contextMenu = contextMenuRef.current
@@ -23,7 +23,7 @@ const Message = ({ data, profile, classEnd, removeMessage, restoreMessage }) => 
   useEffect(() => {
     hidden || contextMenuRef.current.focus()
   })
-  const handleButtonPress = (e) => {
+  const handleButtonPress = e => {
     buttonPressTimer = setTimeout(() => openContextMenu(e), 1500)
   }
 
@@ -68,7 +68,7 @@ const getClassName = (regularClassName, classEnd) => {
   return `${classNames[regularClassName + classEnd]} ${classNames[regularClassName]}`
 }
 
-const calcDate = (date) => {
+const calcDate = date => {
   const thisDate = new Date()
   const dateObj = {
     y: date.getFullYear(),
@@ -90,5 +90,3 @@ const calcDate = (date) => {
   resDate.push(`${dateObj.h}:${dateObj.m}`)
   return resDate.join(' / ')
 }
-
-export default Message

@@ -1,4 +1,4 @@
-import authReducer, { setAuthUser, toggleIsFetching } from '../authReducer'
+import authReducer, { setAuthUser, toggleIsFetching ,setCaptchaUrl} from '../authReducer'
 
 const state = {
   email: null,
@@ -32,4 +32,11 @@ test('toggle isFetching to false', () => {
   const newState = authReducer(state, action)
 
   expect(newState.isFetching).toBe(false)
+})
+test('captchaUrl must be right', () => {
+  const action = setCaptchaUrl('url')
+
+  const newState = authReducer(state, action)
+
+  expect(newState.captchaUrl).toBe('url')
 })

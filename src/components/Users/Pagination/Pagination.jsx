@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from './Pagination.module.css'
 import ReactPaginate from 'react-paginate'
 
-export default ({ itemsCount, pageSize, page = 0, changePage }) => {
+export const Pagination = ({ itemsCount, pageSize, page = 0, changePage }) => {
   const pagesCount = Math.ceil(itemsCount / pageSize)
 
   const handleChangePage = ({ selected }) => {

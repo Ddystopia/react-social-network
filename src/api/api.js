@@ -11,7 +11,7 @@ const instance = {
   }),
   fetch(urlPiesQuery, method, data) {
     return this.axiosInstance[method](urlPiesQuery, data)
-      .then((r) => r.data)
+      .then(r => r.data)
       .catch(errorHandler)
   },
   get(urlPiesQuery) {
@@ -62,7 +62,7 @@ const profileAPI = {
       .put('profile/photo/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
-      .then((r) => r.data)
+      .then(r => r.data)
   },
 }
 
@@ -124,11 +124,11 @@ const newsAPI = {
     return newsapi.v2
       .everything({
         language: 'en',
-        q: 'front-end',
+        q: '(front-end OR frontend) +programming -peacock',
         page,
         count,
       })
-      .then((r) => r.articles)
+      .then(r => r.articles)
   },
 }
 

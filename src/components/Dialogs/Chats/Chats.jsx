@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import classNames from './Chats.module.css'
-import ChatListItem from './ChatListItem/ChatListItem'
+import { ChatListItem } from './ChatListItem/ChatListItem'
 import Swal from 'sweetalert2'
 
-const Chats = ({ data, chatActions, newMessagesCount }) => {
+export const Chats = ({ data, chatActions, newMessagesCount }) => {
   const {
     getAllDialogs,
     createNewChat,
@@ -37,7 +37,7 @@ const Chats = ({ data, chatActions, newMessagesCount }) => {
     else Swal.fire('Invalid id', '', 'error')
   }
 
-  const listItems = data.map((item) => (
+  const listItems = data.map(item => (
     <ChatListItem key={item.id} {...item} onClick={() => getMessages(item.id)} />
   ))
   return (
@@ -52,5 +52,3 @@ const Chats = ({ data, chatActions, newMessagesCount }) => {
     </section>
   )
 }
-
-export default Chats

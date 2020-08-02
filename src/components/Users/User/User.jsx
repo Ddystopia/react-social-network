@@ -3,7 +3,7 @@ import classNames from './User.module.css'
 import standardAvatar from '../../../assets/images/standardAvatar.jpg'
 import { NavLink } from 'react-router-dom'
 
-const User = ({ data, id, disabled, unFollow, follow }) => {
+export const User = ({ data, id, disabled, unFollow, follow }) => {
   return (
     <li className={classNames.li}>
       <div className={classNames.info}>
@@ -31,4 +31,3 @@ const User = ({ data, id, disabled, unFollow, follow }) => {
   )
 }
 
-export default User

@@ -20,18 +20,18 @@ const authReducer = (state = initial, action) => {
     case SET_AUTH_USER:
       return {
         ...state,
-        ...action.data,
+        ...action.payload,
         isAuth: action.isAuth,
       }
     case TOGGLE_IS_FETCHING:
       return {
         ...state,
-        isFetching: action.isFetching,
+        isFetching: action.payload,
       }
     case SET_CAPTCHA_URL:
       return {
         ...state,
-        captchaUrl: action.captchaUrl,
+        captchaUrl: action.payload,
       }
     default:
       return state
@@ -40,27 +40,21 @@ const authReducer = (state = initial, action) => {
 
 const setAuthUser = (userId, email, login) => ({
   type: SET_AUTH_USER,
-  data: { userId, email, login },
+  payload: { userId, email, login },
   isAuth: true,
 })
 
 const logoutUser = () => ({
   type: SET_AUTH_USER,
-  data: { userId: null, email: null, login: null },
+  payload: { userId: null, email: null, login: null },
   isAuth: false,
 })
 
-const toggleIsFetching = (isFetching) => ({
-  type: TOGGLE_IS_FETCHING,
-  isFetching,
-})
+const toggleIsFetching = payload => ({ type: TOGGLE_IS_FETCHING, payload })
 
-const setCaptchaUrl = (captchaUrl) => ({
-  type: SET_CAPTCHA_URL,
-  captchaUrl,
-})
+const setCaptchaUrl = payload => ({ type: SET_CAPTCHA_URL, payload })
 
-const authUser = () => async (dispatch) => {
+const authUser = () => async dispatch => {
   dispatch(getCaptchaUrl())
   dispatch(toggleIsFetching(true))
   const r = (await authAPI.me()) || {}
@@ -74,7 +68,7 @@ const authUser = () => async (dispatch) => {
   return r?.data?.id
 }
 
-const login = (formData) => async (dispatch) => {
+const login = formData => async dispatch => {
   try {
     const r = (await authAPI.login(formData)) || {}
     switch (r.resultCode) {
@@ -94,17 +88,17 @@ const login = (formData) => async (dispatch) => {
   }
 }
 
-const logout = () => async (dispatch) => {
+const logout = () => async dispatch => {
   const r = (await authAPI.logout()) || {}
   if (r.resultCode === 0) {
     dispatch(authUser())
   }
 }
 
-const getCaptchaUrl = () => async (dispatch) => {
+const getCaptchaUrl = () => async dispatch => {
   const r = (await securityAPI.getCaptchaUrl()) || {}
   dispatch(setCaptchaUrl(r.url || null))
 }
 
-export { authUser, login, logout, setAuthUser, toggleIsFetching, getCaptchaUrl }
+export { authUser, login, logout, setAuthUser, toggleIsFetching, getCaptchaUrl, setCaptchaUrl }
 export default authReducer

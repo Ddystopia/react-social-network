@@ -78,7 +78,7 @@ test('message body should be "hi"', () => {
 
   const newState = dialogReducer(state, action)
 
-  expect(newState.messagesData.filter((i) => i.id === 2)[0].body).toBe('hi')
+  expect(newState.messagesData.filter(i => i.id === 2)[0].body).toBe('hi')
 })
 
 test('message should be correct', () => {

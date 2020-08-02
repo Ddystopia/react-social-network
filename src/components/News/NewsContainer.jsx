@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import News from './News'
+import { News } from './News'
 import { getArticles, setCount, setPage } from '../../redux/newsReducer'
 import { compose } from 'redux'
 import {
@@ -10,7 +10,7 @@ import {
   getNewsPageCount,
 } from '../../redux/selectors/selectors'
 
-const NewsContainer = ({ data, page, getArticles, pageCount, setPage, isFetching }) => {
+const NewsContainerComponent = ({ data, page, getArticles, pageCount, setPage, isFetching }) => {
   useEffect(() => {
     getArticles(page, pageCount)
   }, [getArticles, page, pageCount])
@@ -29,4 +29,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { getArticles, setCount, setPage }
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(NewsContainer)
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  NewsContainerComponent
+)
+
+

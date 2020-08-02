@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import Profile from './Profile'
-import Preloader from '../common/Preloader/Preloader'
+import { Profile } from './Profile'
+import { Preloader } from '../common/Preloader/Preloader'
 import {
   setProfile,
   getUserStatus,
@@ -19,7 +19,7 @@ import {
   getAuthProfile,
 } from '../../redux/selectors/selectors'
 
-const ProfileContainer = ({
+const ProfileContainerComponent = ({
   match,
   authUserId,
   profile,
@@ -39,7 +39,7 @@ const ProfileContainer = ({
     if (profile?.userId === userId) return
     if (!userId) return history.push('/login')
 
-    const getProfile = (userId) => {
+    const getProfile = userId => {
       if (userId === authUserId && authProfile) return
       setProfile(userId, userId === authUserId)
       getUserStatus(userId)
@@ -63,7 +63,7 @@ const ProfileContainer = ({
   )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   profile: getProfile(state),
   authProfile: getAuthProfile(state),
   authUserId: getAuthUserId(state),
@@ -79,4 +79,7 @@ const mapDispatchToProps = {
   setProfileData,
 }
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter)(ProfileContainer)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+)(ProfileContainerComponent)

@@ -1,17 +1,17 @@
 import React from 'react'
 import classNames from './SendForm.module.css'
 import * as yup from 'yup'
-import { withFormik, Field, Form } from 'formik'
+import { withFormik, Field, Form as FormikForm } from 'formik'
 import { Row } from '../../../Login/Row/Row'
 
-const SendForm = ({ errors, touched, submitForm }) => {
-  const onKeyDown = (e) => {
+export const SendForm = ({ errors, touched, submitForm }) => {
+  const onKeyDown = e => {
     if (e.key !== 'Enter' || e.shiftKey) return
     e.preventDefault()
     submitForm()
   }
   return (
-    <Form className={classNames.posts}>
+    <FormikForm className={classNames.posts}>
       <Row hasError={errors.message && touched.message} className={classNames.textarea}>
         <Field
           component="textarea"
@@ -21,11 +21,11 @@ const SendForm = ({ errors, touched, submitForm }) => {
         />
       </Row>
       <button type="submit">Send</button>
-    </Form>
+    </FormikForm>
   )
 }
 
-export default withFormik({
+export const Form = withFormik({
   mapPropsToValues() {
     return {
       message: '',

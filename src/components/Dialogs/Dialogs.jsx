@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import classNames from './Dialogs.module.css'
-import Chats from './Chats/Chats'
-import Messages from './Messages/Messages'
+import { Chats } from './Chats/Chats'
+import { Messages } from './Messages/Messages'
 
-const Dialogs = ({
+export const Dialogs = ({
   chatsData,
   messagesData,
   messageActions,
@@ -34,4 +34,3 @@ const Dialogs = ({
     </section>
   )
 }
-export default Dialogs

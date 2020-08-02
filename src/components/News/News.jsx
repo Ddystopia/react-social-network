@@ -1,9 +1,9 @@
 import React, { useRef, useCallback } from 'react'
 import classNames from './News.module.css'
-import Article from './Article/Article.jsx'
-import Preloader from '../common/Preloader/Preloader'
+import { Article } from './Article/Article.jsx'
+import { Preloader } from '../common/Preloader/Preloader'
 
-const News = ({ data, loadBottom, isFetching }) => {
+export const News = ({ data, loadBottom, isFetching }) => {
   const observer = useRef()
   const lastBookElementRef = useCallback(
     (node) => {
@@ -32,4 +32,3 @@ const News = ({ data, loadBottom, isFetching }) => {
   )
 }
 
-export default News

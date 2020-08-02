@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classNames from './UserData.module.css'
 
-const UserData = ({ propStatus, profile, updateUserStatus, isOwner }) => {
+export const UserData = ({ propStatus, profile, updateUserStatus, isOwner }) => {
   const [editMode, setEditMode] = useState(false)
   const [status, setStatus] = useState(propStatus)
   useEffect(() => {
@@ -61,4 +61,3 @@ const UserData = ({ propStatus, profile, updateUserStatus, isOwner }) => {
     </article>
   )
 }
-export default UserData

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Dialogs from './Dialogs'
+import { Dialogs } from './Dialogs'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
@@ -22,7 +22,7 @@ import {
   getNewMessagesCountSelector,
 } from '../../redux/selectors/selectors'
 
-const DialogsContainer = ({
+const DialogsContainerComp = ({
   match,
   history,
   chatsData,
@@ -47,10 +47,10 @@ const DialogsContainer = ({
     getNewMessagesCount,
   }
   const messageActions = {
-    sendMessage: (message) => {
+    sendMessage: message => {
       sendMessage(+match.params.userId, message)
-		},
-		getMessages,
+    },
+    getMessages,
     checkIsViewed,
     removeMessage,
     restoreMessage,
@@ -80,7 +80,7 @@ const DialogsContainer = ({
   )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   chatsData: getChatsData(state),
   messagesData: getMessagesData(state),
   currentDialogId: getCurrentDialogId(state),
@@ -101,4 +101,4 @@ export default compose(
   }),
   withAuthRedirect,
   withRouter
-)(DialogsContainer)
+)(DialogsContainerComp)

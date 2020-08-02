@@ -13,16 +13,16 @@ const appReducer = (state = initial, action) => {
     case SET_INITIALIZED_SUCCESS:
       return {
         ...state,
-        initialized: action.initialized,
+        initialized: action.payload,
       }
     default:
       return state
   }
 }
 
-const setInitialize = (initialized) => ({ type: SET_INITIALIZED_SUCCESS, initialized })
+const setInitialize = payload => ({ type: SET_INITIALIZED_SUCCESS, payload })
 
-const initializeApp = () => async (dispatch) => {
+const initializeApp = () => async dispatch => {
   try {
     const id = await dispatch(authUser())
     if (id) await Promise.all([dispatch(setProfile(id, true)), dispatch(getUserStatus(id))])

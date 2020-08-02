@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import classNames from './UserInfo.module.css'
 import standardAvatar from '../../../assets/images/standardAvatar.jpg'
-import UserData from './UserData/UserData'
-import Form from './Form/Form'
+import { UserData } from './UserData/UserData'
+import { Form } from './Form/Form'
 
-const UserInfo = ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfile }) => {
+export const UserInfo = ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfile }) => {
   const [editMode, setEditMode] = useState(false)
 
   const onChangeFile = (e) => {
@@ -78,4 +78,3 @@ const Contacts = ({ contacts }) => {
     </article>
   )
 }
-export default UserInfo

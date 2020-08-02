@@ -26,26 +26,26 @@ const usersReducer = (state = initial, action) => {
     case FOLLOW:
       return {
         ...state,
-        users: arrayMapHelper(state.users, action.userId, 'id', {
+        users: arrayMapHelper(state.users, action.payload, 'id', {
           followed: true,
         }),
       }
     case UNFOLLOW:
       return {
         ...state,
-        users: arrayMapHelper(state.users, action.userId, 'id', {
+        users: arrayMapHelper(state.users, action.payload, 'id', {
           followed: false,
         }),
       }
     case SET_USERS:
       return {
         ...state,
-        users: [...action.users],
+        users: [...action.payload],
       }
     case SET_PAGE:
       return {
         ...state,
-        page: action.page,
+        page: action.payload,
       }
     case SET_ERROR:
       return {
@@ -55,53 +55,46 @@ const usersReducer = (state = initial, action) => {
     case SET_COUNT:
       return {
         ...state,
-        count: action.count,
+        count: action.payload,
       }
     case SET_USERS_COUNT:
       return {
         ...state,
-        usersCount: action.usersCount,
+        usersCount: action.payload,
       }
     case TOGGLE_IS_FETCHING:
       return {
         ...state,
-        isFetching: action.isFetching,
+        isFetching: action.payload,
       }
     case TOGGLE_IS_FOLLOWING:
       return {
         ...state,
-        isFollowing: action.isFetching
+        isFollowing: action.payload
           ? [...state.isFollowing, action.id]
-          : state.isFollowing.filter((id) => id !== action.id),
+          : state.isFollowing.filter(id => id !== action.id),
       }
     default:
       return state
   }
 }
 
-const acceptFollow = (userId) => ({ type: FOLLOW, userId })
-const acceptUnFollow = (userId) => ({ type: UNFOLLOW, userId })
-const setUsers = (users) => ({ type: SET_USERS, users })
-const setPage = (page) => ({ type: SET_PAGE, page })
+const acceptFollow = payload => ({ type: FOLLOW, payload })
+const acceptUnFollow = payload => ({ type: UNFOLLOW, payload })
+const setUsers = payload => ({ type: SET_USERS, payload })
+const setPage = payload => ({ type: SET_PAGE, payload })
 const setError = () => ({ type: SET_ERROR })
-const acceptSetCount = (count) => ({ type: SET_COUNT, count })
-const setUsersCount = (usersCount) => ({ type: SET_USERS_COUNT, usersCount })
-const toggleIsFetching = (isFetching) => ({
-  type: TOGGLE_IS_FETCHING,
-  isFetching,
-})
-const toggleIsFollowing = (isFetching, id) => ({
-  type: TOGGLE_IS_FOLLOWING,
-  isFetching,
-  id,
-})
+const acceptSetCount = payload => ({ type: SET_COUNT, payload })
+const setUsersCount = payload => ({ type: SET_USERS_COUNT, payload })
+const toggleIsFetching = payload => ({ type: TOGGLE_IS_FETCHING, payload })
+const toggleIsFollowing = (payload, id) => ({ type: TOGGLE_IS_FOLLOWING, payload, id })
 
-const setCount = (count) => async (dispatch) => {
+const setCount = count => async dispatch => {
   dispatch(acceptSetCount(count))
   dispatch(getUsers(1, count))
 }
 
-const getUsers = (page, count) => async (dispatch) => {
+const getUsers = (page, count) => async dispatch => {
   dispatch(setPage(page))
   dispatch(toggleIsFetching(true))
   const data = await usersAPI.getUsers(page, count)
@@ -121,11 +114,11 @@ const followUnfollowFlow = async (dispatch, method, action, id) => {
   dispatch(toggleIsFollowing(false, id))
 }
 
-const follow = (id) => async (dispatch) => {
+const follow = id => async dispatch => {
   followUnfollowFlow(dispatch, usersAPI.followAjax, acceptFollow, id)
 }
 
-const unFollow = (id) => async (dispatch) => {
+const unFollow = id => async dispatch => {
   followUnfollowFlow(dispatch, usersAPI.unFollowAjax, acceptUnFollow, id)
 }
 

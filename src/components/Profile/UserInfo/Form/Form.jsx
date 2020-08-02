@@ -1,11 +1,11 @@
 import React from 'react'
 import classNames from './Form.module.css'
 import * as yup from 'yup'
-import { Form, Field, withFormik } from 'formik'
+import { Form as FormikForm, Field, withFormik } from 'formik'
 
 const SendForm = ({ errors, touched, contacts, values, setEditMode }) => {
   return (
-    <Form className={classNames.form}>
+    <FormikForm className={classNames.form}>
       <article className={classNames.user_info_text}>
         <div>
           <h3>Name: </h3>
@@ -49,11 +49,11 @@ const SendForm = ({ errors, touched, contacts, values, setEditMode }) => {
         </button>
         <button type="submit">Submit</button>
       </article>
-    </Form>
+    </FormikForm>
   )
 }
 
-export default withFormik({
+export const Form = withFormik({
   mapPropsToValues({ initialValues }) {
     return { ...initialValues }
   },

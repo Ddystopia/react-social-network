@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import Message from './Message/Message'
+import { Message } from './Message/Message'
 import classNames from './Messages.module.css'
-import SendForm from './SendForm/SendForm'
+import { Form } from './SendForm/SendForm'
 import empty from '../../../assets/images/mailbox-empty.svg'
 import { connect } from 'react-redux'
-import Preloader from '../../common/Preloader/Preloader'
+import { Preloader } from '../../common/Preloader/Preloader'
 import { getNewMessages } from '../../../redux/dialogReducer'
 import {
   getAuthProfile,
@@ -15,7 +15,7 @@ import {
   getLastCheck,
 } from '../../../redux/selectors/selectors'
 
-const Messages = ({
+const MessagesContainer = ({
   data,
   messageActions,
   haveChats,
@@ -35,7 +35,7 @@ const Messages = ({
     // checkIsViewed,
   } = messageActions
   useEffect(() => {
-    const chat = chatsData.find((item) => item.id === currentDialogId)
+    const chat = chatsData.find(item => item.id === currentDialogId)
     if (!chat) return
     if (chat.newMessagesCount > 0) getNewMessages(chat.id, lastCheck)
   }, [chatsData, currentDialogId, getNewMessages, lastCheck])
@@ -47,11 +47,11 @@ const Messages = ({
   })
   const messagesDiv = React.createRef()
   const messages = data
-    .filter((item) => isBin === !!item.deletedBySender)
-    .map((item) => ({ ...item, addedAt: new Date(item.addedAt) }))
+    .filter(item => isBin === !!item.deletedBySender)
+    .map(item => ({ ...item, addedAt: new Date(item.addedAt) }))
     .sort((a, b) => a.addedAt - b.addedAt)
     .slice(0, Math.min(data.length, 100))
-    .map((item) => {
+    .map(item => {
       const self = profile?.userId === item.senderId
       return (
         <Message
@@ -79,13 +79,13 @@ const Messages = ({
           </div>
         )}
       </div>
-      {haveChats && <SendForm sendMessage={sendMessage} />}
+      {haveChats && <Form sendMessage={sendMessage} />}
     </section>
   )
 }
 
-export default connect(
-  (state) => ({
+export const Messages = connect(
+  state => ({
     profile: getAuthProfile(state),
     elseProfile: getDialogFriendProfile(state),
     isFetching: getIsFetchingMessages(state),
@@ -94,4 +94,4 @@ export default connect(
     lastCheck: getLastCheck(state),
   }),
   { getNewMessages }
-)(Messages)
+)(MessagesContainer)

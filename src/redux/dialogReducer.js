@@ -54,135 +54,129 @@ const dialogReducer = (state = initial, action) => {
     case SEND_MESSAGE:
       return {
         ...state,
-        messagesData: [...state.messagesData, action.messageObj],
+        messagesData: [...state.messagesData, action.payload],
       }
     case EDIT_MESSAGE:
       return {
         ...state,
-        messagesData: state.messagesData.map((message) =>
+        messagesData: state.messagesData.map(message =>
           message.id === action.id ? action.newMessage : message
         ),
       }
     case SET_DIALOGS:
       return {
         ...state,
-        chatsData: action.chatsData,
+        chatsData: action.payload,
       }
     case SET_CURRENT_DIALOG_id:
       return {
         ...state,
-        currentDialogId: action.currentDialogId,
+        currentDialogId: action.payload,
       }
     case SET_LAST_CHECK:
       return {
         ...state,
-        lastCheck: action.lastCheck,
+        lastCheck: action.payload,
       }
     case SET_MESSAGES:
       return {
         ...state,
-        messagesData: action.messagesData,
+        messagesData: action.payload,
       }
     case ADD_MESSAGES:
       return {
         ...state,
-        messagesData: [...state.messagesData, ...action.messagesData],
+        messagesData: [...state.messagesData, ...action.payload],
       }
     case SET_NEW_MESSAGES_COUNT:
       return {
         ...state,
-        newMessagesCount: action.newMessagesCount,
+        newMessagesCount: action.payload,
       }
     case SET_NEW_MESSAGES_COUNT_IN_CHAT:
       return {
         ...state,
-        chatsData: state.chatsData.map((chat) =>
+        chatsData: state.chatsData.map(chat =>
           chat.id === action.id ? { ...chat, newMessagesCount: action.newMessagesCount } : chat
         ),
       }
     case TOGGLE_IS_FETCHING:
       return {
         ...state,
-        messagesFetching: action.messagesFetching,
+        messagesFetching: action.payload,
       }
     default:
       return state
   }
 }
 
-const accessSendMessage = (messageObj) => ({ type: SEND_MESSAGE, messageObj })
+const accessSendMessage = payload => ({ type: SEND_MESSAGE, payload })
 const editMessageProperties = (id, newMessage) => ({ type: EDIT_MESSAGE, id, newMessage })
-const setDialogs = (chatsData) => ({ type: SET_DIALOGS, chatsData })
-const setCurrentDialogId = (currentDialogId) => ({ type: SET_CURRENT_DIALOG_id, currentDialogId })
-const setLastCheck = (lastCheck) => ({ type: SET_LAST_CHECK, lastCheck })
-const setMessages = (messagesData) => ({ type: SET_MESSAGES, messagesData })
-const addMessages = (messagesData) => ({ type: ADD_MESSAGES, messagesData })
-const setNewMessagesCount = (newMessagesCount) => ({
-  type: SET_NEW_MESSAGES_COUNT,
-  newMessagesCount,
-})
+const setDialogs = payload => ({ type: SET_DIALOGS, payload })
+const setCurrentDialogId = payload => ({ type: SET_CURRENT_DIALOG_id, payload })
+const setLastCheck = payload => ({ type: SET_LAST_CHECK, payload })
+const setMessages = payload => ({ type: SET_MESSAGES, payload })
+const addMessages = payload => ({ type: ADD_MESSAGES, payload })
+const setNewMessagesCount = payload => ({ type: SET_NEW_MESSAGES_COUNT, payload })
 const setNewMessagesCountInChat = (id, newMessagesCount) => ({
   type: SET_NEW_MESSAGES_COUNT_IN_CHAT,
   newMessagesCount,
   id,
 })
-const toggleIsFetching = (messagesFetching) => ({
-  type: TOGGLE_IS_FETCHING,
-  messagesFetching,
-})
+const toggleIsFetching = payload => ({ type: TOGGLE_IS_FETCHING, payload })
 
-const getAllDialogs = () => async (dispatch) => {
-  const dialogs = await dialogsAPI.getAllDialogs() || []
+const getAllDialogs = () => async dispatch => {
+  const dialogs = (await dialogsAPI.getAllDialogs()) || []
   dispatch(setDialogs(dialogs))
 }
 
-const createNewChat = (userId) => async (dispatch) => {
-  const response = await dialogsAPI.createNewChat(userId) || {}
+const createNewChat = userId => async dispatch => {
+  const response = (await dialogsAPI.createNewChat(userId)) || {}
   if (response.resultCode === 0) dispatch(getAllDialogs())
 }
 
-const getMessages = (userId) => async (dispatch) => {
+const getMessages = userId => async dispatch => {
   if (!userId) return
   dispatch(toggleIsFetching(true))
-  const response = await dialogsAPI.getMessages(userId) || []
+  const response = (await dialogsAPI.getMessages(userId)) || []
   dispatch(setMessages(response.items))
   dispatch(toggleIsFetching(false))
   dispatch(setCurrentDialogId(userId))
   dispatch(setNewMessagesCountInChat(userId, 0))
 }
-const getNewMessages = (userId, lastCheck) => async (dispatch) => {
+const getNewMessages = (userId, lastCheck) => async dispatch => {
   if (!userId) return
   dispatch(setLastCheck(new Date()))
   dispatch(setNewMessagesCountInChat(userId, 0))
-  const response = await dialogsAPI.getNewMessages(userId, lastCheck) || []
+  const response = (await dialogsAPI.getNewMessages(userId, lastCheck)) || []
   dispatch(addMessages(response))
 }
 
-const getNewMessagesCount = () => async (dispatch) => {
-  const count = await dialogsAPI.getNewMessagesCount() || 0
+const getNewMessagesCount = () => async dispatch => {
+  const count = (await dialogsAPI.getNewMessagesCount()) || 0
   dispatch(setNewMessagesCount(count))
 }
 
-const sendMessage = (userId, message) => async (dispatch) => {
-  const response = await dialogsAPI.sendMessage(userId, message) || {}
+const sendMessage = (userId, message) => async dispatch => {
+  const response = (await dialogsAPI.sendMessage(userId, message)) || {}
   if (response.resultCode === 0) dispatch(accessSendMessage(response.data.message))
 }
 
-const checkIsViewed = (messageId) => async (/* dispatch */) => {
-  const response = await dialogsAPI.isViewed(messageId) || {}
+const checkIsViewed = messageId => async (/* dispatch */) => {
+  const response = (await dialogsAPI.isViewed(messageId)) || {}
   if (response.resultCode === 0) {
     /*Some do*/
   }
 }
 
-const removeMessage = (message) => async (dispatch) => {
-  const response = await dialogsAPI.deleteSelf(message.id) || {}
+const removeMessage = message => async dispatch => {
+  const response = (await dialogsAPI.deleteSelf(message.id)) || {}
   if (response.resultCode === 0)
     dispatch(editMessageProperties(message.id, { ...message, deletedBySender: true }))
 }
 
-const restoreMessage = (message) => async (dispatch) => {
-  const response = await dialogsAPI.restoreMessage(message.id) || {}
+const restoreMessage = message => async dispatch => {
+  const response = (await dialogsAPI.restoreMessage(message.id)) || {}
   if (response.resultCode === 0)
     dispatch(editMessageProperties(message.id, { ...message, deletedBySender: false }))
 }

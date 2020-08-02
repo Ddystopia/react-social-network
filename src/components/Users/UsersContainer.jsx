@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import Users from './Users'
-import Preloader from '../common/Preloader/Preloader'
-import ErrorPage from '../common/ErrorPage/ErrorPage'
+import { Users } from './Users'
+import { Preloader } from '../common/Preloader/Preloader'
+import { ErrorPage } from '../common/ErrorPage/ErrorPage'
 import { getUsers, follow, unFollow, setCount } from '../../redux/usersReducer'
 import { compose } from 'redux'
 import {
@@ -15,7 +15,7 @@ import {
   getUsersError,
 } from '../../redux/selectors/selectors'
 
-const UsersContainer = ({
+const UsersContainerComponent = ({
   data,
   page,
   pageCount,
@@ -62,4 +62,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { getUsers, follow, unFollow, setCount }
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(UsersContainer)
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  UsersContainerComponent
+)

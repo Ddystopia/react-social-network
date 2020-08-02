@@ -1,10 +1,10 @@
 import React from 'react'
 import classNames from './Users.module.css'
-import User from './User/User'
-import Pagination from './Pagination/Pagination'
+import { User } from './User/User'
+import { Pagination } from './Pagination/Pagination'
 const MIN_COUNT = 2
 
-const Users = ({
+export const Users = ({
   data,
   isFollowing,
   follow,
@@ -38,7 +38,7 @@ const Users = ({
         <select
           onChange={(e) => {
             setPageCount(e.target.value)
-          }}	
+          }}
           value={pageCount}
         >
           {new Array(7).fill(null).map((item, i) => (
@@ -52,5 +52,3 @@ const Users = ({
     </section>
   )
 }
-
-export default Users

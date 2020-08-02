@@ -18,45 +18,42 @@ const newsReducer = (state = initial, action) => {
     case ADD_ARTICLES:
       return {
         ...state,
-        articles: [...state.articles, ...action.articles],
+        articles: [...state.articles, ...action.payload],
       }
     case SET_PAGE:
       return {
         ...state,
-        page: action.page,
+        page: action.payload,
       }
     case SET_COUNT:
       return {
         ...state,
-        count: action.count,
+        count: action.payload,
       }
     case TOGGLE_IS_FETCHING:
       return {
         ...state,
-        isFetching: action.isFetching,
+        isFetching: action.payload,
       }
     default:
       return state
   }
 }
 
-const addArticles = (articles) => ({ type: ADD_ARTICLES, articles })
-const setPage = (page) => ({ type: SET_PAGE, page })
-const acceptSetCount = (count) => ({ type: SET_COUNT, count })
-const toggleIsFetching = (isFetching) => ({
-  type: TOGGLE_IS_FETCHING,
-  isFetching,
-})
+export const addArticles = payload => ({ type: ADD_ARTICLES, payload })
+export const setPage = payload => ({ type: SET_PAGE, payload })
+export const acceptSetCount = payload => ({ type: SET_COUNT, payload })
+export const toggleIsFetching = payload => ({ type: TOGGLE_IS_FETCHING, payload })
 
-const setCount = (count) => async (dispatch) => {
+export const setCount = count => async dispatch => {
   dispatch(acceptSetCount(count))
   dispatch(getArticles(1, count))
 }
 
-const getArticles = (page, count) => async (dispatch) => {
+const getArticles = (page, count) => async dispatch => {
   try {
     dispatch(toggleIsFetching(true))
-    const data = await newsAPI.getArticles(page, count) || []
+    const data = (await newsAPI.getArticles(page, count)) || []
 
     dispatch(addArticles(data))
   } catch (err) {
@@ -67,4 +64,4 @@ const getArticles = (page, count) => async (dispatch) => {
 }
 
 export default newsReducer
-export { getArticles, setPage, setCount }
+export { getArticles }

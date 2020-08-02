@@ -9,7 +9,9 @@
 		"plugin:react/recommended"
 	],
 	"globals": {
-		"process": "readonly"
+		"process": "readonly",
+		"expect": "readonly",
+		"test": "readonly"
 	},
 	"parserOptions": {
 		"ecmaFeatures": {
