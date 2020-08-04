@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from './Form.module.css'
 import * as yup from 'yup'
 import { Form as FormikForm, Field, withFormik } from 'formik'
@@ -29,3 +30,8 @@ export const Form = withFormik({
     post: yup.string().max(300).min(10).required(),
   }),
 })(SendForm)
+
+SendForm.propTypes = {
+  errors: PropTypes.object,
+  touched: PropTypes.object,
+}

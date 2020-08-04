@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import PropTypes from 'prop-types'
 import classNames from './MyPosts.module.css'
 import { addPost } from '../../../redux/profileReducer'
 import { getPosts } from '../../../redux/selectors/selectors'
@@ -8,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export const MyPosts = ({ isOwner }) => {
   const data = useSelector(getPosts)
-  const postMessages = data.map((item) => <Post {...item} key={item.id} />).reverse()
+  const postMessages = data.map(item => <Post {...item} key={item.id} />).reverse()
 
   const dispatch = useDispatch()
-  const addPostHandle = useCallback((message) => dispatch(addPost(message)), [dispatch])
+  const addPostHandle = useCallback(message => dispatch(addPost(message)), [dispatch])
 
   return (
     <div className={classNames.posts}>
@@ -20,4 +21,7 @@ export const MyPosts = ({ isOwner }) => {
       <section>{postMessages}</section>
     </div>
   )
+}
+MyPosts.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
 }

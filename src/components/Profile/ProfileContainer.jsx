@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Profile } from './Profile'
 import { Preloader } from '../common/Preloader/Preloader'
@@ -8,6 +9,7 @@ import {
   updateUserStatus,
   setPhoto,
   setProfileData,
+  profileSchema,
 } from '../../redux/profileReducer'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
@@ -19,7 +21,7 @@ import {
   getAuthProfile,
 } from '../../redux/selectors/selectors'
 
-const ProfileContainerComponent = ({
+const ProfileContainer = ({
   match,
   authUserId,
   profile,
@@ -79,7 +81,19 @@ const mapDispatchToProps = {
   setProfileData,
 }
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withRouter
-)(ProfileContainerComponent)
+export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter)(ProfileContainer)
+
+ProfileContainer.propTypes = {
+  match: PropTypes.object.isRequired,
+  authUserId: PropTypes.number,
+  profile: profileSchema,
+  authProfile: profileSchema,
+  history: PropTypes.object.isRequired,
+  setProfile: PropTypes.func.isRequired,
+  getUserStatus: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
+  updateUserStatus: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  setPhoto: PropTypes.func.isRequired,
+  setProfileData: PropTypes.func.isRequired,
+}

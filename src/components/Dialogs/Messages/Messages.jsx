@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Message } from './Message/Message'
 import classNames from './Messages.module.css'
 import { Form } from './SendForm/SendForm'
@@ -14,6 +15,7 @@ import {
   getCurrentDialogId,
   getLastCheck,
 } from '../../../redux/selectors/selectors'
+import { profileSchema } from '../../../redux/profileReducer'
 
 const MessagesContainer = ({
   data,
@@ -95,3 +97,17 @@ export const Messages = connect(
   }),
   { getNewMessages }
 )(MessagesContainer)
+
+MessagesContainer.propTypes = {
+  data: PropTypes.array.isRequired,
+  messageActions: PropTypes.object.isRequired,
+  haveChats: PropTypes.bool.isRequired,
+  profile: profileSchema,
+  elseProfile: profileSchema,
+  isFetching: PropTypes.bool.isRequired,
+  isBin: PropTypes.bool.isRequired,
+  chatsData: PropTypes.array.isRequired,
+  currentDialogId: PropTypes.number,
+  getNewMessages: PropTypes.func.isRequired,
+  lastCheck: PropTypes.instanceOf(Date).isRequired,
+}

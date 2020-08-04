@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import classNames from './Chats.module.css'
 import { ChatListItem } from './ChatListItem/ChatListItem'
 import Swal from 'sweetalert2'
@@ -34,7 +35,7 @@ export const Chats = ({ data, chatActions, newMessagesCount }) => {
       icon: 'question',
     })
     if (+id > 0) createNewChat(id)
-    else Swal.fire('Invalid id', '', 'error')
+    else if (id) Swal.fire('Invalid id', '', 'error')
   }
 
   const listItems = data.map(item => (
@@ -51,4 +52,9 @@ export const Chats = ({ data, chatActions, newMessagesCount }) => {
       <ul>{listItems}</ul>
     </section>
   )
+}
+Chats.propTypes = {
+  data: PropTypes.array.isRequired,
+  chatActions: PropTypes.object.isRequired,
+  newMessagesCount: PropTypes.number.isRequired,
 }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Users } from './Users'
 import { Preloader } from '../common/Preloader/Preloader'
@@ -15,7 +16,7 @@ import {
   getUsersError,
 } from '../../redux/selectors/selectors'
 
-const UsersContainerComponent = ({
+const UsersContainer = ({
   data,
   page,
   pageCount,
@@ -31,7 +32,7 @@ const UsersContainerComponent = ({
   useEffect(() => {
     if (data.length === 0 && !isFetching && !hasError) getUsers(page, pageCount)
   }, [data, getUsers, hasError, isFetching, page, pageCount])
-  const changePage = (p) => getUsers(p, pageCount)
+  const changePage = p => getUsers(p, pageCount)
 
   if (isFetching) return <Preloader />
   if (hasError) return <ErrorPage />
@@ -50,7 +51,7 @@ const UsersContainerComponent = ({
   )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   data: getUsersData(state),
   page: getUsersPage(state),
   pageCount: getUsersPageCount(state),
@@ -62,6 +63,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { getUsers, follow, unFollow, setCount }
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  UsersContainerComponent
-)
+export default compose(connect(mapStateToProps, mapDispatchToProps))(UsersContainer)
+UsersContainer.propTypes = {
+  data: PropTypes.array.isRequired,
+  page: PropTypes.number.isRequired,
+  pageCount: PropTypes.number.isRequired,
+  usersCount: PropTypes.number.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  isFollowing: PropTypes.array.isRequired,
+  follow: PropTypes.func.isRequired,
+  unFollow: PropTypes.func.isRequired,
+  setCount: PropTypes.func.isRequired,
+  hasError: PropTypes.bool.isRequired,
+}

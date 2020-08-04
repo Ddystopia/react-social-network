@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import classNames from './UserInfo.module.css'
 import standardAvatar from '../../../assets/images/standardAvatar.jpg'
 import { UserData } from './UserData/UserData'
 import { Form } from './Form/Form'
+import { profileSchema } from '../../../redux/profileReducer'
 
 export const UserInfo = ({ profile, updateUserStatus, status, isOwner, setPhoto, setProfile }) => {
   const [editMode, setEditMode] = useState(false)
 
-  const onChangeFile = (e) => {
+  const onChangeFile = e => {
     if (e.target.files.length) setPhoto(e.target.files[0])
   }
 
-  const nullToEmptyString = (elem) => {
+  const nullToEmptyString = elem => {
     if (elem === null) return ''
     else if (typeof elem !== 'object') return elem
     else {
@@ -57,7 +59,7 @@ export const UserInfo = ({ profile, updateUserStatus, status, isOwner, setPhoto,
 
 const Contacts = ({ contacts }) => {
   const contactsList = Object.keys(contacts)
-    .map((item) => {
+    .map(item => {
       const link = contacts[item]
       return (
         link && (
@@ -67,7 +69,7 @@ const Contacts = ({ contacts }) => {
         )
       )
     })
-    .filter((item) => item)
+    .filter(item => item)
 
   if (contactsList.length === 0) contactsList.push(<li key={0}>Nothing contacts</li>)
 
@@ -77,4 +79,17 @@ const Contacts = ({ contacts }) => {
       <ul className={classNames.linkList}>{contactsList}</ul>
     </article>
   )
+}
+
+UserInfo.propTypes = {
+  profile: profileSchema,
+  updateUserStatus: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
+  isOwner: PropTypes.bool.isRequired,
+  setPhoto: PropTypes.func.isRequired,
+  setProfile: PropTypes.func.isRequired,
+}
+
+Contacts.propTypes = {
+  contacts: PropTypes.object.isRequired,
 }

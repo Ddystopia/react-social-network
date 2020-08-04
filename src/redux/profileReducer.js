@@ -1,5 +1,6 @@
 import { profileAPI } from '../api/api'
 import { errorHandler } from '../utils/errorHandlers'
+import PropTypes from 'prop-types'
 
 const ADD_POST = 'profileReducer/ADD_POST'
 const REMOVE_POST = 'profileReducer/REMOVE_POST'
@@ -147,3 +148,13 @@ export {
   setProfileData,
   setProfileAuth,
 }
+
+export const profileSchema = PropTypes.shape({
+  aboutMe: PropTypes.string,
+  contacts: PropTypes.object,
+  photos: PropTypes.object,
+  lookingForAJob: PropTypes.bool,
+  lookingForAJobDescription: PropTypes.string,
+  fullName: PropTypes.string,
+  userId: PropTypes.number,
+})

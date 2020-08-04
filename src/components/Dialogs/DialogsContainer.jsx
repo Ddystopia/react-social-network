@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Dialogs } from './Dialogs'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux'
@@ -22,7 +23,7 @@ import {
   getNewMessagesCountSelector,
 } from '../../redux/selectors/selectors'
 
-const DialogsContainerComp = ({
+const DialogsContainer = ({
   match,
   history,
   chatsData,
@@ -101,4 +102,22 @@ export default compose(
   }),
   withAuthRedirect,
   withRouter
-)(DialogsContainerComp)
+)(DialogsContainer)
+
+DialogsContainer.propTypes = {
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  chatsData: PropTypes.array.isRequired,
+  messagesData: PropTypes.array.isRequired,
+  getAllDialogs: PropTypes.func.isRequired,
+  createNewChat: PropTypes.func.isRequired,
+  getMessages: PropTypes.func.isRequired,
+  sendMessage: PropTypes.func.isRequired,
+  checkIsViewed: PropTypes.func.isRequired,
+  removeMessage: PropTypes.func.isRequired,
+  restoreMessage: PropTypes.func.isRequired,
+  newMessagesCount: PropTypes.number.isRequired,
+  getNewMessagesCount: PropTypes.func.isRequired,
+  setCurrentDialogId: PropTypes.func.isRequired,
+  currentDialogId: PropTypes.number,
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from './Login.module.css'
 import * as yup from 'yup'
 import { Row } from './Row/Row'
@@ -66,4 +67,16 @@ export const Login = ({ loginUser, captchaUrl }) => {
       <FormikLoginForm loginUser={loginUser} captchaUrl={captchaUrl} />
     </section>
   )
+}
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  captchaUrl: PropTypes.string,
+}
+
+LoginForm.propTypes = {
+  captchaUrl: PropTypes.string,
+  values: PropTypes.object,
+  errors: PropTypes.object,
+  touched: PropTypes.object,
 }

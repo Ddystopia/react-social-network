@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from './Row.module.css'
 
 export const Row = ({ hasError, children, className }) => {
@@ -8,4 +9,9 @@ export const Row = ({ hasError, children, className }) => {
       {children}
     </div>
   )
+}
+Row.propTypes = {
+  hasError: PropTypes.bool,
+  className: PropTypes.string,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
 }

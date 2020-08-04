@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Login } from './Login'
-import { login, getCaptchaUrl } from '../../redux/authReducer'
+import { login } from '../../redux/authReducer'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
@@ -11,13 +12,15 @@ import {
   getIsFetchingAuth,
 } from '../../redux/selectors/selectors'
 
-const LoginContainerComp = ({ login, isAuth, isFetching, captchaUrl }) => {
+const LoginContainer = ({ login, isAuth, isFetching, captchaUrl }) => {
   const loginUser = formData => {
     login(formData)
-  }
+	}
+	
   if (isFetching) return <Preloader />
   if (isAuth) return <Redirect to={'/profile'} />
-  else return <Login captchaUrl={captchaUrl} loginUser={loginUser} />
+
+  return <Login captchaUrl={captchaUrl} loginUser={loginUser} />
 }
 
 const mapStateToProps = state => ({
@@ -26,4 +29,11 @@ const mapStateToProps = state => ({
   captchaUrl: getCaptchaUrlSelector(state),
 })
 
-export default compose(connect(mapStateToProps, { login, getCaptchaUrl }))(LoginContainerComp)
+export default compose(connect(mapStateToProps, { login }))(LoginContainer)
+
+LoginContainer.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  captchaUrl: PropTypes.string,
+}

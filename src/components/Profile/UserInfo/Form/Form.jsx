@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from './Form.module.css'
 import * as yup from 'yup'
 import { Form as FormikForm, Field, withFormik } from 'formik'
@@ -25,7 +26,7 @@ const SendForm = ({ errors, touched, contacts, values, setEditMode }) => {
       <article>
         <h3>Contacts:</h3>
         <ul className={classNames.contacts}>
-          {Object.keys(contacts).map((el) => {
+          {Object.keys(contacts).map(el => {
             const hasError =
               errors.contacts && touched.contacts && errors.contacts[el] && touched.contacts[el]
             return (
@@ -79,3 +80,11 @@ export const Form = withFormik({
     }),
   }),
 })(SendForm)
+
+SendForm.propTypes = {
+  errors: PropTypes.object,
+  touched: PropTypes.object,
+  contacts: PropTypes.object,
+  values: PropTypes.object,
+  setEditMode: PropTypes.func,
+}

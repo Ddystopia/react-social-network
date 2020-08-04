@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import classNames from './Message.module.css'
 import CMClassNames from './ContextMenu.module.css'
 import standardAvatar from '../../../../assets/images/standardAvatar.jpg'
+import { profileSchema } from '../../../../redux/profileReducer'
 
 export const Message = ({ data, profile, classEnd, removeMessage, restoreMessage }) => {
   const date = calcDate(data.addedAt)
@@ -89,4 +91,23 @@ const calcDate = date => {
   }
   resDate.push(`${dateObj.h}:${dateObj.m}`)
   return resDate.join(' / ')
+}
+
+Message.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.string,
+    body: PropTypes.string,
+    addedAt: PropTypes.instanceOf(Date),
+    senderId: PropTypes.number,
+    senderName: PropTypes.string,
+    recipientId: PropTypes.number,
+    recipientName: PropTypes.string,
+    viewed: PropTypes.bool,
+    deletedBySender: PropTypes.bool,
+    deletedByRecipient: PropTypes.bool,
+  }),
+  profile: profileSchema,
+  classEnd: PropTypes.string.isRequired,
+  removeMessage: PropTypes.func.isRequired,
+  restoreMessage: PropTypes.func.isRequired,
 }

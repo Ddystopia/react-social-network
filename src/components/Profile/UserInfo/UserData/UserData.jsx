@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import classNames from './UserData.module.css'
+import { profileSchema } from '../../../../redux/profileReducer'
 
 export const UserData = ({ propStatus, profile, updateUserStatus, isOwner }) => {
   const [editMode, setEditMode] = useState(false)
@@ -8,7 +10,7 @@ export const UserData = ({ propStatus, profile, updateUserStatus, isOwner }) => 
     setStatus(propStatus)
   }, [propStatus])
 
-  const statusOnChange = (e) => {
+  const statusOnChange = e => {
     setStatus(e.target.value)
   }
 
@@ -60,4 +62,11 @@ export const UserData = ({ propStatus, profile, updateUserStatus, isOwner }) => 
       </div>
     </article>
   )
+}
+
+UserData.propTypes = {
+  propStatus: PropTypes.string.isRequired,
+  profile: profileSchema,
+  updateUserStatus: PropTypes.func.isRequired,
+  isOwner: PropTypes.bool.isRequired,
 }

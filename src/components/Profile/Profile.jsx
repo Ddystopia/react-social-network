@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { UserInfo } from './UserInfo/UserInfo'
 import { MyPosts } from './MyPosts/MyPosts'
 import classNames from './Profile.module.css'
+import { profileSchema } from '../../redux/profileReducer'
 
 export const Profile = ({ profile, status, updateUserStatus, isOwner, setPhoto, setProfile }) => {
   return (
@@ -22,4 +24,13 @@ export const Profile = ({ profile, status, updateUserStatus, isOwner, setPhoto, 
       <MyPosts isOwner={isOwner} />
     </section>
   )
+}
+
+Profile.propTypes = {
+  profile: profileSchema,
+  status: PropTypes.string.isRequired,
+  updateUserStatus: PropTypes.func.isRequired,
+  isOwner: PropTypes.bool.isRequired,
+  setPhoto: PropTypes.func.isRequired,
+  setProfile: PropTypes.func.isRequired,
 }

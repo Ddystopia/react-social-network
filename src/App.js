@@ -11,7 +11,7 @@ import { errorHandler } from './utils/errorHandlers'
 import { useDispatch, useSelector } from 'react-redux'
 import { getInitialized } from './redux/selectors/selectors'
 
-const NewsContainer = React.lazy(() => import('./components/News/NewsContainer'))
+const News = React.lazy(() => import('./components/News/News'))
 const NotFoundPage = React.lazy(() => import('./components/NotFoundPage/NotFoundPage'))
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'))
 const LoginContainer = React.lazy(() => import('./components/Login/LoginContainer'))
@@ -38,7 +38,7 @@ export const App = () => {
           <Redirect exact from="/" to="/profile" />
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
           <Route path="/dialogs/:userId?" render={() => <DialogsContainer />} />
-          <Route path="/news" render={withSuspense(NewsContainer)} />
+          <Route path="/news" render={withSuspense(News)} />
           <Route path="/users" render={withSuspense(UsersContainer)} />
           <Route path="/login" render={withSuspense(LoginContainer)} />
           <Route path="*" render={withSuspense(NotFoundPage)} />

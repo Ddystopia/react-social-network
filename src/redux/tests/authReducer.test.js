@@ -1,4 +1,4 @@
-import authReducer, { setAuthUser, toggleIsFetching ,setCaptchaUrl} from '../authReducer'
+import authReducer, { setAuthUser, toggleIsFetching, setCaptchaUrl } from '../authReducer'
 
 const state = {
   email: null,
