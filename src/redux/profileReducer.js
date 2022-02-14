@@ -20,7 +20,7 @@ const initial = {
     {
       id: 2,
       message: 'I like dogs',
-      likesCount: 0,
+      likesCount: 2,
     },
     {
       id: 3,

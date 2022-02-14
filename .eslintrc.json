@@ -1,32 +1,26 @@
 {
-	"parser": "babel-eslint",
-	"env": {
-		"browser": true,
-		"es2020": true
-	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:react/recommended"
-	],
-	"globals": {
-		"process": "readonly",
-		"expect": "readonly",
-		"test": "readonly"
-	},
-	"parserOptions": {
-		"ecmaFeatures": {
-			"jsx": true
-		},
-		"ecmaVersion": 2020,
-		"sourceType": "module"
-	},
-	"plugins": [
-		"react",
-		"react-hooks"
-	],
-	"rules": {
-		// "react/prop-types": 0,
-		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn"
-	}
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "globals": {
+    "process": "readonly",
+    "expect": "readonly",
+    "test": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    // "react/prop-types": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  }
 }

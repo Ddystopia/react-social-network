@@ -38,6 +38,10 @@ export const getStatus = state => state.profileData.status
 
 export const getPosts = state => state.profileData.postsData
 
+export const getAvatarSmall = state => state.profileData.profile.photos.small
+
+export const getAvatarLarge = state => state.profileData.profile.photos.large
+
 export const getIsFetchingProfile = state => state.profileData.isFetching
 
 export const getIsFetchingMessages = state => state.dialogData.messagesFetching

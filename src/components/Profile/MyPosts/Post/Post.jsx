@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import classNames from './Post.module.css'
 import standardAvatar from '../../../../assets/images/standardAvatar.jpg'
 
-export const Post = ({ message }) => {
+export const Post = ({ avatar, message }) => {
   return (
     <article className={classNames.post}>
-      <img src={standardAvatar} alt="avatar" />
+      <img src={avatar || standardAvatar} alt="avatar" />
       <div className={classNames.messageObj}>
         <p> {message} </p>
       </div>
