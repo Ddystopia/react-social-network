@@ -45,7 +45,7 @@ const InnerForm: FC<FormikProps<FormValues> & OtherProps> = ({
           {(Object.keys(values.contacts) as Array<keyof FormValues['contacts']>).map((el) => {
             const hasError = errors.contacts?.[el] && touched.contacts?.[el]
             return (
-              <li key={el}>
+              <li key={el} className={classNames.contact_link}>
                 <div>{el}:</div>
                 <Field
                   value={values.contacts[el] || ''}

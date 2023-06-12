@@ -12,6 +12,8 @@
   text-align: center;
   font-size: 2rem;
   line-height: 2rem;
+  padding: 5px;
+  user-select: none;
   grid-area: butt;
   background-color: var(--standard_color);
 }

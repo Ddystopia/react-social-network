@@ -28,6 +28,10 @@
   padding: 0;
 }
 
+.contact_link {
+  list-style-type: none;
+}
+
 .form article {
   padding: 0;
 }

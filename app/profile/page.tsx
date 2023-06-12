@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { getAuthUserId } from '@/redux/selectors/selectors'
 
-const ProfileContainer: React.FC = () => {
+export default () => {
   const router = useRouter()
   const authUserId = useSelector(getAuthUserId)
 
@@ -19,6 +19,4 @@ const ProfileContainer: React.FC = () => {
 
   return <></>
 }
-
-export default ProfileContainer
 

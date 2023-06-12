@@ -8,8 +8,9 @@ import { ProfileComponent } from '../Profile'
 import { syncProfile, syncUserStatus, updateUserStatus, setPhoto, updateProfileData, Profile } from '@/redux/profileReducer'
 import { getProfile, getAuthUserId, getStatus, getIsFetchingProfile, getAuthProfile } from '@/redux/selectors/selectors'
 
-const ProfileContainer: React.FC<{ params: { userId?: number | null } }>
-  = ({ params: { userId } }) => {
+const ProfileContainer: React.FC<{ params: { userId?: string | null } }>
+  = ({ params: { userId: paramId } }) => {
+    const userId = paramId ? +paramId : null
     const router = useRouter()
     const dispatch = useDispatch()
     const authUserId = useSelector(getAuthUserId)
@@ -28,32 +29,31 @@ const ProfileContainer: React.FC<{ params: { userId?: number | null } }>
       return <></>;
     }
 
-    const profile = useSelector(getProfile(userId))
+    const secondProfile = useSelector(getProfile(userId))
     const authProfile = useSelector(getAuthProfile)
     const status = useSelector(getStatus)
     const isFetching = useSelector(getIsFetchingProfile)
 
-
     useEffect(() => {
-      if (profile != null && profile.userId === userId) {
+      if (secondProfile != null && secondProfile.userId === userId) {
         return
       }
 
-      if (!profile || isNaN(userId)) {
+      if (!secondProfile || isNaN(userId)) {
         router.push('/login')
       } else if (userId !== authUserId || !authProfile) {
-        dispatch(syncProfile({ userId }))
-        dispatch(syncUserStatus({ userId }))
+        dispatch(syncProfile({ userId: userId }))
+        dispatch(syncUserStatus({ userId: userId }))
       }
-    }, [userId, authUserId, profile, dispatch, authProfile])
+    }, [userId, authUserId, secondProfile, dispatch, authProfile])
 
-    const profileToProps = userId === authUserId || !userId ? authProfile : profile
+    const profile = userId === authUserId || !userId ? authProfile : secondProfile
 
-    return profileToProps && !isFetching ? (
+    return profile && !isFetching ? (
       <ProfileComponent
-        profile={profileToProps}
+        profile={profile}
         status={status}
-        isOwner={!userId || authUserId === profile?.userId}
+        isOwner={!userId || authUserId === secondProfile?.userId}
 
         updateUserStatus={(status: string) => updateUserStatus({ status })}
         setPhoto={(photo: File) => dispatch(setPhoto({ photo }))}

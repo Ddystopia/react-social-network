@@ -5,6 +5,12 @@ import { Profile } from '@/redux/profileReducer'
 import { Article } from '@/redux/newsReducer'
 const newsapi = new NewsAPI('8cd00d3cacde4da2a2dcb5895d6fea47')
 
+type Response<T> = {
+  data: T,
+  messages: Array<string>,
+  resultCode: number
+}
+
 const instance = {
   axiosInstance: axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -56,7 +62,10 @@ const profileAPI = {
   async setProfileData(profile: Profile) {
     return instance.put('profile/', profile)
   },
-  async setPhoto(photo: File) {
+  async setPhoto(photo: File)
+    : Promise<Response<
+      { photos: { small?: string; large?: string; } }
+    >> {
     const formData = new FormData()
     formData.append('image', photo)
     return instance.axiosInstance
@@ -74,19 +83,14 @@ export type LoginValues = {
   captcha?: string
 }
 
-type AuthBaseResponse<T> = {
-  data: T,
-  messages: Array<string>,
-  resultCode: number
-}
 const authAPI = {
-  async me(): Promise<AuthBaseResponse<{ id: number, email: string, login: string }>> {
+  async me(): Promise<Response<{ id: number, email: string, login: string }>> {
     return instance.get('auth/me')
   },
-  async login(loginValues: LoginValues): Promise<AuthBaseResponse<{ userId: number }>> {
+  async login(loginValues: LoginValues): Promise<Response<{ userId: number }>> {
     return instance.post('auth/login', { ...loginValues })
   },
-  async logout(): Promise<AuthBaseResponse<{}>> {
+  async logout(): Promise<Response<{}>> {
     return instance.delete('auth/login')
   },
 }

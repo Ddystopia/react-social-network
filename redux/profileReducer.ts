@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { profileAPI } from '@/api/api';
+import { AppState } from './store';
+import { getAuthUserId } from './selectors/selectors'
 
 
 export type ProfileState = {
@@ -7,7 +9,6 @@ export type ProfileState = {
   profiles: { [key: number]: Profile }
   isFetching: boolean;
   status: string;
-  authUserId: number | null;
 }
 
 export type Post = {
@@ -61,7 +62,6 @@ const initialState: ProfileState = {
     },
   ],
   profiles: [],
-  authUserId: null,
   isFetching: false,
   status: '',
 };
@@ -95,16 +95,22 @@ export const updateUserStatus = createAsyncThunk<string, { status: string }>(
   }
 );
 
-export const setPhoto = createAsyncThunk<{ small?: string; large?: string; }, { photo: File }>(
+export const setPhoto = createAsyncThunk<
+  [number | null, { small?: string; large?: string; }],
+  { photo: File },
+  { state: AppState }
+>(
   'profile/setPhoto',
-  async ({ photo }) => {
+  async ({ photo }, { getState }) => {
     const response = await profileAPI.setPhoto(photo);
 
     if (response?.resultCode !== 0) {
-      return {}
+      return [null, {}]
     }
+    const photos = response.data.photos;
+    const id = getAuthUserId(getState());
 
-    return response.data.photos;
+    return [id, photos];
   }
 );
 
@@ -141,12 +147,6 @@ const profileSlice = createSlice({
     setUserStatus: (state, action: PayloadAction<string>) => {
       state.status = action.payload;
     },
-    setPhotoSuccess: (state, action: PayloadAction<{ small?: string; large?: string; }>) => {
-      const id = state.authUserId;
-      if (id) {
-        state.profiles[id].photos = action.payload;
-      }
-    },
     toggleIsFetching: (state, action: PayloadAction<boolean>) => {
       state.isFetching = action.payload;
     },
@@ -173,9 +173,9 @@ const profileSlice = createSlice({
         state.status = action.payload;
       })
       .addCase(setPhoto.fulfilled, (state, action) => {
-        const id = state.authUserId;
+        const [id, photos] = action.payload;
         if (id) {
-          state.profiles[id].photos = action.payload;
+          state.profiles[id].photos = photos
         }
       })
       .addCase(updateProfileData.fulfilled, (state, action) => {
@@ -192,7 +192,6 @@ export const {
   removePost,
   setProfile,
   setUserStatus,
-  setPhotoSuccess,
   toggleIsFetching
 } = profileSlice.actions;
 

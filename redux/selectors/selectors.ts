@@ -36,7 +36,7 @@ export const getProfile: (id: number) => (state: AppState) => Profile | null =
   id => state => state.profileData.profiles[id] ?? null
 
 export const getAuthProfile = (state: AppState) => {
-  const id = state.profileData.authUserId;
+  const id = getAuthUserId(state);
   if (!id) return null
   return getProfile(id)(state)
 }

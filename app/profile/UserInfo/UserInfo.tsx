@@ -30,7 +30,9 @@ export const UserInfo = ({ profile, updateUserStatus, status, isOwner, setPhoto,
     <section className={classNames.user_info}>
       <article className={classNames.avatar}>
         <img src={profile.photos.small ?? standardAvatar.src} alt="Avatar" />
-        <div>{isOwner && <input type="file" onChange={onChangeFile} value={''} />}</div>
+        <div className={classNames.filepicker}>
+          {isOwner && <input type="file" onChange={onChangeFile} value={''} />}
+        </div>
       </article>
       {editMode ? (
         <SendForm

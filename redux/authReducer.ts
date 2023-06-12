@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { authAPI, securityAPI } from '@/api/api'
 import { errorHandler } from '@/utils/errorHandlers'
-import { initializeApp } from './appReducer'
+import { initializeApp, setInitialized } from './appReducer'
 import { LoginValues } from '@/api/api'
+import { AppState } from './store'
 
 interface AuthState {
   email: null | string,
@@ -30,20 +31,22 @@ export const authUser = createAsyncThunk<number | null, void>('auth/user', async
   if (r.resultCode === 0) {
     const { id, email, login } = r.data
     dispatch(authSlice.actions.setAuthUser({ userId: id, email, login }))
-  } else dispatch(authSlice.actions.logoutUser())
+  } else {
+    dispatch(authSlice.actions.logoutUser())
+  }
 
   dispatch(authSlice.actions.toggleIsFetching(false))
   return r?.data?.id
 })
 
-export const login = createAsyncThunk<void, LoginValues>(
+export const login = createAsyncThunk<void, LoginValues, { state: AppState }>(
   'auth/login',
   async (formData, { dispatch }) => {
     try {
       const r = (await authAPI.login(formData)) || {}
       switch (r.resultCode) {
         case 0:
-          dispatch(initializeApp())
+          await dispatch(initializeApp())
           dispatch(authSlice.actions.setCaptchaUrl(null))
           break
         case 10:
@@ -54,13 +57,16 @@ export const login = createAsyncThunk<void, LoginValues>(
       }
     } catch (err) {
       errorHandler(err)
+      dispatch(setInitialized(false))
     }
   })
 
 export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) => {
   const r = (await authAPI.logout()) || {}
   if (r.resultCode === 0) {
+    dispatch(setInitialized(false))
     dispatch(authUser())
+
   }
 })
 

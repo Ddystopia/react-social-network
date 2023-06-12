@@ -7,11 +7,6 @@ import { Profile as ProfileType } from '../../redux/profileReducer'
 export const ProfileComponent: FC<Props> = ({ profile, status, updateUserStatus, isOwner, setPhoto, setProfile }: Props) => {
   return (
     <section className={classNames.content}>
-      {/* <img
-				className={classNames.img}
-				src="http://getwallpapers.com/wallpaper/full/8/8/c/254974.jpg"
-				alt="Some back"
-			/> */}
       <UserInfo
         profile={profile}
         status={status}
