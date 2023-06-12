@@ -2,56 +2,34 @@
   "name": "react-social-network",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "axios": "^0.19.2",
-    "formik": "^2.1.4",
-    "newsapi": "^2.4.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-paginate": "^6.3.2",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "react-test-renderer": "^16.13.1",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0",
-    "sweetalert2": "^9.10.13",
-    "yup": "^0.29.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js",
-    "prettier": "prettier --write src/**/*.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@sniptt/monads": "^0.5.10",
+    "axios": "^1.4.0",
+    "eslint": "8.42.0",
+    "eslint-config-next": "13.4.4",
+    "formik": "^2.4.1",
+    "newsapi": "^2.4.1",
+    "next": "13.4.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-paginate": "^8.2.0",
+    "react-redux": "^7.2.0",
+    "reselect": "^4.1.8",
+    "sweetalert2": "^11.7.12",
+    "typescript": "5.1.3",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.7.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-jest-dom": "^2.1.0",
-    "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.5",
-    "prettier": "2.0.5",
-    "react-devtools": "^4.7.0"
+    "@types/node": "20.2.6",
+    "@types/react": "18.2.11",
+    "@types/react-dom": "18.2.4",
+    "@types/react-redux": "^7.1.18"
   }
 }

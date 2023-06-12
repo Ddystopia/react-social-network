@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+}
+
+.pie {
+    width: min(90vw, 500px);
+    height: min(90vw, 500px);
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 0px;
+}
+
+.slice {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: top left;
+    animation: rotate 1s linear infinite; /* Adjust this to your desired animation */
+
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.slice1 {
+    background-color: #e15b64;
+    animation: rotate 1.47s linear infinite;
+}
+
+.slice2 {
+    background-color: #f47e60;
+    animation: rotate 1.96s linear infinite;
+}
+
+.slice3 {
+    background-color: #f8b26a;
+    animation: rotate 2.94s linear infinite;
+}
+
+.slice4 {
+    background-color: #abbd81;
+    animation: rotate 5.88s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
