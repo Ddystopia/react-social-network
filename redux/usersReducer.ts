@@ -1,18 +1,19 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { usersAPI } from '../api/api'
 
-type User = {
-  id: number;
-  name: string;
+export type User = {
+  id: number
+  name: string
   photos: {
-    small?: string;
-    large?: string;
-  };
-  status?: string;
-  followed: boolean;
-};
+    small: string
+    large: string
+  }
+  status: string
+  uniqueUrlName: string
+  followed: boolean
+}
 
-type UsersState = {
+export type UsersState = {
   users: User[];
   page: number;
   count: number;

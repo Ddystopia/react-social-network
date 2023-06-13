@@ -82,7 +82,9 @@ export const Messages: FC<MessagesContainerProps> = ({
       )
     })
 
-  if (isFetching) return <Preloader />
+  if (isFetching) {
+    return <Preloader />
+  }
 
   return (
     <section className={classNames.content}>
@@ -91,7 +93,7 @@ export const Messages: FC<MessagesContainerProps> = ({
           messages
         ) : (
           <div className={classNames.empty}>
-            <img alt="Empty" src={empty} />
+            <img alt="Empty" src={empty.src} />
             <p>Empty</p>
           </div>
         )}

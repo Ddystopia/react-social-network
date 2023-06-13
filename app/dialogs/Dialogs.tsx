@@ -28,7 +28,11 @@ export const Dialogs: FC<Props> = ({
   return (
     <section className={classNames.content}>
       {button}
-      <Chats data={chatsData} chatActions={chatActions} newMessagesCount={newMessagesCount} />
+      <Chats
+        data={chatsData}
+        chatActions={chatActions}
+        newMessagesCount={newMessagesCount}
+      />
       <Messages
         data={messagesData}
         messageActions={messageActions}

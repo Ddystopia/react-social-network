@@ -1,12 +1,13 @@
 import React, { ChangeEvent } from 'react'
 import classNames from './Users.module.css'
-import { User, UserData } from './User/User'
+import { UserComponent} from './User/User'
 import { Pagination } from './Pagination/Pagination'
+import { User } from '@/redux/usersReducer'
 
 const MIN_COUNT = 2
 
 interface UsersProps {
-  data: UserData[],
+  usersData: User[],
   isFollowing: number[],
   follow: (userId: number) => void,
   unFollow: (userId: number) => void,
@@ -18,7 +19,7 @@ interface UsersProps {
 }
 
 export const Users: React.FC<UsersProps> = ({
-  data,
+  usersData,
   isFollowing,
   follow,
   unFollow,
@@ -28,8 +29,8 @@ export const Users: React.FC<UsersProps> = ({
   changePage,
   setPageCount,
 }) => {
-  const users = data.map(u => (
-    <User
+  const users = usersData.map(u => (
+    <UserComponent
       key={u.id}
       disabled={isFollowing.includes(u.id)}
       id={u.id}

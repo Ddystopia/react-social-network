@@ -1,0 +1,32 @@
+"use client"
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChatsData, getCurrentDialogId } from '@/redux/selectors/selectors'
+import { initalizeDialogs } from '@/redux/dialogReducer'
+
+export default () => {
+  const router = useRouter()
+  const currentDialogId = useSelector(getCurrentDialogId);
+  const dispatch = useDispatch()
+
+  const chatsData = useSelector(getChatsData);
+  const firstElemId = +chatsData[0]?.id
+
+  useEffect(() => {
+    dispatch(initalizeDialogs())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (currentDialogId) {
+      router.push(`/dialogs/${currentDialogId}`)
+    } else {
+      router.push(`/profile`)
+    }
+  }, [currentDialogId])
+
+  return null
+}
+
+

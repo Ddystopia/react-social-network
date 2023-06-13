@@ -1,8 +1,7 @@
-import React, { useState, useEffect, FC, MouseEvent, useRef, TouchEvent } from 'react'
+import React, { useState, useEffect, FC, useRef } from 'react'
 import classNames from './Message.module.css'
 import CMClassNames from './ContextMenu.module.css'
 import standardAvatar from '@/public/images/standardAvatar.jpg'
-import Image from 'next/image';
 import { MessageData } from '@/redux/dialogReducer';
 
 export const Message: FC<Props> =
@@ -16,28 +15,28 @@ export const Message: FC<Props> =
     const [hidden, setHidden] = useState(true)
     let buttonPressTimer: NodeJS.Timeout;
 
-    type ContextMenuEvent = TouchEvent<HTMLDivElement> | MouseEvent<HTMLDivElement | MouseEvent>
+    type ContextMenuEvent = React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement, MouseEvent>
 
     const openContextMenu = (e: ContextMenuEvent) => {
-      e.preventDefault()
-      setHidden(false)
-      const contextMenu = contextMenuRef.current
+      e.preventDefault();
+      setHidden(false);
+      const contextMenu = contextMenuRef.current;
       if (contextMenu) {
-        if (e instanceof TouchEvent) {
+        if ('touches' in e) {
           contextMenu.style.left = e.touches[0].clientX + 'px';
           contextMenu.style.top = e.touches[0].clientY + 'px';
-        } else if (e instanceof MouseEvent) {
-          contextMenu.style.left = e.clientX + 'px'
-          contextMenu.style.top = e.clientY + 'px'
+        } else {
+          contextMenu.style.left = e.clientX + 'px';
+          contextMenu.style.top = e.clientY + 'px';
         }
       }
-    }
+    };
 
     useEffect(() => {
       hidden || contextMenuRef.current?.focus()
     })
 
-    const handleButtonPress = (e: TouchEvent<HTMLDivElement>) => {
+    const handleButtonPress = (e: ContextMenuEvent) => {
       buttonPressTimer = setTimeout(() => openContextMenu(e), 1500)
     }
 
@@ -47,11 +46,11 @@ export const Message: FC<Props> =
 
     return (
       <article className={messageClassName}>
-        <Image alt="avatar" src={smallPhoto || standardAvatar} />
+        <img alt="avatar" src={smallPhoto || standardAvatar.src} />
         <div
           className={classNames.content}
-          onContextMenu={openContextMenu}
-          onTouchStart={handleButtonPress}
+          onContextMenu={openContextMenu as any}
+          onTouchStart={handleButtonPress as any}
           onTouchEnd={handleButtonRelease}
         >
           <p>{data.body}</p>

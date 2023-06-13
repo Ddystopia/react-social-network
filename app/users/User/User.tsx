@@ -2,8 +2,9 @@ import React from 'react'
 import Link from 'next/link'
 import classNames from './User.module.css'
 import standardAvatar from '@/public/images/standardAvatar.jpg'
+import { User } from '@/redux/usersReducer'
 
-export const User: React.FC<Props> = ({ data, id, disabled, unFollow, follow }) => {
+export const UserComponent: React.FC<Props> = ({ data, id, disabled, unFollow, follow }) => {
   return (
     <li className={classNames.li}>
       <div className={classNames.info}>
@@ -31,20 +32,9 @@ export const User: React.FC<Props> = ({ data, id, disabled, unFollow, follow }) 
   )
 }
 
-export type UserData = {
-  followed: boolean
-  id: number
-  name: string
-  photos: {
-    small: string
-    large: string
-  }
-  status: string
-  uniqueUrlName: string
-}
 
 type Props = {
-  data: UserData
+  data: User
   id: number
   disabled: boolean
   unFollow: (id: number) => void

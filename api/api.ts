@@ -3,7 +3,9 @@ import NewsAPI from 'newsapi'
 import { errorHandler } from '@/utils/errorHandlers'
 import { Profile } from '@/redux/profileReducer'
 import { Article } from '@/redux/newsReducer'
-const newsapi = new NewsAPI('8cd00d3cacde4da2a2dcb5895d6fea47')
+
+const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/'
+const newsapi = new NewsAPI('8cd00d3cacde4da2a2dcb5895d6fea47', { corsProxyUrl })
 
 type Response<T> = {
   data: T,

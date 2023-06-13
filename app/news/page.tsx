@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef, useCallback } from 'react'
 import classNames from './News.module.css'
 import { ArticleComponent } from './Article/Article'
@@ -11,7 +12,7 @@ import {
   getNewsIsFetching,
 } from '@/redux/selectors/selectors'
 
-export const News = () => {
+export default () => {
   const dispatch = useDispatch()
   const page = useSelector(getNewsPage)
   const data: Array<Article> = useSelector(getNewsData)

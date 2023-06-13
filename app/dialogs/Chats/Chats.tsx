@@ -8,19 +8,13 @@ export const Chats: FC<Props> = ({ data, chatActions, newMessagesCount }) => {
     getAllDialogs,
     createNewChat,
     getMessages,
-    setCurrentDialogId,
     getNewMessagesCount,
   } = chatActions
 
-  const firstElemId = data[0]?.id
   useEffect(() => {
-    getAllDialogs()
-    getMessages(+firstElemId)
-    setCurrentDialogId(+firstElemId)
-  }, [firstElemId, getAllDialogs, getMessages, setCurrentDialogId])
-
-  useEffect(() => {
-    if (newMessagesCount > 0) getAllDialogs()
+    if (newMessagesCount > 0) {
+      getAllDialogs()
+    }
     const checkNMC = setInterval(() => getNewMessagesCount(), 10000)
     return () => clearInterval(checkNMC)
   }, [getAllDialogs, getNewMessagesCount, newMessagesCount])

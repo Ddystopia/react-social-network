@@ -62,6 +62,9 @@ export const UserInfo = ({ profile, updateUserStatus, status, isOwner, setPhoto,
 const ContactsComp = ({ contacts }: { contacts: Contacts }) => {
   const contactsList = Object.entries(contacts)
     .map(([item, link]: [string, string | null]) => {
+      if (link && !link.match(/^https?:\/\//)) {
+        link = 'https://' + link
+      }
       return (
         link && (
           <li key={item}>
@@ -72,7 +75,9 @@ const ContactsComp = ({ contacts }: { contacts: Contacts }) => {
     })
     .filter(item => item)
 
-  if (contactsList.length === 0) contactsList.push(<li key={0}>No contacts</li>)
+  if (contactsList.length === 0) {
+    contactsList.push(<li key={0}>No contacts</li>)
+  }
 
   return (
     <article>

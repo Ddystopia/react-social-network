@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { dialogsAPI } from '../api/api';
+import { AppState } from './store';
 
 export type MessageData = {
   id: string;
@@ -89,6 +90,20 @@ export const getAllDialogs = createAsyncThunk<ChatData[], void>(
     return dialogs || [];
   }
 );
+
+export const initalizeDialogs = createAsyncThunk<void, void, { state: AppState }>(
+  'dialog/initalizeDialogs',
+  async (_, { dispatch, getState }) => {
+    await dispatch(getAllDialogs());
+    const firstElemId = getState().dialogData.chatsData[0]?.id;
+
+    if (firstElemId) {
+      await dispatch(getMessages(firstElemId))
+      dispatch(setCurrentDialogId(firstElemId))
+    }
+  }
+);
+
 
 export const createNewChat = createAsyncThunk<void, number>(
   'dialog/createNewChat',
