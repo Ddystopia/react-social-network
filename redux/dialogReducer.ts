@@ -5,7 +5,7 @@ import { AppState } from './store';
 export type MessageData = {
   id: string;
   body: string;
-  addedAt: Date;
+  addedAt: string;
   senderId: number;
   senderName: string;
   recipientId: number;

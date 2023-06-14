@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "@sniptt/monads": "^0.5.10",
     "axios": "^1.4.0",
     "encoding": "^0.1.13",
     "formik": "^2.4.1",

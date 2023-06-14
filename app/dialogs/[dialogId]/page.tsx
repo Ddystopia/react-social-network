@@ -69,12 +69,12 @@ const DialogsContainer: React.FC<DialogsContainerProps> = ({
   const messageActions = {
     sendMessage: (message: string) => {
       if (!isNaN(dialogId)) {
-        dispatch(sendMessage({ userId: dialogId, message }))
+        dispatch(() => sendMessage({ userId: dialogId, message }))
       }
     },
     getMessages: (userId: number) => dispatch(getMessages(userId)),
-    removeMessage: (message: MessageData) => dispatch(removeMessage(message)),
-    restoreMessage: (message: MessageData) => dispatch(restoreMessage(message)),
+    removeMessage: (message: MessageData) => dispatch(() => removeMessage(message)),
+    restoreMessage: (message: MessageData) => dispatch(() => restoreMessage(message)),
     getNewMessages: (userId: number, lastCheck: Date) => {
       dispatch(getNewMessages({ userId, lastCheck }))
     },

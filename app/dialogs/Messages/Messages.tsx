@@ -63,7 +63,7 @@ export const Messages: FC<MessagesContainerProps> = ({
   const messagesDiv = useRef<HTMLDivElement>(null);
   const messages = data
     .filter(item => isBin === !!item.deletedBySender)
-    .map(item => ({ ...item, addedAt: new Date(item.addedAt) }))
+    .map(item => ({ ...item, addedAt: item.addedAt }))
     .sort((a, b) => +a.addedAt - +b.addedAt)
     .slice(0, Math.min(data.length, 100))
     .map(item => {

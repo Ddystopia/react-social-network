@@ -1,17 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
-import { Option } from '@sniptt/monads';
 
 interface ListItemProps {
   text: string
   to: string
-  className: Option<string>
+  className: string | null
 }
 
 const ListItem: React.FC<ListItemProps> = ({ text, to, className }) => {
-  
+  const name = className != null ? className : "";
+
   return (
-    <li className={className.unwrapOr("")}>
+    <li className={name}>
       <Link href={to}> {text} </Link>
     </li>
   )

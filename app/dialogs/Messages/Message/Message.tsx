@@ -6,7 +6,7 @@ import { MessageData } from '@/redux/dialogReducer';
 
 export const Message: FC<Props> =
   ({ data, smallPhoto, classEnd, removeMessage, restoreMessage }) => {
-    const date = calcDate(data.addedAt)
+    const date = calcDate(new Date(data.addedAt))
     const messageClassName = getClassName('message', classEnd)
     const dateClassName = getClassName('date', classEnd)
     const viewedClassName = getClassName('viewed', classEnd)

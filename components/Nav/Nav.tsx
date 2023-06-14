@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react'
 import classNames from './Nav.module.css'
 import ListItem from './ListItem'
 import { usePathname } from 'next/navigation'
-import { Option, Some, None } from '@sniptt/monads';
 
 export const Nav: React.FC = () => {
-  const width = useWindowSize().map(s => s.width).unwrapOr(0);
+  const size = useWindowSize();
+  const width = size == null ? 0 : size.width;
   const path = usePathname();
   const [menuHidden, setMenuHidden] = useState<boolean>(width <= 760);
 
@@ -15,7 +15,7 @@ export const Nav: React.FC = () => {
     setMenuHidden(width <= 760)
   }, [width])
 
-  const active = (p: string) => p == path ? Some(classNames.active) : None;
+  const active = (p: string) => p == path ? classNames.active : null;
 
   return (
     <nav className={classNames.nav}>
@@ -39,14 +39,14 @@ interface WindowSize {
 }
 
 function useWindowSize() {
-  const [windowSize, setWindowSize] = useState<Option<WindowSize>>(None);
+  const [windowSize, setWindowSize] = useState<WindowSize | null>(null);
 
   useEffect(() => {
     function handleResize() {
-      setWindowSize(Some({
+      setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
-      }));
+      });
     }
 
     window.addEventListener("resize", handleResize);

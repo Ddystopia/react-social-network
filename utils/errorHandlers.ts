@@ -1,6 +1,6 @@
 import swal from 'sweetalert2';
 
-export const errorHandler = (err: Error, message: string): void => {
+export const errorHandler = (err: Error, message?: string): void => {
   swal.fire(err.message, message, 'error');
   console.error(err, message);
 }
