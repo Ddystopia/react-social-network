@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { getAuthUserId } from '@/redux/selectors/selectors'
@@ -17,6 +17,6 @@ export default () => {
     }
   }, [authUserId, router])
 
-  return <></>
+  return null
 }
 

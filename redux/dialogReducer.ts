@@ -40,6 +40,7 @@ type DialogState = {
   currentDialogId: number | null
   messagesFetching: boolean
   lastCheck: string
+  initialized: boolean
 }
 
 const initialState: DialogState = {
@@ -79,6 +80,7 @@ const initialState: DialogState = {
   newMessagesCount: 0,
   currentDialogId: null,
   messagesFetching: false,
+  initialized: false,
   lastCheck: new Date().toString(),
 };
 
@@ -91,9 +93,14 @@ export const getAllDialogs = createAsyncThunk<ChatData[], void>(
   }
 );
 
-export const initalizeDialogs = createAsyncThunk<void, void, { state: AppState }>(
+export const initalizeDialogs = createAsyncThunk<boolean | null, void, { state: AppState }>(
   'dialog/initalizeDialogs',
   async (_, { dispatch, getState }) => {
+    const initialized = getState().dialogData.initialized;
+    if (initialized) {
+      return null;
+    }
+
     await dispatch(getAllDialogs());
     const firstElemId = getState().dialogData.chatsData[0]?.id;
 
@@ -101,6 +108,8 @@ export const initalizeDialogs = createAsyncThunk<void, void, { state: AppState }
       await dispatch(getMessages(firstElemId))
       dispatch(setCurrentDialogId(firstElemId))
     }
+
+    return true;
   }
 );
 
@@ -265,6 +274,11 @@ const dialogSlice = createSlice({
             .forEach(chat => chat.newMessagesCount = 0);
         }
         state.messagesData = [...state.messagesData, ...action.payload];
+      })
+      .addCase(initalizeDialogs.fulfilled, (state, action) => {
+        if (action.payload === true) {
+          state.initialized = action.payload;
+        }
       })
       .addCase(getNewMessages.rejected, (_, action) => {
         if (action.payload) {

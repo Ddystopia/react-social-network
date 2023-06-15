@@ -12,7 +12,7 @@ export const Dialogs: FC<Props> = ({
   chatActions,
   newMessagesCount,
   profile,
-  elseProfile,
+  secondProfile,
   isFetching,
   lastCheck,
   currentDialogId
@@ -38,7 +38,7 @@ export const Dialogs: FC<Props> = ({
         messageActions={messageActions}
         isBin={deletedMessagesPage}
         profile={profile}
-        elseProfile={elseProfile}
+        secondProfile={secondProfile}
         isFetching={isFetching}
         lastCheck={lastCheck}
         chatsData={chatsData}
@@ -53,7 +53,7 @@ type Props = {
   messagesData: Array<MessageData>
   isBin?: boolean
   profile: Profile | null
-  elseProfile: Profile | null
+  secondProfile: Profile | null
   isFetching: boolean
   currentDialogId: number | null
   lastCheck: Date

@@ -50,11 +50,13 @@ The project also explores advanced features like React's Suspence and routing in
 Next.js. This combination enables more efficient code and aids in understanding
 how different pieces fit together in a React/Next.js application.
 
+<!--
 ### Persistence
 
 A key challenge was to persist the state between reloads for a smoother user
 experience. This challenge was addressed by extensive research, debugging,
 experimentation, and leveraging the strengths of Redux and React.
+-->
 
 ## Testing
 

@@ -12,7 +12,7 @@ interface MessagesContainerProps {
   data: MessageData[]
   isBin?: boolean
   profile: Profile | null
-  elseProfile: Profile | null
+  secondProfile: Profile | null
   isFetching: boolean
   chatsData: ChatData[]
   currentDialogId: number | null
@@ -31,7 +31,7 @@ export const Messages: FC<MessagesContainerProps> = ({
   data,
   messageActions,
   profile,
-  elseProfile,
+  secondProfile,
   isFetching,
   isBin,
   chatsData,
@@ -64,17 +64,17 @@ export const Messages: FC<MessagesContainerProps> = ({
   const messages = data
     .filter(item => isBin === !!item.deletedBySender)
     .map(item => ({ ...item, addedAt: item.addedAt }))
-    .sort((a, b) => +a.addedAt - +b.addedAt)
+    .sort((a, b) => a.addedAt.localeCompare(b.addedAt))
     .slice(0, Math.min(data.length, 100))
     .map(item => {
-      const self = profile?.userId === item.senderId;
-      const p = self ? profile : elseProfile;
+      const is_self = profile?.userId === item.senderId;
+      const p = is_self ? profile : secondProfile;
       const photo = p?.photos.small;
       return (
         <Message
           key={item.id}
           data={item}
-          classEnd={self ? 'Self' : 'Else'}
+          classEnd={is_self ? 'Self' : 'Else'}
           smallPhoto={photo}
           removeMessage={removeMessage}
           restoreMessage={restoreMessage}
@@ -101,7 +101,8 @@ export const Messages: FC<MessagesContainerProps> = ({
       {
         haveChats &&
         profile != null &&
-        <SendForm sendMessage={(message: string) => sendMessage(message)} />}
+        <SendForm sendMessage={(message: string) => sendMessage(message)} />
+      }
     </section>
   )
 }

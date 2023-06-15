@@ -8,14 +8,14 @@ import { createNewChat, getAllDialogs, getMessages, getNewMessagesCount, initali
 import { Chats } from './Chats/Chats'
 import classNames from './Dialogs.module.css'
 
-export default () => {
+export default function Dialogs() {
   const router = useRouter()
   const currentDialogId = useSelector(getCurrentDialogId);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(initalizeDialogs())
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
     if (currentDialogId) {

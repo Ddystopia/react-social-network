@@ -16,9 +16,11 @@ export function Initialized({ children }: { children: React.ReactNode }) {
     }
   }, [dispatch, initialized])
 
+  const handler = (e: PromiseRejectionEvent) => errorHandler(e.reason);
+
   useEffect(() => {
-    window.addEventListener('unhandledRejection', errorHandler)
-    return window.removeEventListener('unhandledRejection', errorHandler)
+    window.addEventListener('unhandledrejection', handler)
+    return window.removeEventListener('unhandledrejection', handler)
   })
 
   return children

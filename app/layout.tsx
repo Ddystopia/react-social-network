@@ -5,7 +5,6 @@ import { Header } from '../components/Header/Header'
 import { Nav } from '../components/Nav/Nav'
 import Provider from '@/redux/Provider'
 import { Initialized } from './init'
-import Favicon from '@/public/favicon.ico'
 
 const inter = Inter({ subsets: ['latin'] })
 

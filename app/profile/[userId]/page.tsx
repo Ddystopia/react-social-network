@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Preloader } from '@/components/common/Preloader/Preloader'
 import { ProfileComponent } from '../Profile'
 import { syncProfile, syncUserStatus, updateUserStatus, setPhoto, updateProfileData, Profile } from '@/redux/profileReducer'
-import { getProfile, getAuthUserId, getStatus, getIsFetchingProfile } from '@/redux/selectors/selectors'
+import { getProfile, getAuthUserId, getStatus/*, getIsFetchingProfile */ } from '@/redux/selectors/selectors'
 
 const ProfileContainer: React.FC<{ params: { userId?: string | null } }>
   = ({ params: { userId: paramIdString } }) => {
@@ -27,19 +27,28 @@ const ProfileContainer: React.FC<{ params: { userId?: string | null } }>
     }, [paramId, authUserId, router])
 
     if (!userId || isNaN(userId)) {
-      return <></>;
+      return null;
     }
 
     const profile = useSelector(getProfile(userId))
     const status = useSelector(getStatus)
-    const isFetching = useSelector(getIsFetchingProfile)
+    // const isFetching = useSelector(getIsFetchingProfile)
 
     useEffect(() => {
-        dispatch(syncProfile({ userId }))
-        dispatch(syncUserStatus({ userId }))
+      dispatch(syncProfile({ userId }))
+      dispatch(syncUserStatus({ userId }))
     }, [userId, authUserId, dispatch])
 
-    return profile && !isFetching ? (
+
+    if (profile == null) {
+      return <Preloader />
+    }
+
+    // if (isFetching) {
+    //   return <Preloader />
+    // }
+
+    return (
       <ProfileComponent
         profile={profile}
         status={status}
@@ -47,10 +56,7 @@ const ProfileContainer: React.FC<{ params: { userId?: string | null } }>
         updateUserStatus={(status: string) => updateUserStatus({ status })}
         setPhoto={(photo: File) => dispatch(setPhoto({ photo }))}
         setProfile={(profile: Profile) => dispatch(updateProfileData({ formData: profile }))}
-      />
-    ) : (
-      <Preloader />
-    )
+      />)
   }
 
 export async function generateStaticParams() {

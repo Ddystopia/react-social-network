@@ -55,10 +55,13 @@ export const login = createAsyncThunk<void, LoginValues, { state: AppState }>(
         default:
           throw new Error(r?.messages?.join('\n') || 'Something wrong')
       }
-    } catch (err) {
-      errorHandler(err)
+    } catch (err: any) {
+      if (err instanceof Error) {
+        errorHandler(err)
+      }
       dispatch(setInitialized(false))
     }
+
   })
 
 export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) => {

@@ -47,8 +47,10 @@ export const initializeApp = createAsyncThunk<
           dispatch(setInitialized(false))
         }
 
-      } catch (e) {
-        errorHandler(e, 'Error to initialize app')
+      } catch (err) {
+        if (err instanceof Error) {
+          errorHandler(err, 'Error to initialize app')
+        }
       } finally {
       }
     })
