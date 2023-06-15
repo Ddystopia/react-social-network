@@ -85,8 +85,8 @@
 .form .buttons {
   display: flex;
   justify-content: space-around;
-	justify-self: stretch;
-	flex-wrap: wrap;
+  justify-self: stretch;
+  flex-wrap: wrap;
 }
 
 @media screen and (max-width: 850px) {

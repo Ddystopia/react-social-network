@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useRouter } from 'next/navigation'
-import { getAuthUserId } from '@/redux/selectors/selectors'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { getAuthUserId } from '@/redux/selectors/selectors';
 
 export default () => {
-  const router = useRouter()
-  const authUserId = useSelector(getAuthUserId)
+  const router = useRouter();
+  const authUserId = useSelector(getAuthUserId);
 
   useEffect(() => {
     if (authUserId) {
@@ -15,8 +15,7 @@ export default () => {
     } else {
       router.push(`/login`);
     }
-  }, [authUserId, router])
+  }, [authUserId, router]);
 
-  return null
-}
-
+  return null;
+};

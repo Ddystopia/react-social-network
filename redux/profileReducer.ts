@@ -1,21 +1,20 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { profileAPI } from '@/api/api';
 import { AppState } from './store';
-import { getAuthUserId } from './selectors/selectors'
-
+import { getAuthUserId } from './selectors/selectors';
 
 export type ProfileState = {
   postsData: Post[];
-  profiles: { [key: number]: Profile }
+  profiles: { [key: number]: Profile };
   isFetching: boolean;
   status: string;
-}
+};
 
 export type Post = {
   id: number;
   message: string;
   likesCount: number;
-}
+};
 
 export type Profile = {
   aboutMe: string;
@@ -31,14 +30,14 @@ export type Profile = {
 };
 
 export type Contacts = {
-  github: string
-  vk: string
-  facebook: string
-  instagram: string
-  twitter: string
-  website: string
-  youtube: string
-  mainLink: string
+  github: string;
+  vk: string;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  website: string;
+  youtube: string;
+  mainLink: string;
 };
 
 const initialState: ProfileState = {
@@ -47,15 +46,18 @@ const initialState: ProfileState = {
       id: 1,
       message: 'My first Post!',
       likesCount: 0,
-    }, {
+    },
+    {
       id: 2,
       message: 'I like dogs',
       likesCount: 2,
-    }, {
+    },
+    {
       id: 3,
       message: 'Yesterday I ate delicious pasta',
       likesCount: 0,
-    }, {
+    },
+    {
       id: 4,
       message: 'My best day',
       likesCount: 0,
@@ -91,28 +93,25 @@ export const updateUserStatus = createAsyncThunk<string, { status: string }>(
     if (data?.resultCode === 0) {
       return status;
     }
-    return ""
+    return '';
   }
 );
 
 export const setPhoto = createAsyncThunk<
-  [number | null, { small?: string; large?: string; }],
+  [number | null, { small?: string; large?: string }],
   { photo: File },
   { state: AppState }
->(
-  'profile/setPhoto',
-  async ({ photo }, { getState }) => {
-    const response = await profileAPI.setPhoto(photo);
+>('profile/setPhoto', async ({ photo }, { getState }) => {
+  const response = await profileAPI.setPhoto(photo);
 
-    if (response?.resultCode !== 0) {
-      return [null, {}]
-    }
-    const photos = response.data.photos;
-    const id = getAuthUserId(getState());
-
-    return [id, photos];
+  if (response?.resultCode !== 0) {
+    return [null, {}];
   }
-);
+  const photos = response.data.photos;
+  const id = getAuthUserId(getState());
+
+  return [id, photos];
+});
 
 export const updateProfileData = createAsyncThunk<Profile, { formData: Profile }>(
   'profile/unpdateProfileData',
@@ -138,8 +137,7 @@ const profileSlice = createSlice({
       });
     },
     removePost: (state, action: PayloadAction<number>) => {
-      state.postsData = state.postsData
-        .filter(post => post.id !== action.payload);
+      state.postsData = state.postsData.filter((post) => post.id !== action.payload);
     },
     setProfile: (state, action: PayloadAction<Profile>) => {
       state.profiles[action.payload.userId] = action.payload;
@@ -151,7 +149,7 @@ const profileSlice = createSlice({
       state.isFetching = action.payload;
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(syncProfile.pending, (state) => {
         state.isFetching = true;
@@ -175,23 +173,17 @@ const profileSlice = createSlice({
       .addCase(setPhoto.fulfilled, (state, action) => {
         const [id, photos] = action.payload;
         if (id) {
-          state.profiles[id].photos = photos
+          state.profiles[id].photos = photos;
         }
       })
       .addCase(updateProfileData.fulfilled, (state, action) => {
         const id = action.payload.userId;
         state.profiles[id] = action.payload;
-      })
+      });
   },
 });
 
 export default profileSlice.reducer;
 
-export const {
-  addPost,
-  removePost,
-  setProfile,
-  setUserStatus,
-  toggleIsFetching
-} = profileSlice.actions;
-
+export const { addPost, removePost, setProfile, setUserStatus, toggleIsFetching } =
+  profileSlice.actions;

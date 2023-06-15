@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import React, { useEffect } from 'react'
-import { connect, ConnectedProps, useDispatch } from 'react-redux'
-import { Users } from './Users'
-import { Preloader } from '@/components/common/Preloader/Preloader'
-import { ErrorPage } from '@/components/common/ErrorPage/ErrorPage'
-import { getUsers, follow, unFollow, setCount, setPage } from '@/redux/usersReducer'
-import { AppState } from '@/redux/store'
-import { compose } from 'redux'
+import React, { useEffect } from 'react';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { Users } from './Users';
+import { Preloader } from '@/components/common/Preloader/Preloader';
+import { ErrorPage } from '@/components/common/ErrorPage/ErrorPage';
+import { getUsers, follow, unFollow, setCount, setPage } from '@/redux/usersReducer';
+import { AppState } from '@/redux/store';
+import { compose } from 'redux';
 import {
   getUsersData,
   getUsersPage,
@@ -16,7 +16,7 @@ import {
   getIsFetchingUserData,
   getIsFollowing,
   getUsersError,
-} from '../../redux/selectors/selectors'
+} from '../../redux/selectors/selectors';
 
 const mapStateToProps = (state: AppState) => ({
   usersData: getUsersData(state),
@@ -26,13 +26,13 @@ const mapStateToProps = (state: AppState) => ({
   isFetching: getIsFetchingUserData(state),
   isFollowing: getIsFollowing(state),
   hasError: getUsersError(state),
-})
+});
 
-const mapDispatchToProps = { getUsers, follow, unFollow, setCount }
+const mapDispatchToProps = { getUsers, follow, unFollow, setCount };
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector>
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const UsersContainer: React.FC<PropsFromRedux> = ({
   usersData,
@@ -49,21 +49,21 @@ const UsersContainer: React.FC<PropsFromRedux> = ({
 }) => {
   useEffect(() => {
     if (usersData.length === 0 && !isFetching && !hasError) {
-      getUsers({ page, count: pageCount })
+      getUsers({ page, count: pageCount });
     }
-  }, [usersData, getUsers, hasError, isFetching, page, pageCount])
-  const dispatch = useDispatch()
+  }, [usersData, getUsers, hasError, isFetching, page, pageCount]);
+  const dispatch = useDispatch();
 
   const changePage = (page: number) => {
     dispatch(setPage(page));
-    getUsers({ page, count: pageCount })
-  }
+    getUsers({ page, count: pageCount });
+  };
 
   if (isFetching) {
-    return <Preloader />
+    return <Preloader />;
   }
   if (hasError) {
-    return <ErrorPage />
+    return <ErrorPage />;
   }
 
   return (
@@ -78,8 +78,7 @@ const UsersContainer: React.FC<PropsFromRedux> = ({
       changePage={changePage}
       setPageCount={setCount}
     />
-  )
-}
+  );
+};
 
-export default compose(connector)(UsersContainer)
-
+export default compose(connector)(UsersContainer);

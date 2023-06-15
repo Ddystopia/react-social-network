@@ -1,21 +1,21 @@
-import React, { ChangeEvent } from 'react'
-import classNames from './Users.module.css'
-import { UserComponent} from './User/User'
-import { Pagination } from './Pagination/Pagination'
-import { User } from '@/redux/usersReducer'
+import React, { ChangeEvent } from 'react';
+import classNames from './Users.module.css';
+import { UserComponent } from './User/User';
+import { Pagination } from './Pagination/Pagination';
+import { User } from '@/redux/usersReducer';
 
-const MIN_COUNT = 2
+const MIN_COUNT = 2;
 
 interface UsersProps {
-  usersData: User[],
-  isFollowing: number[],
-  follow: (userId: number) => void,
-  unFollow: (userId: number) => void,
-  usersCount: number,
-  pageCount: number,
-  page: number,
-  changePage: (pageNumber: number) => void,
-  setPageCount: (count: number) => void
+  usersData: User[];
+  isFollowing: number[];
+  follow: (userId: number) => void;
+  unFollow: (userId: number) => void;
+  usersCount: number;
+  pageCount: number;
+  page: number;
+  changePage: (pageNumber: number) => void;
+  setPageCount: (count: number) => void;
 }
 
 export const Users: React.FC<UsersProps> = ({
@@ -29,7 +29,7 @@ export const Users: React.FC<UsersProps> = ({
   changePage,
   setPageCount,
 }) => {
-  const users = usersData.map(u => (
+  const users = usersData.map((u) => (
     <UserComponent
       key={u.id}
       disabled={isFollowing.includes(u.id)}
@@ -38,11 +38,11 @@ export const Users: React.FC<UsersProps> = ({
       follow={follow}
       unFollow={unFollow}
     />
-  ))
+  ));
 
   const onSetPageCount = (event: ChangeEvent<HTMLSelectElement>) => {
     setPageCount(Number(event.target.value));
-  }
+  };
 
   return (
     <section className={classNames.content}>
@@ -63,6 +63,5 @@ export const Users: React.FC<UsersProps> = ({
       </div>
       <ul className={classNames.usersList}>{users}</ul>
     </section>
-  )
-}
-
+  );
+};

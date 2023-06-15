@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import classNames from './Nav.module.css'
-import ListItem from './ListItem'
-import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react';
+import classNames from './Nav.module.css';
+import ListItem from './ListItem';
+import { usePathname } from 'next/navigation';
 
 export const Nav: React.FC = () => {
   const size = useWindowSize();
@@ -12,30 +12,30 @@ export const Nav: React.FC = () => {
   const [menuHidden, setMenuHidden] = useState<boolean>(width <= 760);
 
   useEffect(() => {
-    setMenuHidden(width <= 760)
-  }, [width])
+    setMenuHidden(width <= 760);
+  }, [width]);
 
-  const active = (p: string) => p == path ? classNames.active : null;
+  const active = (p: string) => (p == path ? classNames.active : null);
 
   return (
     <nav className={classNames.nav}>
-      <div className={classNames.menuButton} onClick={() => setMenuHidden(p => !p)}>
+      <div className={classNames.menuButton} onClick={() => setMenuHidden((p) => !p)}>
         Menu
       </div>
       <div className={classNames.leftSide} />
       <ul id="menu" hidden={menuHidden}>
-        <ListItem text='Profile' to='/profile' className={active('/profile')} />
-        <ListItem text='Messages' to='/dialogs' className={active('/dialogs')} />
-        <ListItem text='Users' to='/users' className={active('/users')} />
-        <ListItem text='News' to='/news' className={active('/news')} />
+        <ListItem text="Profile" to="/profile" className={active('/profile')} />
+        <ListItem text="Messages" to="/dialogs" className={active('/dialogs')} />
+        <ListItem text="Users" to="/users" className={active('/users')} />
+        <ListItem text="News" to="/news" className={active('/news')} />
       </ul>
     </nav>
-  )
-}
+  );
+};
 
 interface WindowSize {
-  width: number,
-  height: number
+  width: number;
+  height: number;
 }
 
 function useWindowSize() {
@@ -49,11 +49,11 @@ function useWindowSize() {
       });
     }
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return windowSize;

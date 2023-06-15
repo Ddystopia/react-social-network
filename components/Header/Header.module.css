@@ -18,11 +18,11 @@
 }
 
 .header > .welcome {
-	margin-left: 35px;
+  margin-left: 35px;
 }
 
 .header > .welcome > h1 {
-	font-family: 'Sriracha', cursive;
+  font-family: 'Sriracha', cursive;
   font-size: 2.3rem;
   font-weight: normal;
   word-wrap: normal;

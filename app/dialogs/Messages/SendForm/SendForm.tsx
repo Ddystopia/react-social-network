@@ -6,19 +6,23 @@ import { Row } from '@/components/common/Row/Row';
 
 type FormValues = {
   message: string;
-}
+};
 
 type OtherProps = {
   sendMessage: (message: string) => void;
-}
+};
 
-const InnerForm: React.FC<OtherProps & FormikProps<FormValues>> = ({ errors, touched, submitForm }) => {
+const InnerForm: React.FC<OtherProps & FormikProps<FormValues>> = ({
+  errors,
+  touched,
+  submitForm,
+}) => {
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key !== 'Enter' || e.shiftKey) return;
     e.preventDefault();
     submitForm && submitForm();
   };
-  
+
   let hasError = !!(errors.message && touched.message);
 
   return (
@@ -50,4 +54,3 @@ export const SendForm = withFormik<OtherProps, FormValues>({
     message: yup.string().max(500).min(1).required(),
   }),
 })(InnerForm);
-

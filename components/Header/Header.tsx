@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import React from 'react'
-import classNames from './Header.module.css'
-import { logout } from '../../redux/authReducer'
-import { getIsAuth, getLogin } from '../../redux/selectors/selectors'
-import { useDispatch, useSelector } from 'react-redux'
-import Link from 'next/link'
+import React from 'react';
+import classNames from './Header.module.css';
+import { logout } from '../../redux/authReducer';
+import { getIsAuth, getLogin } from '../../redux/selectors/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 export const Header = () => {
-  const dispatch = useDispatch()
-  const logoutDispatch = () => dispatch(logout())
-  const isAuth = useSelector(getIsAuth)
-  const login = useSelector(getLogin)
+  const dispatch = useDispatch();
+  const logoutDispatch = () => dispatch(logout());
+  const isAuth = useSelector(getIsAuth);
+  const login = useSelector(getLogin);
 
   return (
     <header className={classNames.header}>
@@ -28,5 +28,5 @@ export const Header = () => {
         </Link>
       )}
     </header>
-  )
-}
+  );
+};

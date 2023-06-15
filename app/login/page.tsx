@@ -1,36 +1,36 @@
-"use client"
+'use client';
 
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-import { useSelector, useDispatch } from 'react-redux'
-import * as yup from 'yup'
-import { Form, Field, withFormik, FormikProps, FormikErrors, FormikTouched } from 'formik'
+import { useSelector, useDispatch } from 'react-redux';
+import * as yup from 'yup';
+import { Form, Field, withFormik, FormikProps, FormikErrors, FormikTouched } from 'formik';
 
-import { Row } from '@/components/common/Row/Row'
-import { Preloader } from '@/components/common/Preloader/Preloader'
+import { Row } from '@/components/common/Row/Row';
+import { Preloader } from '@/components/common/Preloader/Preloader';
 
-import { login } from '@/redux/authReducer'
-import { getCaptchaUrl, getIsAuth, getIsFetchingAuth } from '@/redux/selectors/selectors'
+import { login } from '@/redux/authReducer';
+import { getCaptchaUrl, getIsAuth, getIsFetchingAuth } from '@/redux/selectors/selectors';
 
-import { LoginValues } from '@/api/api'
+import { LoginValues } from '@/api/api';
 
-import classNames from './Login.module.css'
+import classNames from './Login.module.css';
 
 type LoginFormProps = {
-  values: LoginValues
-  errors: FormikErrors<LoginValues>
-  touched: FormikTouched<LoginValues>
-  captchaUrl: string | null
-}
+  values: LoginValues;
+  errors: FormikErrors<LoginValues>;
+  touched: FormikTouched<LoginValues>;
+  captchaUrl: string | null;
+};
 
 const LoginForm: React.FC<LoginFormProps & FormikProps<LoginValues>> = ({
   values,
   errors,
   touched,
-  captchaUrl
+  captchaUrl,
 }) => {
-  const hasError = hasInputsError(errors, touched)
+  const hasError = hasInputsError(errors, touched);
 
   return (
     <Form className={classNames.form}>
@@ -54,25 +54,25 @@ const LoginForm: React.FC<LoginFormProps & FormikProps<LoginValues>> = ({
         <button type="submit">Login</button>
       </div>
     </Form>
-  )
-}
+  );
+};
 
 const hasInputsError = (errors: FormikErrors<LoginValues>, touched: FormikTouched<LoginValues>) => {
-  const hasError: { [key: string]: boolean } = {}
+  const hasError: { [key: string]: boolean } = {};
 
   for (const input in errors) {
     let key: keyof LoginValues = input as keyof LoginValues;
 
-    hasError[input] = Boolean(touched[key] && errors[key])
+    hasError[input] = Boolean(touched[key] && errors[key]);
   }
 
-  return hasError
-}
+  return hasError;
+};
 
 type FormikLoginFormProps = {
-  loginUser: (values: LoginValues) => void
-  captchaUrl?: string
-}
+  loginUser: (values: LoginValues) => void;
+  captchaUrl?: string;
+};
 
 const FormikLoginForm = withFormik<FormikLoginFormProps, LoginValues>({
   mapPropsToValues() {
@@ -81,7 +81,7 @@ const FormikLoginForm = withFormik<FormikLoginFormProps, LoginValues>({
       password: '',
       rememberMe: false,
       captcha: '',
-    }
+    };
   },
   validationSchema: yup.object().shape({
     email: yup.string().email().max(50).required(),
@@ -89,45 +89,42 @@ const FormikLoginForm = withFormik<FormikLoginFormProps, LoginValues>({
     captcha: yup.string(),
   }),
   handleSubmit(values, { resetForm, props: { loginUser } }) {
-    loginUser(values)
-    resetForm()
+    loginUser(values);
+    resetForm();
   },
-})(LoginForm)
+})(LoginForm);
 
 type LoginProps = {
-  loginUser: (values: LoginValues) => void
-  captchaUrl?: string
-}
+  loginUser: (values: LoginValues) => void;
+  captchaUrl?: string;
+};
 
 const Login: React.FC<LoginProps> = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const isAuth = useSelector(getIsAuth);
   const isFetching = useSelector(getIsFetchingAuth);
   const captchaUrl = useSelector(getCaptchaUrl) || undefined;
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (isAuth) {
-      router.push('/profile')
+      router.push('/profile');
     }
-  }, [isAuth])
+  }, [isAuth]);
 
   const loginUser = (formData: LoginValues) => {
-    dispatch(login(formData))
-  }
+    dispatch(login(formData));
+  };
 
   if (isFetching) {
-    return <Preloader />
+    return <Preloader />;
   }
   return (
     <section className={classNames.login}>
       <h2>Log in</h2>
-      <FormikLoginForm
-        loginUser={loginUser}
-        captchaUrl={captchaUrl}
-      />
+      <FormikLoginForm loginUser={loginUser} captchaUrl={captchaUrl} />
     </section>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

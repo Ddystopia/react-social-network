@@ -15,15 +15,14 @@
 }
 
 .user_info > .avatar > .filepicker {
-	height: 25px;
+  height: 25px;
   padding: 5px;
 }
 
 .user_info > .avatar input {
   display: none;
-	padding: 0;
+  padding: 0;
 }
-
 
 .user_info > .avatar:hover input {
   display: block;
@@ -39,9 +38,9 @@
 }
 
 .edit > button {
-	font-size: 1.2rem;
-	border: 1px solid black;
-	border-radius: 30px;
+  font-size: 1.2rem;
+  border: 1px solid black;
+  border-radius: 30px;
   padding: 6px 13px;
 }
 

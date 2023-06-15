@@ -5,7 +5,7 @@ import usersReducer, {
   setPage,
   setUsersCount,
   acceptSetCount,
-} from '../usersReducer'
+} from '../usersReducer';
 
 const state = {
   users: [
@@ -26,39 +26,39 @@ const state = {
   usersCount: 0,
   isFetching: false,
   isFollowing: [],
-}
+};
 
 test('should follow', () => {
-  const action = acceptFollow(1)
+  const action = acceptFollow(1);
 
-  const newState = usersReducer(state, action)
+  const newState = usersReducer(state, action);
 
-  expect(newState.users[0].followed).toBe(true)
-})
+  expect(newState.users[0].followed).toBe(true);
+});
 
 test('should unfollow', () => {
-  const action = acceptUnFollow(7932)
+  const action = acceptUnFollow(7932);
 
-  const newState = usersReducer(state, action)
+  const newState = usersReducer(state, action);
 
-  expect(newState.users[0].followed).toBe(false)
-})
+  expect(newState.users[0].followed).toBe(false);
+});
 
 test('should set page number 2', () => {
-  const action = setPage(2)
+  const action = setPage(2);
 
-  const newState = usersReducer(state, action)
+  const newState = usersReducer(state, action);
 
-  expect(newState.page).toBe(2)
-})
+  expect(newState.page).toBe(2);
+});
 
 test('should set count to 2', () => {
-  const action = acceptSetCount(2)
+  const action = acceptSetCount(2);
 
-  const newState = usersReducer(state, action)
+  const newState = usersReducer(state, action);
 
-  expect(newState.count).toBe(2)
-})
+  expect(newState.count).toBe(2);
+});
 
 test('users length should increment', () => {
   const action = setUsers([
@@ -84,17 +84,17 @@ test('users length should increment', () => {
       status: null,
       followed: false,
     },
-  ])
+  ]);
 
-  const newState = usersReducer(state, action)
+  const newState = usersReducer(state, action);
 
-  expect(newState.users.length).toBe(2)
-})
+  expect(newState.users.length).toBe(2);
+});
 
 test('usersCount should be 2', () => {
-  const action = setUsersCount(2)
+  const action = setUsersCount(2);
 
-  const newState = usersReducer(state, action)
+  const newState = usersReducer(state, action);
 
-  expect(newState.usersCount).toBe(2)
-})
+  expect(newState.usersCount).toBe(2);
+});

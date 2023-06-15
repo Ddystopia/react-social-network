@@ -14,38 +14,37 @@ export type MessageData = {
   deletedBySender: boolean;
   deletedByRecipient: boolean;
 
-  isSpam: boolean
-  distributionId: number | null,
-  translatedBody: boolean | null,
-}
+  isSpam: boolean;
+  distributionId: number | null;
+  translatedBody: boolean | null;
+};
 
 export type ChatData = {
-  id: number
-  userName: string
-  newMessagesCount: number
+  id: number;
+  userName: string;
+  newMessagesCount: number;
 
   photos: Array<{
-    small?: string
-    large?: string
-  }>
-  hasNewMessages: boolean,
-  lastDialogActivityDate: Date
-  lastUserActivityDate: Date
-}
+    small?: string;
+    large?: string;
+  }>;
+  hasNewMessages: boolean;
+  lastDialogActivityDate: Date;
+  lastUserActivityDate: Date;
+};
 
 type DialogState = {
-  chatsData: ChatData[]
-  messagesData: MessageData[]
-  newMessagesCount: number
-  currentDialogId: number | null
-  messagesFetching: boolean
-  lastCheck: string
-  initialized: boolean
-}
+  chatsData: ChatData[];
+  messagesData: MessageData[];
+  newMessagesCount: number;
+  currentDialogId: number | null;
+  messagesFetching: boolean;
+  lastCheck: string;
+  initialized: boolean;
+};
 
 const initialState: DialogState = {
   chatsData: [
-
     //   {
     //     userName: 'Sasha',
     //     id: 9999,
@@ -60,7 +59,6 @@ const initialState: DialogState = {
     //   },
   ],
   messagesData: [
-
     // {
     //   addedAt: '2020-05-31T19:11:24.16',
     //   body: 'Приветики',
@@ -84,7 +82,6 @@ const initialState: DialogState = {
   lastCheck: new Date().toString(),
 };
 
-
 export const getAllDialogs = createAsyncThunk<ChatData[], void>(
   'dialog/getAllDialogs',
   async () => {
@@ -105,14 +102,13 @@ export const initalizeDialogs = createAsyncThunk<boolean | null, void, { state: 
     const firstElemId = getState().dialogData.chatsData[0]?.id;
 
     if (firstElemId) {
-      await dispatch(getMessages(firstElemId))
-      dispatch(setCurrentDialogId(firstElemId))
+      await dispatch(getMessages(firstElemId));
+      dispatch(setCurrentDialogId(firstElemId));
     }
 
     return true;
   }
 );
-
 
 export const createNewChat = createAsyncThunk<void, number>(
   'dialog/createNewChat',
@@ -124,46 +120,44 @@ export const createNewChat = createAsyncThunk<void, number>(
   }
 );
 
-export const getMessages = createAsyncThunk<MessageData[], number, { rejectValue: { errorMessage: string } }>(
-  'dialog/getMessages',
-  async (userId: number, { rejectWithValue }) => {
-    try {
-      const response = await dialogsAPI.getMessages(userId);
-      return response.items;
-    } catch (err) {
-      const errorMessage = "Failed to fetch messages";
-      return rejectWithValue({ errorMessage });
-    }
+export const getMessages = createAsyncThunk<
+  MessageData[],
+  number,
+  { rejectValue: { errorMessage: string } }
+>('dialog/getMessages', async (userId: number, { rejectWithValue }) => {
+  try {
+    const response = await dialogsAPI.getMessages(userId);
+    return response.items;
+  } catch (err) {
+    const errorMessage = 'Failed to fetch messages';
+    return rejectWithValue({ errorMessage });
   }
-);
+});
 
-export const __getNewMessages = createAsyncThunk<MessageData[], { userId: number, lastCheck: Date }>(
-  'dialog/getNewMessages',
-  async ({ userId, lastCheck }, { dispatch }) => {
-    if (!userId) return;
-    dispatch(setLastCheck(new Date()));
-    dispatch(setNewMessagesCountInChat({ id: userId, newMessagesCount: 0 }));
-    const response = await dialogsAPI.getNewMessages(userId, lastCheck);
-    return response || [];
-  }
-);
+export const __getNewMessages = createAsyncThunk<
+  MessageData[],
+  { userId: number; lastCheck: Date }
+>('dialog/getNewMessages', async ({ userId, lastCheck }, { dispatch }) => {
+  if (!userId) return;
+  dispatch(setLastCheck(new Date()));
+  dispatch(setNewMessagesCountInChat({ id: userId, newMessagesCount: 0 }));
+  const response = await dialogsAPI.getNewMessages(userId, lastCheck);
+  return response || [];
+});
 
 export const getNewMessages = createAsyncThunk<
   MessageData[],
-  { userId: number, lastCheck: Date },
+  { userId: number; lastCheck: Date },
   { rejectValue: { errorMessage: string } }
->(
-  'dialog/getNewMessages',
-  async ({ userId, lastCheck }, { rejectWithValue }) => {
-    try {
-      const response = await dialogsAPI.getNewMessages(userId, lastCheck);
-      return response || [];
-    } catch (err) {
-      const errorMessage = "Failed to fetch messages";
-      return rejectWithValue({ errorMessage });
-    }
+>('dialog/getNewMessages', async ({ userId, lastCheck }, { rejectWithValue }) => {
+  try {
+    const response = await dialogsAPI.getNewMessages(userId, lastCheck);
+    return response || [];
+  } catch (err) {
+    const errorMessage = 'Failed to fetch messages';
+    return rejectWithValue({ errorMessage });
   }
-);
+});
 
 export const getNewMessagesCount = createAsyncThunk<number, void>(
   'dialog/getNewMessagesCount',
@@ -173,7 +167,7 @@ export const getNewMessagesCount = createAsyncThunk<number, void>(
   }
 );
 
-export const sendMessage = createAsyncThunk<void, { userId: number, message: string }>(
+export const sendMessage = createAsyncThunk<void, { userId: number; message: string }>(
   'dialog/sendMessage',
   async ({ userId, message }, { dispatch }) => {
     const response = await dialogsAPI.sendMessage(userId, message);
@@ -185,7 +179,7 @@ export const sendMessage = createAsyncThunk<void, { userId: number, message: str
 
 export const checkIsViewed = createAsyncThunk<void, string>(
   'dialog/checkIsViewed',
-  async (messageId, /*{ dispatch }*/) => {
+  async (messageId /*{ dispatch }*/) => {
     const response = await dialogsAPI.isViewed(messageId);
     if (response?.resultCode === 0) {
       /*Some do*/
@@ -220,7 +214,7 @@ const dialogSlice = createSlice({
     addMessage: (state, action: { payload: MessageData }) => {
       state.messagesData.push(action.payload);
     },
-    editMessage: (state, action: { payload: { id: string, newMessage: MessageData } }) => {
+    editMessage: (state, action: { payload: { id: string; newMessage: MessageData } }) => {
       const message = state.messagesData.find((m) => m.id === action.payload.id);
       if (message) {
         Object.assign(message, action.payload.newMessage);
@@ -232,7 +226,10 @@ const dialogSlice = createSlice({
     setLastCheck: (state, action: { payload: Date }) => {
       state.lastCheck = action.payload.toString();
     },
-    setNewMessagesCountInChat: (state, action: { payload: { id: number, newMessagesCount: number } }) => {
+    setNewMessagesCountInChat: (
+      state,
+      action: { payload: { id: number; newMessagesCount: number } }
+    ) => {
       const chat = state.chatsData.find((c) => c.id === action.payload.id);
       if (chat) {
         chat.newMessagesCount = action.payload.newMessagesCount;
@@ -255,8 +252,8 @@ const dialogSlice = createSlice({
         state.messagesFetching = false;
         state.currentDialogId = action.meta.arg;
         state.chatsData
-          .filter(chat => chat.id === action.meta.arg)
-          .forEach(chat => chat.newMessagesCount = 0);
+          .filter((chat) => chat.id === action.meta.arg)
+          .forEach((chat) => (chat.newMessagesCount = 0));
       })
       .addCase(getMessages.rejected, (state, action) => {
         state.messagesFetching = false;
@@ -270,8 +267,8 @@ const dialogSlice = createSlice({
         if (action.meta.arg.userId) {
           state.lastCheck = new Date().toString();
           state.chatsData
-            .filter(chat => chat.id === action.meta.arg.userId)
-            .forEach(chat => chat.newMessagesCount = 0);
+            .filter((chat) => chat.id === action.meta.arg.userId)
+            .forEach((chat) => (chat.newMessagesCount = 0));
         }
         state.messagesData = [...state.messagesData, ...action.payload];
       })
@@ -299,4 +296,3 @@ export const {
 } = dialogSlice.actions;
 
 export default dialogSlice.reducer;
-

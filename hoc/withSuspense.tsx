@@ -12,4 +12,3 @@ function withSuspense<P extends object>(Component: ComponentType<P>): ComponentT
 }
 
 export default withSuspense;
-

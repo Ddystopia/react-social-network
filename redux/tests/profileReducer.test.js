@@ -3,7 +3,7 @@ import profileReducer, {
   removePost,
   setProfileUser,
   setUserStatus,
-} from '../profileReducer'
+} from '../profileReducer';
 
 const state = {
   postsData: [
@@ -35,44 +35,44 @@ const state = {
   profile: null,
   isFetching: false,
   status: '',
-}
+};
 test('length should increment', () => {
-  const action = addPost('New post')
+  const action = addPost('New post');
 
-  const newState = profileReducer(state, action)
+  const newState = profileReducer(state, action);
 
-  expect(newState.postsData.length).toBe(5)
-})
+  expect(newState.postsData.length).toBe(5);
+});
 
 test("5th post message should be 'New post'", () => {
-  const action = addPost('New post')
+  const action = addPost('New post');
 
-  const newState = profileReducer(state, action)
+  const newState = profileReducer(state, action);
 
-  expect(newState.postsData[4].message).toBe('New post')
-})
+  expect(newState.postsData[4].message).toBe('New post');
+});
 
 test('after deleting posts length should decrement', () => {
-  const action = removePost(2)
+  const action = removePost(2);
 
-  const newState = profileReducer(state, action)
+  const newState = profileReducer(state, action);
 
-  expect(newState.postsData.length).toBe(3)
-})
+  expect(newState.postsData.length).toBe(3);
+});
 
 test('should set profile', () => {
-  const profile = {}
-  const action = setProfileUser(profile)
+  const profile = {};
+  const action = setProfileUser(profile);
 
-  const newState = profileReducer(state, action)
+  const newState = profileReducer(state, action);
 
-  expect(newState.profile).toBe(profile)
-})
+  expect(newState.profile).toBe(profile);
+});
 
 test('should set userStatus', () => {
-  const action = setUserStatus('status')
+  const action = setUserStatus('status');
 
-  const newState = profileReducer(state, action)
+  const newState = profileReducer(state, action);
 
-  expect(newState.status).toBe('status')
-})
+  expect(newState.status).toBe('status');
+});

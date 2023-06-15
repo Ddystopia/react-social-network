@@ -1,27 +1,27 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
-import classNames from './UserData.module.css'
-import { Profile } from '@/redux/profileReducer'
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import classNames from './UserData.module.css';
+import { Profile } from '@/redux/profileReducer';
 
 export const UserData: React.FC<Props> = ({ propStatus, profile, updateUserStatus, isOwner }) => {
-  const [editMode, setEditMode] = useState(false)
-  const [status, setStatus] = useState(propStatus)
+  const [editMode, setEditMode] = useState(false);
+  const [status, setStatus] = useState(propStatus);
   useEffect(() => {
-    setStatus(propStatus)
-  }, [propStatus])
+    setStatus(propStatus);
+  }, [propStatus]);
 
   const statusOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setStatus(e.target.value)
-  }
+    setStatus(e.target.value);
+  };
 
   const anabelEditMode = () => {
-    if (!isOwner) return
-    setEditMode(true)
-  }
+    if (!isOwner) return;
+    setEditMode(true);
+  };
 
   const disableEditMode = () => {
-    setEditMode(false)
-    if (propStatus !== status) updateUserStatus(status || '')
-  }
+    setEditMode(false);
+    if (propStatus !== status) updateUserStatus(status || '');
+  };
 
   return (
     <article className={classNames.user_info_text}>
@@ -59,8 +59,8 @@ export const UserData: React.FC<Props> = ({ propStatus, profile, updateUserStatu
         {profile.lookingForAJobDescription}
       </div>
     </article>
-  )
-}
+  );
+};
 
 interface Props {
   propStatus: string;

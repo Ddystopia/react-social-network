@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
-import { Article } from '@/redux/newsReducer'
+import React, { FC } from 'react';
+import { Article } from '@/redux/newsReducer';
 // import classNames from './Article.module.css'
 
 export const ArticleComponent: FC<Props> = ({ data, refTo }) => {
-  const content = data.content || data.description
+  const content = data.content || data.description;
   return (
     <article ref={refTo}>
       <h3>{data.title}</h3>
@@ -19,10 +19,10 @@ export const ArticleComponent: FC<Props> = ({ data, refTo }) => {
         <span>Published at: {new Date(data.publishedAt).toLocaleDateString()}</span>
       </div>
     </article>
-  )
-}
+  );
+};
 
 type Props = {
-  data: Article
-  refTo: ((node: HTMLDivElement) => void) | null
-}
+  data: Article;
+  refTo: ((node: HTMLDivElement) => void) | null;
+};

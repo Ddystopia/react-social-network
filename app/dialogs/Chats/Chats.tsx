@@ -1,23 +1,18 @@
-import React, { FC, useEffect } from 'react'
-import classNames from './Chats.module.css'
-import { ChatListItem } from './ChatListItem/ChatListItem'
-import Swal from 'sweetalert2'
+import React, { FC, useEffect } from 'react';
+import classNames from './Chats.module.css';
+import { ChatListItem } from './ChatListItem/ChatListItem';
+import Swal from 'sweetalert2';
 
 export const Chats: FC<Props> = ({ data, chatActions, newMessagesCount }) => {
-  const {
-    getAllDialogs,
-    createNewChat,
-    getMessages,
-    getNewMessagesCount,
-  } = chatActions
+  const { getAllDialogs, createNewChat, getMessages, getNewMessagesCount } = chatActions;
 
   useEffect(() => {
     if (newMessagesCount > 0) {
-      getAllDialogs()
+      getAllDialogs();
     }
-    const checkNMC = setInterval(() => getNewMessagesCount(), 10000)
-    return () => clearInterval(checkNMC)
-  }, [getAllDialogs, getNewMessagesCount, newMessagesCount])
+    const checkNMC = setInterval(() => getNewMessagesCount(), 10000);
+    return () => clearInterval(checkNMC);
+  }, [getAllDialogs, getNewMessagesCount, newMessagesCount]);
 
   const onNewChatClick = async () => {
     const { value: id } = await Swal.fire({
@@ -26,23 +21,18 @@ export const Chats: FC<Props> = ({ data, chatActions, newMessagesCount }) => {
       input: 'number',
       inputPlaceholder: '1234',
       icon: 'question',
-    })
+    });
 
     if (+id > 0) {
-      createNewChat(id)
+      createNewChat(id);
     } else if (id) {
-      Swal.fire('Invalid id', '', 'error')
+      Swal.fire('Invalid id', '', 'error');
     }
+  };
 
-  }
-
-  const listItems = data.map(item => (
-    <ChatListItem
-      active={false}
-      key={item.id}
-      {...item}
-      onClick={() => getMessages(item.id)} />
-  ))
+  const listItems = data.map((item) => (
+    <ChatListItem active={false} key={item.id} {...item} onClick={() => getMessages(item.id)} />
+  ));
 
   return (
     <section className={classNames.chats}>
@@ -54,23 +44,23 @@ export const Chats: FC<Props> = ({ data, chatActions, newMessagesCount }) => {
       </header>
       <ul>{listItems}</ul>
     </section>
-  )
-}
+  );
+};
 
 type Props = {
-  data: Array<ChatData>
+  data: Array<ChatData>;
   chatActions: {
-    getAllDialogs: () => void
-    createNewChat: (id: number) => void
-    getMessages: (id: number) => void
-    setCurrentDialogId: (id: number) => void
-    getNewMessagesCount: () => void
-  }
-  newMessagesCount: number
-}
+    getAllDialogs: () => void;
+    createNewChat: (id: number) => void;
+    getMessages: (id: number) => void;
+    setCurrentDialogId: (id: number) => void;
+    getNewMessagesCount: () => void;
+  };
+  newMessagesCount: number;
+};
 
 export type ChatData = {
-    id: number
-    userName: string
-    newMessagesCount: number
-}
+  id: number;
+  userName: string;
+  newMessagesCount: number;
+};

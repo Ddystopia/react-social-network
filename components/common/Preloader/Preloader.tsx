@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import classNames from './Preloader.module.css'
+import React, { useEffect, useState } from 'react';
+import classNames from './Preloader.module.css';
 
 export const Preloader: React.FC = () => {
   const { container, pie, slice } = classNames;
@@ -31,5 +31,5 @@ export const Preloader: React.FC = () => {
         <div className={t4}></div>
       </div>
     </div>
-  )
-}
+  );
+};

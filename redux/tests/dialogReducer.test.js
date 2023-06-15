@@ -5,7 +5,7 @@ import dialogReducer, {
   setMessages,
   setCurrentDialogId,
   editMessageProperties,
-} from '../dialogReducer'
+} from '../dialogReducer';
 
 const state = {
   chatsData: [
@@ -48,15 +48,15 @@ const state = {
   ],
   newMessagesCount: 0,
   currentDialogId: null,
-}
+};
 
 test('length should increment', () => {
-  const action = accessSendMessage('New message')
+  const action = accessSendMessage('New message');
 
-  const newState = dialogReducer(state, action)
+  const newState = dialogReducer(state, action);
 
-  expect(newState.messagesData.length).toBe(5)
-})
+  expect(newState.messagesData.length).toBe(5);
+});
 
 test('length should be 1', () => {
   const action = setMessages([
@@ -66,20 +66,20 @@ test('length should be 1', () => {
       message: 'Hi bro',
       id: 1,
     },
-  ])
+  ]);
 
-  const newState = dialogReducer(state, action)
+  const newState = dialogReducer(state, action);
 
-  expect(newState.messagesData.length).toBe(1)
-})
+  expect(newState.messagesData.length).toBe(1);
+});
 
 test('message body should be "hi"', () => {
-  const action = editMessageProperties(2, { id: 2, body: 'hi' })
+  const action = editMessageProperties(2, { id: 2, body: 'hi' });
 
-  const newState = dialogReducer(state, action)
+  const newState = dialogReducer(state, action);
 
-  expect(newState.messagesData.filter(i => i.id === 2)[0].body).toBe('hi')
-})
+  expect(newState.messagesData.filter((i) => i.id === 2)[0].body).toBe('hi');
+});
 
 test('message should be correct', () => {
   const action = accessSendMessage({
@@ -96,32 +96,32 @@ test('message should be correct', () => {
     senderName: 'Ddystopia',
     translatedBody: null,
     viewed: false,
-  })
+  });
 
-  const newState = dialogReducer(state, action)
-  expect(newState.messagesData[4].body).toBe('New message')
-})
+  const newState = dialogReducer(state, action);
+  expect(newState.messagesData[4].body).toBe('New message');
+});
 
 test('dialogs length should be 1', () => {
-  const action = setDialogs([{ userName: 'Dad', id: 95 }])
+  const action = setDialogs([{ userName: 'Dad', id: 95 }]);
 
-  const newState = dialogReducer(state, action)
+  const newState = dialogReducer(state, action);
 
-  expect(newState.chatsData.length).toBe(1)
-})
+  expect(newState.chatsData.length).toBe(1);
+});
 
 test('newMessagesCount should be 5', () => {
-  const action = setNewMessagesCount(5)
+  const action = setNewMessagesCount(5);
 
-  const newState = dialogReducer(state, action)
+  const newState = dialogReducer(state, action);
 
-  expect(newState.newMessagesCount).toBe(5)
-})
+  expect(newState.newMessagesCount).toBe(5);
+});
 
 test('currentDialogId should be 5', () => {
-  const action = setCurrentDialogId(5)
+  const action = setCurrentDialogId(5);
 
-  const newState = dialogReducer(state, action)
+  const newState = dialogReducer(state, action);
 
-  expect(newState.currentDialogId).toBe(5)
-})
+  expect(newState.currentDialogId).toBe(5);
+});

@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import React, { FC } from 'react'
-import classNames from './Form.module.css'
-import * as yup from 'yup'
-import { FormikProps, withFormik, Form, Field } from 'formik'
-import { Profile } from '@/redux/profileReducer'
+import React, { FC } from 'react';
+import classNames from './Form.module.css';
+import * as yup from 'yup';
+import { FormikProps, withFormik, Form, Field } from 'formik';
+import { Profile } from '@/redux/profileReducer';
 
 type FormValues = Profile;
 
@@ -13,13 +13,13 @@ type OtherProps = {
   userId: number;
   setProfile: (values: FormValues) => void;
   setEditMode: (editMode: boolean) => void;
-}
+};
 
 const InnerForm: FC<FormikProps<FormValues> & OtherProps> = ({
   errors,
   touched,
   values,
-  setEditMode
+  setEditMode,
 }) => {
   return (
     <Form className={classNames.form}>
@@ -43,7 +43,7 @@ const InnerForm: FC<FormikProps<FormValues> & OtherProps> = ({
         <h3>Contacts:</h3>
         <ul className={classNames.contacts}>
           {(Object.keys(values.contacts) as Array<keyof FormValues['contacts']>).map((el) => {
-            const hasError = errors.contacts?.[el] && touched.contacts?.[el]
+            const hasError = errors.contacts?.[el] && touched.contacts?.[el];
             return (
               <li key={el} className={classNames.contact_link}>
                 <div>{el}:</div>
@@ -55,9 +55,8 @@ const InnerForm: FC<FormikProps<FormValues> & OtherProps> = ({
                   }}
                 />
               </li>
-            )
+            );
           })}
-
         </ul>
       </article>
       <article className={classNames.buttons}>
@@ -67,12 +66,12 @@ const InnerForm: FC<FormikProps<FormValues> & OtherProps> = ({
         <button type="submit">Submit</button>
       </article>
     </Form>
-  )
-}
+  );
+};
 
 export const SendForm = withFormik<OtherProps, FormValues>({
   mapPropsToValues: ({ initialValues }) => {
-    return { ...initialValues }
+    return { ...initialValues };
   },
 
   validationSchema: yup.object().shape({
@@ -92,7 +91,6 @@ export const SendForm = withFormik<OtherProps, FormValues>({
   }),
 
   handleSubmit: (values, { props: { setProfile } }) => {
-    setProfile(values)
+    setProfile(values);
   },
-})(InnerForm)
-
+})(InnerForm);

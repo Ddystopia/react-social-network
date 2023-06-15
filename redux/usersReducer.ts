@@ -1,17 +1,17 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { usersAPI } from '../api/api'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { usersAPI } from '../api/api';
 
 export type User = {
-  id: number
-  name: string
+  id: number;
+  name: string;
   photos: {
-    small: string
-    large: string
-  }
-  status: string
-  uniqueUrlName: string
-  followed: boolean
-}
+    small: string;
+    large: string;
+  };
+  status: string;
+  uniqueUrlName: string;
+  followed: boolean;
+};
 
 export type UsersState = {
   users: User[];
@@ -97,4 +97,3 @@ const usersSlice = createSlice({
 export const { setPage, setCount } = usersSlice.actions;
 
 export default usersSlice.reducer;
-

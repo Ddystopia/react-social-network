@@ -1,15 +1,15 @@
 .content {
   display: grid;
-	grid-template-columns: 1fr 3fr;
-	position: relative;
+  grid-template-columns: 1fr 3fr;
+  position: relative;
 }
 
-.content > button{
-	padding: 10px;
-	border-radius: 20px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	cursor: pointer;
-	z-index: 2;
+.content > button {
+  padding: 10px;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: 2;
 }

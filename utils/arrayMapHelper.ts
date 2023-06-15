@@ -4,12 +4,11 @@ export const replaceItemPropsInArray = <T extends Record<string, any>>(
   propName: string,
   newProps: Partial<T>
 ): T[] => {
-  return items.map(it => {
+  return items.map((it) => {
     if (it[propName] === itemId) {
-      return { ...it, ...newProps }
+      return { ...it, ...newProps };
     } else {
-      return it
+      return it;
     }
   });
-}
-
+};

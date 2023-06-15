@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { withAuthRedirect } from '@/hoc/withAuthRedirect'
-import { connect, ConnectedProps, useDispatch } from 'react-redux'
-import { AppState } from '@/redux/store'
-import classNames from '../Dialogs.module.css'
-import { Chats } from '../Chats/Chats'
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { withAuthRedirect } from '@/hoc/withAuthRedirect';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { AppState } from '@/redux/store';
+import classNames from '../Dialogs.module.css';
+import { Chats } from '../Chats/Chats';
 import {
   getAllDialogs,
   createNewChat,
@@ -18,8 +18,8 @@ import {
   restoreMessage,
   setCurrentDialogId,
   getNewMessagesCount,
-  MessageData
-} from '@/redux/dialogReducer'
+  MessageData,
+} from '@/redux/dialogReducer';
 
 import {
   getAuthProfile,
@@ -30,10 +30,10 @@ import {
   getChatsData,
   getCurrentDialogId,
   getLastCheck,
-} from '@/redux/selectors/selectors'
-import { Messages } from '../Messages/Messages'
+} from '@/redux/selectors/selectors';
+import { Messages } from '../Messages/Messages';
 
-type PropsFromRedux = ConnectedProps<typeof connector>
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const DialogsContainer: React.FC<DialogsContainerProps> = ({
   chatsData,
@@ -54,9 +54,9 @@ const DialogsContainer: React.FC<DialogsContainerProps> = ({
   lastCheck,
   params: { dialogId: paramId },
 }) => {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const dialogId = Number(paramId)
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const dialogId = Number(paramId);
 
   const chatActions = {
     getAllDialogs,
@@ -69,43 +69,39 @@ const DialogsContainer: React.FC<DialogsContainerProps> = ({
   const messageActions = {
     sendMessage: (message: string) => {
       if (!isNaN(dialogId)) {
-        dispatch(() => sendMessage({ userId: dialogId, message }))
+        dispatch(() => sendMessage({ userId: dialogId, message }));
       }
     },
     getMessages: (userId: number) => dispatch(getMessages(userId)),
     removeMessage: (message: MessageData) => dispatch(() => removeMessage(message)),
     restoreMessage: (message: MessageData) => dispatch(() => restoreMessage(message)),
     getNewMessages: (userId: number, lastCheck: Date) => {
-      dispatch(getNewMessages({ userId, lastCheck }))
+      dispatch(getNewMessages({ userId, lastCheck }));
     },
-  }
+  };
 
   useEffect(() => {
     if (dialogId !== currentDialogId) {
       if (isNaN(dialogId) && currentDialogId) {
-        router.push(`/dialogs/${currentDialogId}`)
+        router.push(`/dialogs/${currentDialogId}`);
       } else if (!isNaN(dialogId)) {
-        setCurrentDialogId(dialogId)
+        setCurrentDialogId(dialogId);
       }
     }
-  }, [currentDialogId, dialogId])
+  }, [currentDialogId, dialogId]);
 
-  const [deletedMessagesPage, setDeletedMessagesPage] = useState(false)
+  const [deletedMessagesPage, setDeletedMessagesPage] = useState(false);
 
-  const button = <button onClick={() => setDeletedMessagesPage(it => !it)}>
-    {deletedMessagesPage ?
-      "To messages" :
-      "To deleted messages"}
-  </button>
+  const button = (
+    <button onClick={() => setDeletedMessagesPage((it) => !it)}>
+      {deletedMessagesPage ? 'To messages' : 'To deleted messages'}
+    </button>
+  );
 
   return (
     <section className={classNames.content}>
       {button}
-      <Chats
-        data={chatsData}
-        chatActions={chatActions}
-        newMessagesCount={newMessagesCount}
-      />
+      <Chats data={chatsData} chatActions={chatActions} newMessagesCount={newMessagesCount} />
       <Messages
         data={messagesData}
         messageActions={messageActions}
@@ -118,15 +114,15 @@ const DialogsContainer: React.FC<DialogsContainerProps> = ({
         currentDialogId={currentDialogId}
       />
     </section>
-  )
-}
+  );
+};
 
 interface DialogsContainerProps extends PropsFromRedux {
-  messagesData: MessageData[]
-  newMessagesCount: number
+  messagesData: MessageData[];
+  newMessagesCount: number;
   params: {
-    dialogId: number
-  }
+    dialogId: number;
+  };
 }
 
 const mapStateToProps = (state: AppState) => ({
@@ -138,7 +134,7 @@ const mapStateToProps = (state: AppState) => ({
   elseProfile: getDialogFriendProfile(state),
   isFetching: getIsFetchingMessages(state),
   lastCheck: getLastCheck(state),
-})
+});
 
 const mapDispatchToProps = {
   getAllDialogs,
@@ -150,8 +146,8 @@ const mapDispatchToProps = {
   restoreMessage,
   getNewMessagesCount,
   setCurrentDialogId,
-}
+};
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export default connector(withAuthRedirect(DialogsContainer))
+export default connector(withAuthRedirect(DialogsContainer));

@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import React, { FC } from 'react'
-import classNames from './Form.module.css'
-import * as yup from 'yup'
-import { withFormik, FormikProps, Form, Field } from 'formik'
-import { Row } from '../../../../components/common/Row/Row'
+import React, { FC } from 'react';
+import classNames from './Form.module.css';
+import * as yup from 'yup';
+import { withFormik, FormikProps, Form, Field } from 'formik';
+import { Row } from '../../../../components/common/Row/Row';
 
 interface FormValues {
   post: string;
@@ -22,14 +22,14 @@ const InnerForm: FC<FormikProps<FormValues> & OtherProps> = ({ touched, errors }
       </Row>
       <button type="submit">Send</button>
     </Form>
-  )
-}
+  );
+};
 
 export const SendForm = withFormik<OtherProps, FormValues>({
   mapPropsToValues: () => {
     return {
       post: '',
-    }
+    };
   },
 
   validationSchema: yup.object().shape({
@@ -37,8 +37,7 @@ export const SendForm = withFormik<OtherProps, FormValues>({
   }),
 
   handleSubmit: (values, { resetForm, props: { addPost } }) => {
-    addPost(values.post)
-    resetForm()
+    addPost(values.post);
+    resetForm();
   },
-})(InnerForm)
-
+})(InnerForm);
